@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FunctionContext } from '../contexts/FunctionContext'; // Importar o contexto
 
 export const MenuPet = () => {
   const navigate = useNavigate();
+  const { selectedFunction } = useContext(FunctionContext); // Acessar a flag do contexto
+
+  const handleLoginClick = () => {
+    navigate('/login'); // Redireciona para a página de login
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register'); // Redireciona para a página de registro
+  };
 
   const styles = {
     page: {
@@ -52,38 +62,6 @@ export const MenuPet = () => {
       margin: '1rem 0',
       zIndex: 1,
     },
-    iconsContainer: {
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '1rem',
-      position: 'absolute',
-      top: '1rem',
-      zIndex: 2,
-    },
-    backIcon: {
-      width: '30px',
-      height: '30px',
-      background: 'white',
-      borderRadius: '50%',
-      boxShadow: '0 0 3px rgba(0,0,0,0.2)',
-    },
-    flagIcon: {
-      width: '43px',
-      height: '43px',
-      position: 'relative',
-    },
-    flagLayer: (size, top, left, color, opacity = 1) => ({
-      position: 'absolute',
-      width: size,
-      height: size,
-      top,
-      left,
-      background: color,
-      borderRadius: '50%',
-      opacity,
-    }),
     footer: {
       marginTop: 'auto',
       padding: '1rem',
@@ -98,18 +76,6 @@ export const MenuPet = () => {
       {/* Ellipse background */}
       <div style={styles.ellipse}></div>
 
-      {/* Top Icons */}
-      <div style={styles.iconsContainer}>
-        <div style={styles.backIcon}></div>
-        <div style={styles.flagIcon}>
-          <div style={styles.flagLayer('43px', '0px', '0px', '#380D51')}></div>
-          <div style={styles.flagLayer('39.73px', '1.64px', '1.64px', 'white')}></div>
-          <div style={styles.flagLayer('36.35px', '3.33px', '3.33px', '#FEFEFE')}></div>
-          <div style={styles.flagLayer('29.35px', '4.36px', '6.82px', '#012169')}></div>
-          <div style={styles.flagLayer('36.35px', '3.33px', '3.33px', '#C8102E', 0.3)}></div>
-        </div>
-      </div>
-
       {/* Ilustração */}
       <img
         src="https://placehold.co/628x471"
@@ -120,17 +86,17 @@ export const MenuPet = () => {
       {/* LOGIN Button */}
       <div
         style={styles.button}
-        onClick={() => navigate('/login')}
+        onClick={handleLoginClick}
       >
-        LOGIN
+        {selectedFunction === 'X' ? 'LOGIN AS OWNER' : 'LOGIN AS CARE-TAKER'}
       </div>
 
       {/* REGISTER Button */}
       <div
         style={styles.button}
-        onClick={() => navigate('/register')}
+        onClick={handleRegisterClick}
       >
-        REGISTER
+        {selectedFunction === 'X' ? 'REGISTER AS OWNER' : 'REGISTER AS CARE-TAKER'}
       </div>
 
       {/* Footer */}

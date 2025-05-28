@@ -1,6 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const OwnerHomeInterface = () => {
+  const navigate = useNavigate();
+
   const styles = {
     container: {
       width: '100%',
@@ -11,10 +14,11 @@ export const OwnerHomeInterface = () => {
       flexDirection: 'column',
       alignItems: 'center',
     },
+
     header: {
       width: '100%',
       height: '200px',
-      backgroundColor: '#CFFAFE',
+      backgroundColor: '#2D2432',
       borderBottomLeftRadius: '50px',
       borderBottomRightRadius: '50px',
       display: 'flex',
@@ -22,15 +26,18 @@ export const OwnerHomeInterface = () => {
       justifyContent: 'center',
       position: 'relative',
     },
+
     profileImage: {
-      width: '120px',
-      height: '120px',
+      width: '150px',
+      height: '150px',
       borderRadius: '50%',
       objectFit: 'cover',
       position: 'absolute',
-      left: '16px',
-      top: '40px',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
     },
+
     sectionTitle: {
       marginTop: '1rem',
       fontSize: '1.5rem',
@@ -47,12 +54,13 @@ export const OwnerHomeInterface = () => {
       boxSizing: 'border-box',
     },
     card: {
-      backgroundColor: '#E5E7EB',
+      backgroundColor: '#2D243261',
       borderRadius: '16px',
       padding: '1rem',
       width: '280px',
       display: 'flex',
       gap: '1rem',
+      cursor: 'pointer',
     },
     petImage: {
       width: '100px',
@@ -79,6 +87,26 @@ export const OwnerHomeInterface = () => {
       borderTopLeftRadius: '16px',
       borderTopRightRadius: '16px',
     },
+
+    addCircle: {
+      width: '50px',
+      height: '50px',
+      borderRadius: '50%',
+      backgroundColor: '#2D2432',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'absolute',
+      right: '20px', // Position on the right side of the screen
+      top: 'calc(50% - 25px)', // Center vertically relative to the container
+      cursor: 'pointer',
+    },
+    
+    addIcon: {
+      width: '30px',
+      height: '30px',
+      objectFit: 'contain',
+    },
   };
 
   const pets = [
@@ -87,27 +115,27 @@ export const OwnerHomeInterface = () => {
       age: '5 years old',
       type: 'Dog',
       gender: 'Female',
-      image: 'https://placehold.co/112x106',
+      image: './images/Roxy.jpg',
       status: 'Care-Taker assigned',
       statusColor: '#059669',
     },
     {
       name: 'Gino',
-      age: '10 months old',
-      type: 'Turtle',
-      gender: 'Male',
-      image: 'https://placehold.co/108x104',
-      status: 'Care-Taker not assigned yet',
-      statusColor: '#F59E0B',
-    },
-    {
-      name: 'Sonic',
       age: '2 years old',
       type: 'Cat',
       gender: 'Male',
-      image: 'https://placehold.co/108x104',
+      image: './images/Gino.jpg',
       status: 'Care-Taker assigned',
       statusColor: '#059669',
+    },
+    {
+      name: 'Sonic',
+      age: '10 months old',
+      type: 'Turtle',
+      gender: 'Male',
+      image: './images/Sonic.jpg',
+      status: 'Care-Taker not assigned yet',
+      statusColor: '#F59E0B',
     },
   ];
 
@@ -116,16 +144,36 @@ export const OwnerHomeInterface = () => {
       <div style={styles.header}>
         <img
           style={styles.profileImage}
-          src="https://placehold.co/198x205"
+          src="./images/OwnerPfp.png"
           alt="Profile"
         />
       </div>
 
       <div style={styles.sectionTitle}>My Pets</div>
 
+      {/* Add Circle for '+' */}
+      <div style={styles.addCircle} onClick={() => alert('Add new pet')}>
+        <img
+          style={styles.addIcon}
+          src="./images/plus-icon.png" // Replace with the path to your '+' image
+          alt="Add"
+        />
+      </div>
+
       <div style={styles.petList}>
         {pets.map((pet, index) => (
-          <div key={index} style={styles.card}>
+          <div
+            key={index}
+            style={{
+              ...styles.card,
+              backgroundColor: pet.name === 'Gino' ? '#2D2432' : styles.card.backgroundColor, // Change background for Gino
+            }}
+            onClick={() => {
+              if (pet.name === 'Gino') {
+                navigate('/Petmenu');
+              }
+            }}
+          >
             <img src={pet.image} alt={pet.name} style={styles.petImage} />
             <div style={styles.petDetails}>
               <strong>{pet.name}</strong>

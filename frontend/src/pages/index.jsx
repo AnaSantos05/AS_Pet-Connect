@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FunctionContext } from '../contexts/FunctionContext'; // Importar o contexto
 
 const smallCircleBaseClasses = `
   absolute
@@ -156,21 +157,23 @@ const styles = {
         position: 'absolute',
         overflow: 'hidden',
     },
-
-
 };
 
 const Page = () => {
     const navigate = useNavigate();
-
+    const { setSelectedFunction } = useContext(FunctionContext); // Usar o contexto
+  
     const handleOwnerClick = () => {
-        navigate('/login');
+      setSelectedFunction('X'); // Define a função como 'X'
+      navigate('/MenuPet'); // Redireciona para a página de login
     };
-    
-    const handleOwnerClick1 = () => {
-        navigate('/MenuPet');
+  
+    const handleCaretakerClick = () => {
+      setSelectedFunction('Y'); // Define a função como 'Y'
+      navigate('/MenuPet'); // Redireciona para a página de login
     };
 
+    
 
 
     return (
@@ -210,7 +213,7 @@ const Page = () => {
 
             {/* Círculo direito */}
             <div className={`${smallCircleBaseClasses} ${rightCirclePosition}`}
-            onClick={handleOwnerClick1}
+                onClick={handleCaretakerClick}
              />
 
             {/* Imagem care-taker */}
@@ -218,7 +221,7 @@ const Page = () => {
                 src="images/pet_caretaker.png"
                 alt="Care Taker"
                 className={caretakerImageClasses}
-                onClick={handleOwnerClick1}
+                onClick={handleCaretakerClick}
             />
 
             <div style={{ ...styles.text, ...styles.caretakerText }}>

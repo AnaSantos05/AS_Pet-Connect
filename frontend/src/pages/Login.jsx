@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FunctionContext } from '../contexts/FunctionContext'; // Importar o contexto
 
 export const Login = () => {
   const navigate = useNavigate();
+  const { selectedFunction } = useContext(FunctionContext); // Acessar a flag do contexto
 
-  const handleOwnerClick = (event) => {
-    event.preventDefault(); // evita que o form seja enviado
-    navigate('/OwnerHomeInterface'); // redireciona
+  const handleLogin = (event) => {
+    event.preventDefault(); // Evita que o form seja enviado
+
+    // Redireciona com base na função escolhida
+    if (selectedFunction === 'X') {
+      navigate('/OwnerHomeInterface'); // Redireciona para a página do Owner
+    } else if (selectedFunction === 'Y') {
+      navigate('/PetCaretakerInterface'); // Redireciona para a página do Care-Taker
+    } else {
+      alert('Please select a function before logging in!'); // Caso nenhuma função tenha sido escolhida
+    }
   };
 
   const styles = {
@@ -93,7 +103,7 @@ export const Login = () => {
         alt="Ilustração"
         style={styles.illustration}
       />
-      <form style={styles.form} onSubmit={handleOwnerClick}>
+      <form style={styles.form} onSubmit={handleLogin}>
         <input type="email" placeholder="Email" style={styles.input} />
         <input type="password" placeholder="Password" style={styles.input} />
         <div style={styles.checkboxRow}>
