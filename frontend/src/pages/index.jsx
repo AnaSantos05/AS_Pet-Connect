@@ -1,4 +1,5 @@
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const smallCircleBaseClasses = `
   absolute
@@ -12,7 +13,6 @@ const smallCircleBaseClasses = `
 
 const leftCirclePosition = `left-[41%] top-[65%]`;
 const rightCirclePosition = `left-[53%] top-[65%]`;
-
 const imageBaseClasses = `absolute overflow-hidden`;
 
 const ownerImageClasses = `
@@ -24,9 +24,8 @@ const ownerImageClasses = `
 `;
 
 // left-[42%] top-[65%]
-
 const caretakerImageClasses = `
-  ${imageBaseClasses}
+  ${imageBaseClasses} 
   w-[70px]
   ${rightCirclePosition} translate-x-[55%] translate-y-[45%]
   sm:w-[50px]
@@ -34,8 +33,6 @@ const caretakerImageClasses = `
 `;
 
 const styles = {
-
-    
     container: {
         width: '100vw',
         height: '100vh',
@@ -43,6 +40,7 @@ const styles = {
         background: 'white',
         overflow: 'hidden',
     },
+    
     gradientCircle: {
         width: '110%', // give me the equivalent in percentage for any device 
         height: '70%',
@@ -56,6 +54,7 @@ const styles = {
         borderRadius: '50%',
         border: '20px #2D2432 solid',
     },
+
     text: {
         position: 'absolute',
         textAlign: 'center',
@@ -65,6 +64,7 @@ const styles = {
         fontWeight: 400,
         wordWrap: 'break-word',
     },
+
     caretakerText: {
         width: 206,
         height: 72,
@@ -76,6 +76,7 @@ const styles = {
         fontWeight: 400,
         wordWrap: 'break-word',
     },
+
     ownerText: {
         width: 87,
         height: 45,
@@ -159,9 +160,19 @@ const styles = {
 
 };
 
-
-
 const Page = () => {
+    const navigate = useNavigate();
+
+    const handleOwnerClick = () => {
+        navigate('/login');
+    };
+    
+    const handleOwnerClick1 = () => {
+        navigate('/MenuPet');
+    };
+
+
+
     return (
         <div style={styles.container}>
             <div
@@ -171,62 +182,71 @@ const Page = () => {
                 w-[130vw]
                 translate-x-1/2 right-1/2
                 md:w-[110%]
-                2xl:w-[125%]
-                "
+                2xl:w-[125%]"
                 style={{
                     height: '70vh',
                     top: '-30%',
-                    // left: '-5%',
                     background: 'linear-gradient(180deg, #2D2432 49%, rgba(20.19, 20.19, 20.19, 0.74) 60%, rgba(20.19, 20.19, 20.19, 0.38) 78%, rgba(20.19, 20.19, 20.19, 0) 93%), #FFB062',
                     borderRadius: '50%',
                     border: '20px #2D2432 solid',
                 }}
             ></div>
+
             <div style={styles.footerText}>By Hotel Bicho Solto</div>
-            {/* Círculo esquerdo */}
-            <div className={`${smallCircleBaseClasses} ${leftCirclePosition}`} />
+
+            {/* Círculo esquerdo - Pet Owner */}
+            <div
+                className={`${smallCircleBaseClasses} ${leftCirclePosition} cursor-pointer`}
+                onClick={handleOwnerClick}
+            />
 
             {/* Imagem owner */}
             <img
                 src="images/pet_owner.png"
                 alt="Owner"
-                className={ownerImageClasses}
+                className={`${ownerImageClasses} cursor-pointer`}
+                onClick={handleOwnerClick}
             />
 
             {/* Círculo direito */}
-            <div className={`${smallCircleBaseClasses} ${rightCirclePosition}`} />
+            <div className={`${smallCircleBaseClasses} ${rightCirclePosition}`}
+            onClick={handleOwnerClick1}
+             />
 
             {/* Imagem care-taker */}
             <img
                 src="images/pet_caretaker.png"
                 alt="Care Taker"
                 className={caretakerImageClasses}
+                onClick={handleOwnerClick1}
             />
+
             <div style={{ ...styles.text, ...styles.caretakerText }}>
                 Pet <br /> Care-Taker
             </div>
             <div style={{ ...styles.text, ...styles.ownerText }}>
                 Pet <br /> Owner
             </div>
+
             <img
                 src="images/logo.png"
                 alt="Logo grande"
                 className="
-                        absolute
-                        top-1/3 left-1/2
-                        w-[70%]
-                        -translate-x-1/2 -translate-y-1/2
-                        md:w-[20%]
-                        lg:w-[15%]
-                        xl:w-[10%]
-                        2xl:w-[20%]
-                    "
+                    absolute
+                    top-1/3 left-1/2
+                    w-[70%]
+                    -translate-x-1/2 -translate-y-1/2
+                    md:w-[20%]
+                    lg:w-[15%]
+                    xl:w-[10%]
+                    2xl:w-[20%]
+                "
             />
 
             <img
                 style={{ ...styles.lanImage, ...styles.lanContainer }}
                 src="images/uk-flag.png"
-                alt="Placeholder for large "
+                alt="Placeholder for large"
             />
         </div>
     );
