@@ -18,7 +18,7 @@ export const OwnerHomeInterface = () => {
     header: {
       width: '100%',
       height: '200px',
-      backgroundColor: '#2D2432',
+      backgroundColor: ' #2D2432',
       borderBottomLeftRadius: '50px',
       borderBottomRightRadius: '50px',
       display: 'flex',

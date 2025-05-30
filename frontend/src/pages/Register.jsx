@@ -1,25 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FunctionContext } from '../contexts/FunctionContext';
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
-  const { selectedFunction } = useContext(FunctionContext);
-
-  const handleLogin = (event) => {
-    event.preventDefault();
-    
-    // Redireciona imediatamente sem verificar campos
-    if (selectedFunction === 'X') {
-      navigate('/OwnerHomeInterface');
-    } else if (selectedFunction === 'Y') {
-      navigate('/PetCaretakerInterface');
-    } else {
-      // Se nenhuma função foi selecionada, navega para uma página padrão
-      navigate('/OwnerHomeInterface');
-    }
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    repeatPassword: ''
+  });
+  
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
-
+  
+  const handleRegister = (e) => {
+    e.preventDefault();
+    // Validação básica de senha
+    if (formData.password !== formData.repeatPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+    
+    // Simulação de registro bem-sucedido
+    alert("Registro realizado com sucesso!");
+    navigate('/login'); // Redireciona para a página de login
+  };
+  
   const styles = {
     container: {
       width: '100vw',
@@ -67,13 +75,20 @@ export const Login = () => {
       justifyContent: 'center',
       alignItems: 'center',
       overflow: 'hidden',
-      marginBottom: '3rem',
+      marginBottom: '2rem',
     },
     petLogo: {
       width: '100%',
       height: '100%',
       objectFit: 'contain',
       padding: '20px',
+    },
+    headerText: {
+      fontSize: '2rem',
+      fontWeight: 'bold',
+      marginBottom: '1.5rem',
+      color: '#2D2432',
+      textAlign: 'center',
     },
     form: {
       width: '100%',
@@ -90,6 +105,8 @@ export const Login = () => {
       padding: '0 1rem',
       background: 'rgba(20, 20, 20, 0.1)',
       fontSize: '1rem',
+      width: '100%',
+      boxSizing: 'border-box',
     },
     button: {
       height: '50px',
@@ -101,6 +118,9 @@ export const Login = () => {
       cursor: 'pointer',
       transition: 'all 0.2s ease',
       marginTop: '1rem',
+      fontWeight: 'bold',
+      textTransform: 'uppercase',
+      letterSpacing: '1px',
       ':hover': {
         transform: 'translateY(-2px)',
         boxShadow: '0 4px 6px rgba(0, 0, 0, 0.2)',
@@ -109,18 +129,6 @@ export const Login = () => {
         transform: 'translateY(1px)',
         boxShadow: '0 2px 3px rgba(0, 0, 0, 0.2)',
       },
-    },
-    checkboxRow: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      fontSize: '0.9rem',
-      marginTop: '-0.5rem',
-    },
-    checkbox: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
     },
     footer: {
       marginTop: 'auto',
@@ -131,6 +139,16 @@ export const Login = () => {
       padding: '1rem 0',
       width: '100%',
     },
+    loginLink: {
+      color: '#2D2432',
+      textDecoration: 'underline',
+      marginTop: '1rem',
+      cursor: 'pointer',
+      fontWeight: 'bold',
+      ':hover': {
+        color: '#FFB062',
+      }
+    }
   };
 
   return (
@@ -138,7 +156,6 @@ export const Login = () => {
       <div style={styles.ellipse}></div>
       
       <div style={styles.contentWrapper}>
-        {/* Logo central igual ao MenuPet */}
         <div style={styles.logoCircle}>
           <img 
             src="/images/logo.png"
@@ -147,30 +164,56 @@ export const Login = () => {
           />
         </div>
         
-        <form style={styles.form} onSubmit={handleLogin}>
-          {/* Campos mantidos mas não obrigatórios */}
+        <h1 style={styles.headerText}>Criar Conta</h1>
+        
+        <form style={styles.form} onSubmit={handleRegister}>
+          <input 
+            type="text" 
+            name="name"
+            placeholder="Nome" 
+            style={styles.input} 
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+          />
+          
           <input 
             type="email" 
+            name="email"
             placeholder="Email" 
             style={styles.input} 
+            value={formData.email}
+            onChange={handleInputChange}
+            required
           />
+          
           <input 
             type="password" 
-            placeholder="Password" 
+            name="password"
+            placeholder="Senha" 
             style={styles.input} 
+            value={formData.password}
+            onChange={handleInputChange}
+            required
           />
-          <div style={styles.checkboxRow}>
-            <div style={styles.checkbox}>
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember me!</label>
-            </div>
-            <a href="#" style={{ fontSize: '0.8rem', textDecoration: 'underline' }}>
-              Forgot password?
-            </a>
-          </div>
+          
+          <input 
+            type="password" 
+            name="repeatPassword"
+            placeholder="Repetir Senha" 
+            style={styles.input} 
+            value={formData.repeatPassword}
+            onChange={handleInputChange}
+            required
+          />
+          
           <button type="submit" style={styles.button}>
-            LOGIN
+            Registrar
           </button>
+          
+          <p style={styles.loginLink} onClick={() => navigate('/login')}>
+            Já tem uma conta? Faça login
+          </p>
         </form>
       </div>
       
@@ -179,4 +222,4 @@ export const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

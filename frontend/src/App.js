@@ -5,6 +5,10 @@ import Page from './pages/index';
 import MenuPet from './pages/MenuPet';
 import OwnerHomeInterface from './pages/OwnerHomeInterface';
 import PetMenu from './pages/PetMenu';
+import Register from './pages/Register';
+import OwnerSettings from './pages/OwnerSettings';
+import VerificationPetTaker from './pages/VerificationPetTaker';
+import PetMenuAssigned from './pages/PetMenuAssigned';
 import RegisterServiceMenu from './pages/RegisterServiceMenu'
 import UserProfilePetOwnerOnSettings from './pages/userprofilepetowner';
 import { FunctionProvider } from './contexts/FunctionContext';
@@ -33,6 +37,14 @@ const App = () => {
           <Route path="/RegisterServiceMenu" element={<RegisterServiceMenu />} />
 
           <Route path='/userprofilepetowner' element={<UserProfilePetOwnerOnSettings />} />
+
+          <Route path='/Register' element={<Register />} />
+
+          <Route path='/OwnerSettings' element={<OwnerSettings />} />
+
+          <Route path='/VerificationPetTaker' element={<VerificationPetTaker />} />
+
+          <Route path='/PetMenuAssigned' element={<PetMenuAssigned />} />
 
         </Routes>
       </BrowserRouter>

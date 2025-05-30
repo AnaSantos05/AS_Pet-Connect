@@ -12,22 +12,22 @@ export const RegisterServiceMenu = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'space-between',
+       justifyContent: 'space-between',
+       justifyContent: 'flex-start',
       padding: '1rem',
+       paddingBottom: '100px', // espaço para o footer
       boxSizing: 'border-box',
       position: 'relative',
       overflow: 'hidden',
     },
     ellipse: {
       position: 'absolute',
-      width: '200vw',
-      height: '200vw',
-      top: '1rem',
-      left: '50%',
-      transform: 'translate(-50%, -92%)',
-      background: '2vw solid #FFB062',
-      borderRadius: '50%',
-      border: '2vw solid #FFB062',
+      width: '180vw',
+      height: '180vw',
+      top: '-100vw',
+      left: '-40vw',
+      background: 'linear-gradient(180deg, #2D2432 49%, rgba(20, 20, 20, 0.74) 60%, rgba(20, 20, 20, 0.38) 78%, rgba(20, 20, 20, 0) 93%), #2D2432',
+      borderRadius: '9999px',
       zIndex: 0,
     },
     backArrow: {
@@ -37,6 +37,7 @@ export const RegisterServiceMenu = () => {
       zIndex: 2,
       fontSize: '2rem',
       color: 'white',
+      cursor: 'pointer',
     },
     catImage: {
       width: '70vw',
@@ -49,7 +50,8 @@ export const RegisterServiceMenu = () => {
     textGroup: {
       textAlign: 'center',
       fontFamily: 'Londrina Solid',
-      marginTop: '0.5rem',
+       marginTop: '0.5rem',
+       marginTop: '1.5rem', // sobe os textos
       zIndex: 1,
     },
     name: {
@@ -78,8 +80,10 @@ export const RegisterServiceMenu = () => {
     sectionTitle: {
       fontSize: '1.1rem',
       fontWeight: 'bold',
-      marginTop: '1rem',
+       marginTop: '1rem',
+       marginTop: '2rem', // mais espaço acima
       color: '#2D2432',
+      zIndex: 1,
     },
     formGroup: {
       width: '90%',
@@ -87,6 +91,7 @@ export const RegisterServiceMenu = () => {
       display: 'flex',
       flexDirection: 'column',
       gap: '0.5rem',
+       marginTop: '1rem', // sobe o form
       zIndex: 1,
     },
     inputRow: {
@@ -129,7 +134,7 @@ export const RegisterServiceMenu = () => {
     submitButton: {
       width: '44px',
       height: '44px',
-      background: '#2D2432',
+      background: '#380D51',
       borderRadius: '50%',
       display: 'flex',
       justifyContent: 'center',
@@ -137,8 +142,13 @@ export const RegisterServiceMenu = () => {
       color: 'white',
       fontSize: '1.5rem',
       alignSelf: 'flex-end',
+      cursor: 'pointer',
+      zIndex: 1,
     },
     footer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
       width: '100%',
       height: '60px',
       background: '#2D2432',
@@ -146,39 +156,40 @@ export const RegisterServiceMenu = () => {
       justifyContent: 'space-around',
       alignItems: 'center',
       zIndex: 1,
-      borderRadius: '20px 20px 20px 20px',
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
     },
     footerIcon: {
-      width: '36px',
-      height: '36px',
-      background: '#FFFFFF',
+      width: '48px',
+      height: '48px',
       borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+      background: '#FFFFFF',
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
   return (
     <div style={styles.container}>
-      <div style={styles.ellipse}>
-      <div
-        className="
-          absolute
-          rounded-full
-          border-[20px] border-[#FFB062]
-          w-[200vw] h-[200vw]
-          translate-x-1/2 left-1/2
-          md:w-[150vw] md:h-[150vw]
-          lg:w-[120vw] lg:h-[120vw]
-          xl:w-[110vw] xl:h-[110vw]
-          top-[15rem]
-          -translate-y-[92%]
-          bg-gradient-to-b from-[#FFB062] to-[#FFB062A0]
-        "
-      ></div>
+      {/* círculo roxo de fundo */}
+      <div style={styles.ellipse} />
 
-      </div>
+      {/* botão voltar */}
       <div style={styles.backArrow}>←</div>
-      <img src="https://placehold.co/261x207" alt="Gino the Cat" style={styles.catImage} />
 
+      {/* foto do pet */}
+      <img
+        src="https://placehold.co/261x207"
+        alt="Gino the Cat"
+        style={styles.catImage}
+      />
+
+      {/* texto com nome, tipo e idade */}
       <div style={styles.textGroup}>
         <div style={styles.name}>Gino</div>
         <div style={styles.genderGroup}>
@@ -188,38 +199,49 @@ export const RegisterServiceMenu = () => {
         <div style={styles.age}>5 years old</div>
       </div>
 
-      <div style={styles.sectionTitle}>Request SERVICES</div>
+      {/* título da seção */}
+      <div style={styles.sectionTitle}>REQUEST SERVICES</div>
 
+      {/* formulário */}
       <div style={styles.formGroup}>
         <div style={styles.inputRow}>
-          <label style={styles.label}>Type</label>
+          <label style={styles.label}>Type:</label>
           <input style={styles.input} placeholder="Select a type" />
         </div>
         <div style={styles.inputRow}>
-          <label style={styles.label}>Date</label>
+          <label style={styles.label}>Date:</label>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
             <input style={styles.input} placeholder="DD/MM/YYYY" />
             <span style={styles.icon}>🗓️</span>
           </div>
         </div>
         <div style={styles.inputRow}>
-          <label style={styles.label}>Hour</label>
+          <label style={styles.label}>Hour:</label>
           <input style={styles.input} placeholder="HH:MM" />
         </div>
         <div>
-          <label style={styles.label}>Notes</label>
+          <label style={styles.label}>Notes:</label>
           <textarea
             style={styles.textarea}
             placeholder="Put here medication, prescription, notes about the treatment or the pet"
           />
         </div>
+
+        {/* botão enviar */}
         <div style={styles.submitButton}>✔</div>
       </div>
 
+      {/* footer com ícones */}
       <div style={styles.footer}>
-        <div style={styles.footerIcon}></div>
-        <div style={styles.footerIcon}></div>
-        <div style={styles.footerIcon}></div>
+        <div style={styles.footerIcon}>
+          <img src="/path/to/icon1.png" alt="Ícone 1" style={styles.footerIconImage} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="/path/to/icon2.png" alt="Ícone 2" style={styles.footerIconImage} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="/path/to/icon3.png" alt="Ícone 3" style={styles.footerIconImage} />
+        </div>
       </div>
     </div>
   );
