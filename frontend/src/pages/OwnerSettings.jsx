@@ -154,7 +154,7 @@ export const OwnerSettings = () => {
         ← {/* Back arrow content */}
       </div>
 
-      <button style={styles.logoutButton}>LogOut</button>
+      <button style={styles.logoutButton } onClick={() => navigate('/')}>LogOut</button>
 
       {/* Profile Picture */}
       <div style={styles.profileWrapper}>
