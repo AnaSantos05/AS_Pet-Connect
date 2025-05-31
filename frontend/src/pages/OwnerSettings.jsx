@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const OwnerSettings = () => {
   const baseFont = 'Lexend Peta, sans-serif';
+  const navigate = useNavigate();
 
   const styles = {
     container: {
@@ -18,14 +20,17 @@ export const OwnerSettings = () => {
       overflowX: 'hidden',
     },
     topEllipse: {
+      width: '110%',
+      height: '75%',
+      top: '-45%',
+      left: '-5%',
       position: 'absolute',
-      top: '-120vw',            // desloca mais para cima
-      left: '-50vw',
-      width: '200vw',
-      height: '200vw',
-      background: 'linear-gradient(180deg, #2D2432 0%, #2D2432 100%)',
+      overflow: 'hidden', // Makes it so the gradient circle doesn't leak out of the container
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: '#2D2432',
       borderRadius: '50%',
-      zIndex: 0,
+      border: '20px #2D2432 solid',
     },
     logoutButton: {
       position: 'absolute',
@@ -111,13 +116,26 @@ export const OwnerSettings = () => {
       borderTopRightRadius: '20px',
     },
     footerIcon: {
-      width: '36px',
-      height: '36px',
-      background: 'white',
+      cursor: 'pointer',
+      width: '48px',
+      height: '48px',
       borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+
+    backArrow: {
+      position: 'absolute',
+      top: '1rem',
+      left: '1rem',
+      zIndex: 2,
+      fontSize: '2rem',
+      color: 'white',
       cursor: 'pointer',
     },
   };
@@ -127,13 +145,22 @@ export const OwnerSettings = () => {
   return (
     <div style={styles.container}>
       <div style={styles.topEllipse} />
+
+      {/* Back arrow */}
+      <div
+        style={styles.backArrow}
+        onClick={() => navigate(-1)} // Go back to the previous page
+      >
+        ← {/* Back arrow content */}
+      </div>
+
       <button style={styles.logoutButton}>LogOut</button>
 
       {/* Profile Picture */}
       <div style={styles.profileWrapper}>
         <div style={styles.profileBorder}>
           <img
-            src="https://placehold.co/120"
+            src="./images/OwnerPfp.png"
             alt="Owner"
             style={styles.profileImage}
           />
@@ -150,11 +177,17 @@ export const OwnerSettings = () => {
         ))}
       </div>
 
-      {/* Footer */}
+      {/* footer com ícones */}
       <div style={styles.footer}>
-        <div style={styles.footerIcon}>🐾</div>
-        <div style={styles.footerIcon}>📍</div>
-        <div style={styles.footerIcon}>⚙️</div>
+        <div style={styles.footerIcon}>
+          <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')} />
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesomeIcon
+import { faPlus, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons'; // Import specific icons
 
 export const OwnerHomeInterface = () => {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ export const OwnerHomeInterface = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      position: 'relative', // Ensure the container creates a stacking context
     },
 
     header: {
@@ -43,6 +46,46 @@ export const OwnerHomeInterface = () => {
       fontSize: '1.5rem',
       fontWeight: 600,
     },
+
+    text_name:{
+      fontFamily: 'Londrina Solid',
+      fontWeight: '400',
+      wordWrap: 'break-word',
+      color: ' rgb(147, 53, 73)',
+      fontSize: '1.6rem',
+
+    },
+
+    text_age:{
+      fontFamily: 'Londrina Solid',
+      fontWeight: '400',
+      wordWrap: 'break-word',
+      color: '#78588A',
+    },
+
+    text_type:{
+      fontFamily: 'Londrina Solid',
+      fontWeight: '400',
+      wordWrap: 'break-word',
+      color: 'rgb(104, 128, 173) ',
+    },
+
+    text_gender:{
+      fontFamily: 'Londrina Solid',
+      fontWeight: '400',
+      wordWrap: 'break-word',
+      color: '#FECD63',
+    },
+
+    ellipsisButton: {
+      position: 'relative',
+      top: '50%', // Adjust the vertical position
+      right: '3px', // Adjust the horizontal position
+      cursor: 'pointer',
+      fontSize: '1.5rem',
+      color: 'red',
+      zIndex: 10, // Ensure it appears above other elements
+    },
     petList: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -52,6 +95,8 @@ export const OwnerHomeInterface = () => {
       width: '100%',
       maxWidth: '1000px',
       boxSizing: 'border-box',
+      position: 'relative', // Required for the ellipsis button to be positioned relative to this container
+      zIndex: 2, // Ensure it appears above the pet cards
     },
     card: {
       backgroundColor: '#2D243261',
@@ -67,6 +112,7 @@ export const OwnerHomeInterface = () => {
       height: '100px',
       borderRadius: '12px',
       objectFit: 'cover',
+      zIndex: 1, // Ensure the image appears above the card background
     },
     petDetails: {
       display: 'flex',
@@ -79,15 +125,6 @@ export const OwnerHomeInterface = () => {
       fontWeight: 600,
       fontSize: '0.9rem',
     }),
-    footer: {
-      marginTop: 'auto',
-      width: '100%',
-      height: '60px',
-      backgroundColor: '#F3F4F6',
-      borderTopLeftRadius: '16px',
-      borderTopRightRadius: '16px',
-    },
-
     addCircle: {
       width: '50px',
       height: '50px',
@@ -101,11 +138,39 @@ export const OwnerHomeInterface = () => {
       top: 'calc(50% - 25px)', // Center vertically relative to the container
       cursor: 'pointer',
     },
-    
+
     addIcon: {
       width: '30px',
       height: '30px',
       objectFit: 'contain',
+    },
+
+    footer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '60px',
+      background: '#2D2432',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      zIndex: 1,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+    footerIcon: {
+      cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
@@ -135,7 +200,7 @@ export const OwnerHomeInterface = () => {
       gender: 'Male',
       image: './images/Sonic.jpg',
       status: 'Care-Taker not assigned yet',
-      statusColor: '#F59E0B',
+      statusColor: 'red',
     },
   ];
 
@@ -151,13 +216,16 @@ export const OwnerHomeInterface = () => {
 
       <div style={styles.sectionTitle}>My Pets</div>
 
+      {/* Ellipsis Button */}
+      <FontAwesomeIcon
+        icon={faEllipsisVertical}
+        style={styles.ellipsisButton}
+        onClick={() => alert('Ellipsis button clicked!')}
+      />
+
       {/* Add Circle for '+' */}
       <div style={styles.addCircle} onClick={() => alert('Add new pet')}>
-        <img
-          style={styles.addIcon}
-          src="./images/plus-icon.png" // Replace with the path to your '+' image
-          alt="Add"
-        />
+        <FontAwesomeIcon icon={faPlus} style={{ color: 'white' }} />
       </div>
 
       <div style={styles.petList}>
@@ -176,17 +244,28 @@ export const OwnerHomeInterface = () => {
           >
             <img src={pet.image} alt={pet.name} style={styles.petImage} />
             <div style={styles.petDetails}>
-              <strong>{pet.name}</strong>
-              <span>{pet.age}</span>
-              <span>{pet.type}</span>
-              <span>{pet.gender}</span>
+              <div style={{ ...styles.text_name }}>{pet.name}</div>
+              <div style={{ ...styles.text_age }}>{pet.age}</div>
+              <div style={{ ...styles.text_type }}>{pet.type}</div>
+              <div style={{ ...styles.text_gender }}>{pet.gender}</div>
               <span style={styles.status(pet.statusColor)}>{pet.status}</span>
             </div>
           </div>
         ))}
       </div>
 
-      <div style={styles.footer}></div>
+      {/* footer com ícones */}
+      <div style={styles.footer}>
+        <div style={styles.footerIcon}>
+          <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} />
+        </div>
+        <div style={styles.footerIcon}>
+          <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')}/>
+        </div>
+      </div>
     </div>
   );
 };

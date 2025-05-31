@@ -1,7 +1,8 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 export const RegisterServiceMenu = () => {
   const baseFont = 'Lexend Peta, sans-serif';
+  const navigate = useNavigate(); // Initialize navigate function
 
   const styles = {
     container: {
@@ -21,14 +22,17 @@ export const RegisterServiceMenu = () => {
       overflow: 'hidden',
     },
     ellipse: {
+      width: '110%',
+      height: '75%',
+      top: '-45%',
+      left: '-5%',
       position: 'absolute',
-      width: '180vw',
-      height: '180vw',
-      top: '-100vw',
-      left: '-40vw',
-      background: 'linear-gradient(180deg, #2D2432 49%, rgba(20, 20, 20, 0.74) 60%, rgba(20, 20, 20, 0.38) 78%, rgba(20, 20, 20, 0) 93%), #2D2432',
-      borderRadius: '9999px',
-      zIndex: 0,
+      overflow: 'hidden', // Makes it so the gradient circle doesn't leak out of the container
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: '#2D2432',
+      borderRadius: '50%',
+      border: '20px #2D2432 solid',
     },
     backArrow: {
       position: 'absolute',
@@ -40,11 +44,12 @@ export const RegisterServiceMenu = () => {
       cursor: 'pointer',
     },
     catImage: {
-      width: '70vw',
-      maxWidth: '261px',
-      marginTop: '7vh',
-      borderRadius: '30px',
-      border: '3px solid black',
+      width: '100%',
+      maxWidth: '300px',
+      height: 'auto',
+      marginTop: 'clamp(2vh, 5vh, 10vh)', // Dynamically adjusts margin based on screen size
+      borderRadius: '50px',
+      border: '3px solid rgba(0,0,0,0.2)',
       zIndex: 1,
     },
     textGroup: {
@@ -160,12 +165,12 @@ export const RegisterServiceMenu = () => {
       borderTopRightRadius: '20px',
     },
     footerIcon: {
+      cursor: 'pointer',
       width: '48px',
       height: '48px',
       borderRadius: '50%',
       overflow: 'hidden',
       flexShrink: 0,
-      background: '#FFFFFF',
     },
     footerIconImage: {
       width: '100%',
@@ -179,12 +184,17 @@ export const RegisterServiceMenu = () => {
       {/* círculo roxo de fundo */}
       <div style={styles.ellipse} />
 
-      {/* botão voltar */}
-      <div style={styles.backArrow}>←</div>
-
+      {/* Back arrow */}
+      <div
+        style={styles.backArrow}
+        onClick={() => navigate(-1)} // Go back to the previous page
+      >
+        ← {/* Back arrow content */}
+      </div>
+    
       {/* foto do pet */}
       <img
-        src="https://placehold.co/261x207"
+        src="./images/CatImage.png"
         alt="Gino the Cat"
         style={styles.catImage}
       />
@@ -234,13 +244,13 @@ export const RegisterServiceMenu = () => {
       {/* footer com ícones */}
       <div style={styles.footer}>
         <div style={styles.footerIcon}>
-          <img src="/path/to/icon1.png" alt="Ícone 1" style={styles.footerIconImage} />
+          <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')}/>
         </div>
         <div style={styles.footerIcon}>
-          <img src="/path/to/icon2.png" alt="Ícone 2" style={styles.footerIconImage} />
+          <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} />
         </div>
         <div style={styles.footerIcon}>
-          <img src="/path/to/icon3.png" alt="Ícone 3" style={styles.footerIconImage} />
+          <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')}/>
         </div>
       </div>
     </div>
