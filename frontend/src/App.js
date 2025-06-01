@@ -6,6 +6,14 @@ import MenuPet from './pages/MenuPet';
 import OwnerHomeInterface from './pages/OwnerHomeInterface';
 import PetMenu from './pages/PetMenu';
 import Register from './pages/Register';
+import PetAssignedPin from './pages/PetAssignedPin';
+import OwnerMap from './pages/OwnerMap';
+import AddPet from './pages/AddPet';
+import OwnerReview from './pages/OwnerReview';
+import PetTakerHome from './pages/PetTakerHome';
+import AddService from './pages/AddService';
+import PetAssignedChat from './pages/PetAssignedChat';
+import Phone from './pages/Phone';
 import OwnerSettings from './pages/OwnerSettings';
 import VerificationPetTaker from './pages/VerificationPetTaker';
 import PetMenuAssigned from './pages/PetMenuAssigned';
@@ -45,6 +53,19 @@ const App = () => {
           <Route path='/VerificationPetTaker' element={<VerificationPetTaker />} />
 
           <Route path='/PetMenuAssigned' element={<PetMenuAssigned />} />
+
+          <Route path='/PetAssignedPin' element={<PetAssignedPin />} />
+          <Route path='/OwnerMap' element={<OwnerMap />} />
+          <Route path='/AddPet' element={<AddPet />} />
+          <Route path='/OwnerReview' element={<OwnerReview />} />
+
+          <Route path='/PetAssignedChat' element={<PetAssignedChat />} />
+
+          <Route path='/Phone' element={<Phone />} />
+
+          <Route path='/PetTakerHome' element={<PetTakerHome />} />
+
+          <Route path='/AddService' element={<AddService />} />
 
         </Routes>
       </BrowserRouter>

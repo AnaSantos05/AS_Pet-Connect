@@ -240,6 +240,9 @@ export const OwnerHomeInterface = () => {
               if (pet.name === 'Gino') {
                 navigate('/Petmenu');
               }
+              if (pet.name == 'Roxy'){
+                navigate('/PetMenuAssigned')
+              }
             }}
           >
             <img src={pet.image} alt={pet.name} style={styles.petImage} />
