@@ -13,15 +13,7 @@ export const OwnerHomeInterface = () => {
         if (!res.ok) throw new Error('Erro na resposta da API');
         return res.json();
       })
-      .then((data) => {
-        const enrichedPets = data.map((pet) => ({
-          ...pet,
-          image: pet.image || '/images/logo.png',
-          status: pet.status || 'Care-Taker not assigned yet',
-          statusColor: pet.statusColor || 'red',
-        }));
-        setPets(enrichedPets);
-      })
+      .then((data) => setPets(data))
       .catch((err) => {
         console.error('Erro ao carregar pets:', err);
         setPets([]);

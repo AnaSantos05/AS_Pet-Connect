@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/home/rita/UA/Uni/2 ano/2_semestre/AS/Projeto/venv/bin/python3" "$0" "$@"
-' '''
+#!/home/roberto/UNI2ANO/Semestre_2/AS/AS_Pet-Connect/backend/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

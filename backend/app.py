@@ -18,8 +18,6 @@ def save_pets(pets):
     with open(FILE_PATH, 'w') as f:
         json.dump(pets, f, indent=2)
 
-pets = load_pets()
-
 @app.route('/add_pet', methods=['POST'])
 def add_pet():
     data = request.get_json()
@@ -30,15 +28,19 @@ def add_pet():
     if missing_fields:
         return jsonify({'error': f'Campos em falta: {", ".join(missing_fields)}'}), 400
 
-    pets = load_pets()  # <-- recarrega do ficheiro
+    # Adicionar propriedades default se não estiverem presentes
+    data['image'] = data.get('image', '/images/logo.png')
+    data['status'] = data.get('status', 'Care-Taker not assigned yet')
+    data['statusColor'] = data.get('statusColor', 'red')
+
+    pets = load_pets()
     pets.append(data)
     save_pets(pets)
     return jsonify({'message': 'Pet adicionado com sucesso!'}), 201
 
 @app.route('/api/pets', methods=['GET'])
 def get_pets():
-    with open('pets.json', 'r') as f:
-        pets = json.load(f)
+    pets = load_pets()
     return jsonify(pets)
 
 @app.route('/')
