@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import '@fontsource/londrina-solid'; // npm package for the font
 export const RegisterServiceMenu = () => {
-  const baseFont = 'Lexend Peta, sans-serif';
   const navigate = useNavigate(); // Initialize navigate function
+  const baseFont = "'Lexend Peta', sans-serif"; // Define the base font
 
   const styles = {
     container: {
@@ -85,8 +86,8 @@ export const RegisterServiceMenu = () => {
     sectionTitle: {
       fontSize: '1.1rem',
       fontWeight: 'bold',
-       marginTop: '1rem',
-       marginTop: '2rem', // mais espaço acima
+       marginTop: '1rem', // mais espaço acima
+      fontFamily: 'Londrina Solid',
       color: '#2D2432',
       zIndex: 1,
     },

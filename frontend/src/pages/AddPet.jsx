@@ -4,10 +4,31 @@ import '@fontsource/londrina-solid';
 
 const AddPet = () => {
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', race: '', age: '', notes: '' });
+  const [form, setForm] = useState({ name: '', race: '', age: '', gender: '', notes: '' });
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/add_pet', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        alert('Pet adicionado com sucesso!');
+        navigate('/'); // Redireciona para onde quiseres depois de adicionar
+      } else {
+        alert('Erro ao adicionar pet!');
+      }
+    } catch (error) {
+      console.error('Erro:', error);
+      alert('Erro ao conectar com o servidor!');
+    }
   };
 
   const styles = {
@@ -147,7 +168,7 @@ const AddPet = () => {
 
       <div style={styles.title}>Add a Pet</div>
 
-      <form style={styles.form}>
+      <form style={styles.form} onSubmit={(e) => e.preventDefault()}>
         <div style={styles.inputGroup}>
           <label style={styles.label}>Name</label>
           <input type="text" name="name" value={form.name} onChange={handleChange} style={styles.input} />
@@ -164,12 +185,18 @@ const AddPet = () => {
         </div>
 
         <div style={styles.inputGroup}>
+          <label style={styles.label}>Gender:</label>
+          <input type="text" name="gender" value={form.gender} onChange={handleChange} style={styles.input} />
+        </div>
+
+        <div style={styles.inputGroup}>
           <label style={styles.label}>Notes:</label>
           <textarea name="notes" value={form.notes} onChange={handleChange} style={styles.textarea} />
         </div>
+
       </form>
 
-      <div style={styles.submitButton}>✓</div>
+      <div style={styles.submitButton} onClick={handleSubmit}>✓</div>
 
       <div style={styles.footer}>
         <img src="/images/paw-orange.png" alt="pets" style={styles.footerIcon} />

@@ -10,6 +10,29 @@ const AddService = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/add_service', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (response.ok) {
+        alert('Serviço adicionado com sucesso!');
+        setForm({ type: '', animals: '', age: '', description: '' }); // limpa o form
+      } else {
+        const data = await response.json();
+        alert('Erro ao adicionar o serviço: ' + (data.error || 'Erro desconhecido'));
+      }
+    } catch (error) {
+      alert('Erro de conexão com o servidor.');
+      console.error(error);
+    }
+  };
+
   const styles = {
     page: {
       fontFamily: "'Londrina Solid', sans-serif",
@@ -147,7 +170,7 @@ const AddService = () => {
 
       <div style={styles.title}>Add a Service</div>
 
-      <form style={styles.form}>
+      <form style={styles.form} onSubmit={e => e.preventDefault()}>
         <div style={styles.inputGroup}>
           <label style={styles.label}>Type</label>
           <input type="text" name="type" value={form.type} onChange={handleChange} style={styles.input} />
@@ -169,12 +192,22 @@ const AddService = () => {
         </div>
       </form>
 
-      <div style={styles.submitButton} onClick={() => alert('Service submitted!')}>✓</div>
+      <div
+        style={styles.submitButton}
+        onClick={handleSubmit}
+      >
+        ✓
+      </div>
 
       <div style={styles.footer}>
         <img src="/images/paw-orange.png" alt="services" style={styles.footerIcon} />
         <img src="/images/profile-icon.png" alt="profile" style={styles.footerIcon} />
-        <img src="/images/settings.svg" alt="settings" style={styles.footerIcon} onClick={() => navigate('/PetTakerSettings')} />
+        <img
+          src="/images/settings.svg"
+          alt="settings"
+          style={styles.footerIcon}
+          onClick={() => navigate('/PetTakerSettings')}
+        />
       </div>
     </div>
   );

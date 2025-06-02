@@ -1,258 +1,146 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FunctionContext } from '../contexts/FunctionContext'; // Importar o contexto
-
-const smallCircleBaseClasses = `
-  absolute
-  rounded-full
-  border-4 border-[#2D2432]
-  bg-gradient-to-b from-[#FFB062A0] to-[#FFB062]
-  sm:w-[100px] sm:h-[100px]
-  md:w-[120px] md:h-[120px]
-  w-[134px] h-[131px]
-`;
-
-const leftCirclePosition = `left-[41%] top-[65%]`;
-const rightCirclePosition = `left-[53%] top-[65%]`;
-const imageBaseClasses = `absolute overflow-hidden`;
-
-const ownerImageClasses = `
-  ${imageBaseClasses}
-  w-[70px]
-  ${leftCirclePosition} translate-x-[55%] translate-y-[45%]
-  sm:w-[50px]
-  md:w-[60px]
-`;
-
-// left-[42%] top-[65%]
-const caretakerImageClasses = `
-  ${imageBaseClasses} 
-  w-[70px]
-  ${rightCirclePosition} translate-x-[55%] translate-y-[45%]
-  sm:w-[50px]
-  md:w-[60px]
-`;
+import { FunctionContext } from '../contexts/FunctionContext';
 
 const styles = {
-    container: {
-        width: '100vw',
-        height: '100vh',
-        position: 'relative',
-        background: 'white',
-        overflow: 'hidden',
-    },
-    
-    gradientCircle: {
-        width: '110%', // give me the equivalent in percentage for any device 
-        height: '70%',
-        top: '-30%',
-        left: '-5%',
-        position: 'absolute',
-        overflow: 'hidden', // Makes it so the gradient circle doesn't leak out of the container
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(180deg, #2D2432 49%, rgba(20.19, 20.19, 20.19, 0.74) 60%, rgba(20.19, 20.19, 20.19, 0.38) 78%, rgba(20.19, 20.19, 20.19, 0) 93%), #FFB062',
-        borderRadius: '50%',
-        border: '20px #2D2432 solid',
-    },
-
-    text: {
-        position: 'absolute',
-        textAlign: 'center',
-        color: '#2D2432',
-        fontSize: 20,
-        fontFamily: 'Londrina Solid',
-        fontWeight: 400,
-        wordWrap: 'break-word',
-    },
-
-    caretakerText: {
-        width: 206,
-        height: 72,
-        top: '80%',
-        left: '51%',
-        color: '#2D2432',
-        fontSize: 20,
-        fontFamily: 'Londrina Solid',
-        fontWeight: 400,
-        wordWrap: 'break-word',
-    },
-
-    ownerText: {
-        width: 87,
-        height: 45,
-        top: '80%',
-        left: '42%',
-        color: '#2D2432',
-        fontSize: 20,
-        fontFamily: 'Londrina Solid',
-        fontWeight: 400,
-        wordWrap: 'break-word',
-    },
-    footerText: {
-        top: '60%',
-        left: '47.5%',
-        position: 'absolute',
-        color: 'black',
-        fontSize: 12,
-        fontFamily: 'Lexend Peta',
-        fontWeight: 400,
-        wordWrap: 'break-word',
-    },
-    smallCircle: {
-        width: 134,
-        height: 131,
-        position: 'absolute',
-        background: 'linear-gradient(180deg, rgba(247.56, 3.09, 3.09, 0) 0%, rgba(247.56, 3.09, 3.09, 0.20) 64%), #FFB062',
-        borderRadius: '50%',
-        border: '4px #2D2432 solid',
-    },
-    leftCircle: {
-        left: '41%',
-        top: '65%',
-    },
-    rightCircle: {
-        left: '53%',
-        top: '65%',
-    },
-    image: {
-        position: 'absolute',
-        overflow: 'hidden',
-    },
-    largeImage: {
-        // width: 628, 
-        // height: 471,
-        width: 942,
-        height: 706.5,
-        // left: -100,
-        // top: 57,
-        top: '-1%',
-        left: '28%',
-    },
-    leftImage: {
-        width: 304,
-        height: 430,
-        left: '36.8%',
-        top: '51%',
-        position: 'absolute',
-    },
-    rightImage: {
-        width: 262,
-        height: 370,
-        left: '49.6%',
-        top: '55%',
-        position: 'absolute',
-    },
-    lanContainer: {
-        width: 43,
-        height: 43,
-        bottom: '5%',
-        right: '5%',
-        position: 'absolute',
-        overflow: 'hidden',
-    },
-    lanImage: {
-        width: 43,
-        height: 43,
-        position: 'absolute',
-        overflow: 'hidden',
-    },
+  container: {
+    width: '100vw',
+    height: '100vh',
+    position: 'relative',
+    background: 'white',
+    overflow: 'hidden',
+  },
+  footerText: {
+    top: '50%',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    position: 'absolute',
+    color: 'black',
+    fontSize: 12,
+    fontFamily: 'Lexend Peta',
+    fontWeight: 400,
+    wordWrap: 'break-word',
+  },
+  lanContainer: {
+    width: 43,
+    height: 43,
+    bottom: '5%',
+    right: '5%',
+    position: 'absolute',
+    overflow: 'hidden',
+  },
+  lanImage: {
+    width: 43,
+    height: 43,
+    position: 'absolute',
+    overflow: 'hidden',
+  },
 };
 
 const Page = () => {
-    const navigate = useNavigate();
-    const { setSelectedFunction } = useContext(FunctionContext); // Usar o contexto
-  
-    const handleOwnerClick = () => {
-      setSelectedFunction('X'); // Define a função como 'X'
-      navigate('/MenuPet'); // Redireciona para a página de login
-    };
-  
-    const handleCaretakerClick = () => {
-      setSelectedFunction('Y'); // Define a função como 'Y'
-      navigate('/MenuPet'); // Redireciona para a página de login
-    };
+  const navigate = useNavigate();
+  const { setSelectedFunction } = useContext(FunctionContext);
 
-    
+  const handleOwnerClick = () => {
+    setSelectedFunction('X');
+    navigate('/MenuPet');
+  };
 
+  const handleCaretakerClick = () => {
+    setSelectedFunction('Y');
+    navigate('/MenuPet');
+  };
 
-    return (
-        <div style={styles.container}>
-            <div
-                className="absolute
-                rounded-full border-20 
-                border-[#2D2432] 
-                w-[130vw]
-                translate-x-1/2 right-1/2
-                md:w-[110%]
-                2xl:w-[125%]"
-                style={{
-                    height: '70vh',
-                    top: '-30%',
-                    background: 'linear-gradient(180deg, #2D2432 49%, rgba(20.19, 20.19, 20.19, 0.74) 60%, rgba(20.19, 20.19, 20.19, 0.38) 78%, rgba(20.19, 20.19, 20.19, 0) 93%), #FFB062',
-                    borderRadius: '50%',
-                    border: '20px #2D2432 solid',
-                }}
-            ></div>
+  return (
+    <div style={styles.container}>
+      {/* Gradiente do topo */}
+      <div
+        className="absolute
+        rounded-full border-20 
+        border-[#2D2432] 
+        w-[130vw]
+        translate-x-1/2 right-1/2
+        md:w-[110%]
+        2xl:w-[125%]"
+        style={{
+          height: '70vh',
+          top: '-30%',
+          background:
+            'linear-gradient(180deg, #2D2432 49%, rgba(20.19, 20.19, 20.19, 0.74) 60%, rgba(20.19, 20.19, 20.19, 0.38) 78%, rgba(20.19, 20.19, 20.19, 0) 93%), #FFB062',
+          borderRadius: '50%',
+          border: '20px #2D2432 solid',
+        }}
+      />
 
-            <div style={styles.footerText}>By Hotel Bicho Solto</div>
+      {/* Logo */}
+      <img
+        src="images/logo.png"
+        alt="Logo grande"
+        className="absolute top-[26%] left-1/2 w-[70%] -translate-x-1/2 -translate-y-1/2 md:w-[25%]"
+      />
 
-            {/* Círculo esquerdo - Pet Owner */}
-            <div
-                className={`${smallCircleBaseClasses} ${leftCirclePosition} cursor-pointer`}
-                onClick={handleOwnerClick}
-            />
+      {/* Texto footer */}
+      <div style={styles.footerText}>By Hotel Bicho Solto</div>
 
-            {/* Imagem owner */}
+      {/* Opções */}
+      <div className="absolute top-[63%] left-1/2 -translate-x-1/2 flex gap-4 sm:gap-10 items-center justify-center">
+        {/* Pet Owner */}
+        <div
+          className="flex flex-col items-center cursor-pointer"
+          onClick={handleOwnerClick}
+        >
+          <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[134px] md:h-[131px] rounded-full border-4 border-[#2D2432] bg-gradient-to-b from-[#FFB062A0] to-[#FFB062] flex items-center justify-center">
             <img
-                src="images/pet_owner.png"
-                alt="Owner"
-                className={`${ownerImageClasses} cursor-pointer`}
-                onClick={handleOwnerClick}
+              src="images/pet_owner.png"
+              alt="Owner"
+              className="w-[40px] sm:w-[45px] md:w-[50px]"
             />
-
-            {/* Círculo direito */}
-            <div className={`${smallCircleBaseClasses} ${rightCirclePosition}`}
-                onClick={handleCaretakerClick}
-             />
-
-            {/* Imagem care-taker */}
-            <img
-                src="images/pet_caretaker.png"
-                alt="Care Taker"
-                className={caretakerImageClasses}
-                onClick={handleCaretakerClick}
-            />
-
-            <div style={{ ...styles.text, ...styles.caretakerText }}>
-                Pet <br /> Care-Taker
-            </div>
-            <div style={{ ...styles.text, ...styles.ownerText }}>
-                Pet <br /> Owner
-            </div>
-
-            <img
-                src="images/logo.png"
-                alt="Logo grande"
-                className="
-                    absolute
-                    top-1/3 left-1/2
-                    w-[70%]
-                    -translate-x-1/2 -translate-y-1/2
-                    md:w-[20%]
-                    lg:w-[15%]
-                    xl:w-[10%]
-                    2xl:w-[20%]
-                "
-            />
-
-            <img
-                style={{ ...styles.lanImage, ...styles.lanContainer }}
-                src="images/uk-flag.png"
-                alt="Placeholder for large"
-            />
+          </div>
+          <div
+            className="mt-2 text-center text-[#2D2432]"
+            style={{
+              fontFamily: 'Londrina Solid',
+              fontSize: 16,
+              lineHeight: '1.2',
+            }}
+          >
+            Pet <br /> Owner
+          </div>
         </div>
-    );
+
+        {/* Pet Care-Taker */}
+        <div
+          className="flex flex-col items-center cursor-pointer"
+          onClick={handleCaretakerClick}
+        >
+          <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] md:w-[134px] md:h-[131px] rounded-full border-4 border-[#2D2432] bg-gradient-to-b from-[#FFB062A0] to-[#FFB062] flex items-center justify-center">
+            <img
+              src="images/pet_caretaker.png"
+              alt="Caretaker"
+              className="w-[40px] sm:w-[45px] md:w-[50px]"
+            />
+          </div>
+          <div
+            className="mt-2 text-center text-[#2D2432]"
+            style={{
+              fontFamily: 'Londrina Solid',
+              fontSize: 16,
+              lineHeight: '1.2',
+            }}
+          >
+            Pet <br /> Care-Taker
+          </div>
+        </div>
+      </div>
+
+      {/* Bandeira */}
+      <img
+        style={{ ...styles.lanImage, ...styles.lanContainer }}
+        src="images/uk-flag.png"
+        alt="UK Flag"
+      />
+    </div>
+  );
 };
 
 export default Page;

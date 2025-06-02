@@ -13,7 +13,7 @@ export const Login = () => {
     if (selectedFunction === 'X') {
       navigate('/OwnerHomeInterface');
     } else if (selectedFunction === 'Y') {
-      navigate('/PetCaretakerInterface');
+      navigate('/PetTakerHome');
     } else {
       // Se nenhuma função foi selecionada, navega para uma página padrão
       navigate('/OwnerHomeInterface');

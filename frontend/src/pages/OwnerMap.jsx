@@ -102,13 +102,36 @@ const OwnerMap = () => {
       height: '50px',
     },
     cluster: {
-      background: 'rgba(255, 100, 100, 0.4)',
-      borderRadius: '50%',
-      textAlign: 'center',
+      background: 'rgba(255, 100, 100, 0.4)', // Background color
+      borderRadius: '50%', // Makes it a circle
+      textAlign: 'center', // Centers text horizontally
       fontWeight: 'bold',
-      fontSize: '1rem',
-      color: '#2D2432',
-      lineHeight: '50px',
+      fontSize: '1.2rem', // Slightly larger font size for better visibility
+      color: '#2D2432', // Text color
+      lineHeight: '70px', // Matches the new height for vertical centering
+      border: '5px solid #B74C4C', // Border around the circle
+      width: '150px', // New width for a bigger circle
+      height: '150px', // New height for a bigger circle
+      backgroundImage: 'url(/images/pawicon.svg)', // Path to your image
+      backgroundSize: 'cover', // Ensures the image covers the circle
+      backgroundPosition: 'center', // Centers the image
+    },
+    notification: {
+      position: 'absolute', // Position relative to the parent (cluster)
+      top: '0px', // Adjust to position the notification circle
+      left: '0px', // Move it to the left side
+      width: '40px', // Width of the notification circle
+      height: '40px', // Height of the notification circle
+      background: 'white', // Background color for the notification
+      borderRadius: '50%', // Makes it a circle
+      color: 'black', // Text color
+      fontSize: '1rem', // Font size for the text
+      fontWeight: 'bold', // Bold text
+      display: 'flex', // Flexbox for centering text
+      alignItems: 'center', // Centers text vertically
+      justifyContent: 'center', // Centers text horizontally
+      border: '6px solid #B74C4C', // Optional border for the notification
+      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', // Optional shadow for better visibility
     },
     footer: {
       position: 'absolute',
@@ -189,7 +212,7 @@ const OwnerMap = () => {
                 left: marker.left,
               }}
             >
-              {marker.count}
+              <div style={styles.notification}>{marker.count}</div>
             </div>
           ) : (
             <img
