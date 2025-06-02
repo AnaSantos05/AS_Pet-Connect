@@ -20,6 +20,7 @@ import PetMenuAssigned from './pages/PetMenuAssigned';
 import RegisterServiceMenu from './pages/RegisterServiceMenu'
 import UserProfilePetOwnerOnSettings from './pages/userprofilepetowner';
 import { FunctionProvider } from './contexts/FunctionContext';
+import PetTakerMap from './pages/PetTakerMap';
 
 const App = () => {
   return (

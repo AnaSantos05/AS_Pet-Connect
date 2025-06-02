@@ -1,5 +1,4 @@
 import React from "react";
-import "./userprofilepetowner.css";
 
 const UserProfilePetOwnerOnSettings = () => (
   <div className="userprofilepetowner-container">
