@@ -34,35 +34,35 @@ const PetTakerMap = () => {
       top: '30%', 
       left: '15%', 
       tags: ['Hotels', 'Low $'],
-      topImage: '/images/hotel-icon.png' // Add your icon path here
+      topImage: '/images/logostore.png' // Store logo
     },
     { 
       id: 2, 
       top: '60%', 
       left: '20%', 
       tags: ['Pet-walking'],
-      topImage: '/images/walking-icon.png' // Add your icon path here
+      topImage: '/images/garden1.png' // Garden 1
     },
     { 
       id: 3, 
       top: '70%', 
       left: '60%', 
       tags: ['High $'],
-      topImage: '/images/premium-icon.png' // Add your icon path here
+      topImage: '/images/garden2.png' // Garden 2
     },
     { 
       id: 4, 
       top: '48%', 
       left: '43%', 
       tags: ['Hotels', 'High $'],
-      topImage: '/images/luxury-hotel-icon.png' // Add your icon path here
+      topImage: '/images/logostore.png' // Store logo
     },
     { 
       id: 5, 
       top: '75%', 
       left: '10%', 
       tags: ['Pet-spa'],
-      topImage: '/images/spa-icon.png' // Add your icon path here
+      topImage: '/images/garden2.png' // Garden 2
     },
   ];
 
@@ -128,13 +128,13 @@ const PetTakerMap = () => {
     },
     markerContainer: {
       position: 'absolute',
-      width: '92px',
-      height: '107px',
+      width: '92px', // Match the marker width
+      height: '107px', // Match the marker height
     },
     marker: {
-      width: '100%',
-      height: '100%',
-      backgroundImage: 'url(/images/greenmarker.png)', // alo tou aqui consegues ver isto? ya mas o live server matou se, ele n considera as minhas alteracoes pq um de nos ta com a net fraca, suponho q tu pq eduroam ahahah
+      width: '100%', // Use full container width
+      height: '100%', // Use full container height
+      backgroundImage: 'url(/images/greenmarker.png)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
@@ -144,14 +144,9 @@ const PetTakerMap = () => {
       position: 'absolute',
       top: '15px', // Adjust to position the icon on top of the marker
       left: '50%',
-      transform: 'translateX(-50%)',
-      width: '40px', // Adjust size as needed
-      height: '40px', // Adjust size as needed
-      borderRadius: '50%',
-      border: '2px solid white',
-      backgroundColor: 'white',
-      padding: '5px',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
+      transform: 'translateX(-50%) translateY(-15%)',
+      width: '70px', // Adjust size as needed
+      height: '70px', // Adjust size as needed
     },
     footer: {
       position: 'absolute',
