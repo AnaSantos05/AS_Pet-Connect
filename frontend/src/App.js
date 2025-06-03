@@ -26,6 +26,7 @@ import PetMenuAssigned from './pages/PetMenuAssigned';
 import RegisterServiceMenu from './pages/RegisterServiceMenu'
 import UserProfilePetOwnerOnSettings from './pages/userprofilepetowner';
 import { FunctionProvider } from './contexts/FunctionContext';
+import PetHotelDetails from './pages/PetHotel';
 
 const App = () => {
   return (
@@ -81,6 +82,8 @@ const App = () => {
           <Route path="/OwnerFinal" element={<OwnerFinal />} />
 
           <Route path="/ServiceRequests" element={<ServiceRequests />} />
+
+          <Route path="/PetHotel" element={<PetHotelDetails />} />
 
         </Routes>
       </BrowserRouter>
