@@ -20,6 +20,8 @@ import PetMenuAssigned from './pages/PetMenuAssigned';
 import RegisterServiceMenu from './pages/RegisterServiceMenu'
 import UserProfilePetOwnerOnSettings from './pages/userprofilepetowner';
 import { FunctionProvider } from './contexts/FunctionContext';
+import PetSitterAddServiceInterface from './pages/PetSitterAddServiceInterface'
+import PetSitterTakerHomeInterface from './pages/PetSitterTakerHomeInterface'
 
 const App = () => {
   return (
@@ -66,6 +68,11 @@ const App = () => {
           <Route path='/PetTakerHome' element={<PetTakerHome />} />
 
           <Route path='/AddService' element={<AddService />} />
+
+          <Route path='/PetSitterTakerHomeInterface' element={<PetSitterTakerHomeInterface />} />
+
+          <Route path='/add-service' element={<PetSitterAddServiceInterface />} />
+
 
         </Routes>
       </BrowserRouter>

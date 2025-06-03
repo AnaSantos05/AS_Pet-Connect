@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FunctionContext } from '../contexts/FunctionContext';
 
@@ -6,19 +6,46 @@ export const Login = () => {
   const navigate = useNavigate();
   const { selectedFunction } = useContext(FunctionContext);
 
-  const handleLogin = (event) => {
-    event.preventDefault();
-    
-    // Redireciona imediatamente sem verificar campos
-    if (selectedFunction === 'X') {
-      navigate('/OwnerHomeInterface');
-    } else if (selectedFunction === 'Y') {
-      navigate('/PetTakerHome');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async (event) => {
+  event.preventDefault();
+
+  try {
+    const response = await fetch('http://localhost:5000/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      const { id, type } = result.user;
+
+      localStorage.setItem('userId', id);
+      localStorage.setItem('userType', type);  // Guarda o tipo
+
+      alert("Login realizado com sucesso!");
+
+      if (type === 'owner') {
+        navigate('/OwnerHomeInterface');
+      } else if (type === 'sitter') {
+        navigate('/PetSitterTakerHomeInterface');
+      } else {
+        alert('Tipo de utilizador desconhecido.');
+      }
     } else {
-      // Se nenhuma função foi selecionada, navega para uma página padrão
-      navigate('/OwnerHomeInterface');
+      alert(result.error || "Falha no login.");
     }
-  };
+  } catch (error) {
+    console.error("Erro de login:", error);
+    alert("Erro ao comunicar com o servidor.");
+  }
+};
 
   const styles = {
     container: {
@@ -149,16 +176,22 @@ export const Login = () => {
         
         <form style={styles.form} onSubmit={handleLogin}>
           {/* Campos mantidos mas não obrigatórios */}
-          <input 
-            type="email" 
-            placeholder="Email" 
-            style={styles.input} 
-          />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            style={styles.input} 
-          />
+            <input 
+                type="email" 
+                placeholder="Email" 
+                style={styles.input} 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input 
+                type="password" 
+                placeholder="Password" 
+                style={styles.input} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
           <div style={styles.checkboxRow}>
             <div style={styles.checkbox}>
               <input type="checkbox" id="remember" />

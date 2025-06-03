@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "name": "petowner1",
+            "email": "test1@gmail.com",
+            "password": "123",
+            "type": "owner",
+            "id": 1
+        },
+        {
+            "name": "petowner2",
+            "email": "test2@gmail.com",
+            "password": "123",
+            "type": "owner",
+            "id": 2
+        },
+        {
+            "name": "pet sitter1",
+            "email": "test3@gmail.com",
+            "password": "123",
+            "type": "sitter",
+            "id": 3
+        }
+    ]
+}
