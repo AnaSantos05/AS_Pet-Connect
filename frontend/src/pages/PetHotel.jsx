@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft, faArrowRight, faEllipsisVertical, faPaw, faMapMarkerAlt, faGear } from '@fortawesome/free-solid-svg-icons';
 
 const images = [
-  '/images/hotel1.jpg',
-  '/images/hotel2.jpg',
-  '/images/hotel3.jpg',
+  '/images/hotel1.png',
+  '/images/hotel2.png',
+  '/images/hotel3.png',
 ];
 
 export const PetHotelDetails = () => {
@@ -25,26 +25,45 @@ export const PetHotelDetails = () => {
     container: {
       width: '100%',
       minHeight: '100vh',
-      backgroundColor: '#1f192a',
+      backgroundColor: 'white',
       color: 'white',
       fontFamily: "'Londrina Solid', cursive, sans-serif",
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      paddingBottom: '80px', // space for footer
+      paddingBottom: '80px',
       position: 'relative',
       overflowX: 'hidden',
     },
 
-    logoContainer: {
-      position: 'relative',
-      marginTop: '-70px',
-      marginBottom: '10px',
-    },
-
+    header: {
+        width: '100%',
+        height: '160px',
+        backgroundColor: '#2D2432',
+        borderBottomLeftRadius: '50% 80px', // More pronounced ellipse for 160px height
+        borderBottomRightRadius: '50% 80px', // More pronounced ellipse for 160px height
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0,
+      },
+      
+      logoContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        marginTop: '20px',
+        width: '100%',
+        position: 'relative', // Added relative positioning
+        zIndex: 1, // Added z-index to appear above header
+      },
     logoImage: {
       width: '160px',
       userSelect: 'none',
+      marginBottom: '10px',
     },
 
     ratingContainer: {
@@ -57,7 +76,7 @@ export const PetHotelDetails = () => {
     ratingText: {
       fontSize: '16px',
       fontWeight: '700',
-      color: 'white',
+      color: '#2D2432',
     },
 
     star: {
@@ -67,8 +86,9 @@ export const PetHotelDetails = () => {
     address: {
       fontWeight: '700',
       fontSize: '18px',
-      marginBottom: '10px',
+      marginBottom: '20px',
       textAlign: 'center',
+      color: '#2D2432',
     },
 
     carouselContainer: {
@@ -76,7 +96,7 @@ export const PetHotelDetails = () => {
       maxWidth: '400px',
       backgroundColor: '#2c2247',
       borderRadius: '16px',
-      padding: '10px',
+      padding: '20px',
       position: 'relative',
       userSelect: 'none',
     },
@@ -138,35 +158,42 @@ export const PetHotelDetails = () => {
       transition: 'background-color 0.3s',
     },
 
-    continueButtonHover: {
-      backgroundColor: '#684e9a',
-    },
-
     footer: {
       position: 'fixed',
       bottom: 0,
       left: 0,
       width: '100%',
       height: '60px',
-      backgroundColor: '#2c2247',
-      borderTopLeftRadius: '20px',
-      borderTopRightRadius: '20px',
+      background: '#2D2432',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
-      zIndex: 100,
+      zIndex: 1,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
     },
 
     footerIcon: {
-      color: 'white',
-      fontSize: '28px',
       cursor: 'pointer',
-      userSelect: 'none',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
   return (
     <div style={styles.container}>
+      {/* Header */}
+      <div style={styles.header}></div>
+
       {/* Logo */}
       <div style={styles.logoContainer}>
         <img
@@ -175,27 +202,27 @@ export const PetHotelDetails = () => {
           alt="Bichosolto Logo"
           draggable={false}
         />
-      </div>
 
-      {/* Rating */}
-      <div style={styles.ratingContainer}>
-        <span style={styles.ratingText}>3.5</span>
-        {[1, 2, 3, 4, 5].map((i) => (
-          <FontAwesomeIcon
-            key={i}
-            icon={faStar}
-            style={{
-              ...styles.star,
-              color: i <= 3 ? '#FFB400' : '#555555',
-            }}
-          />
-        ))}
-        <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: 'white', cursor: 'pointer' }} />
-      </div>
+        {/* Rating */}
+        <div style={styles.ratingContainer}>
+          <span style={styles.ratingText}>3.5</span>
+          {[1, 2, 3, 4, 5].map((i) => (
+            <FontAwesomeIcon
+              key={i}
+              icon={faStar}
+              style={{
+                ...styles.star,
+                color: i <= 3 ? '#FFB400' : '#555555',
+              }}
+            />
+          ))}
+          <FontAwesomeIcon icon={faEllipsisVertical} style={{ color: '#2D2432', cursor: 'pointer' }} />
+        </div>
 
-      {/* Address */}
-      <div style={styles.address}>
-        Rua das Camélias, 55, <br /> AVEIRO
+        {/* Address */}
+        <div style={styles.address}>
+          Rua das Camélias, 55, <br /> AVEIRO
+        </div>
       </div>
 
       {/* Carousel */}
@@ -231,24 +258,29 @@ export const PetHotelDetails = () => {
 
       {/* Footer */}
       <div style={styles.footer}>
-        <FontAwesomeIcon
-          icon={faPaw}
-          style={styles.footerIcon}
-          onClick={() => navigate('/ownerhome')}
-          title="Pets"
-        />
-        <FontAwesomeIcon
-          icon={faMapMarkerAlt}
-          style={styles.footerIcon}
-          onClick={() => navigate('/map')}
-          title="Map"
-        />
-        <FontAwesomeIcon
-          icon={faGear}
-          style={styles.footerIcon}
-          onClick={() => navigate('/settings')}
-          title="Settings"
-        />
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerHome')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map-on.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
       </div>
     </div>
   );
