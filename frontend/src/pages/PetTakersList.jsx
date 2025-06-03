@@ -1,101 +1,102 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const PetTakersList = () => {
   const { petName, type } = useParams();
   const navigate = useNavigate();
-  const [petTakers, setPetTakers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/pet_takers')
-      .then((res) => {
-        if (!res.ok) throw new Error('Erro ao buscar pet takers');
-        return res.json();
-      })
-      .then((data) => {
-        const tipoFiltro = decodeURIComponent(type).trim().toLowerCase();
-
-        const filtrados = data.filter((pt) =>
-          pt.type && pt.type.trim().toLowerCase() === tipoFiltro
-        );
-
-        setPetTakers(filtrados);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Erro ao carregar pet takers:', err);
-        setLoading(false);
-      });
-  }, [type]);
+  const petTakers = [
+    {
+      name: 'Madalena Matias',
+      age: 25,
+      description: 'I do pet–walking and I can stay with a pet when you go on summer vacations.',
+    },
+    {
+      name: 'Pedro Lemos',
+      age: 20,
+      description: 'I will give your pet a bath and also do your pet’s fur.',
+    },
+    {
+      name: 'Patrícia Lee',
+      age: 44,
+      description: 'I will go for a walk with your pet in a defined schedule or just for a day. I can also give training to your pet.',
+    },
+    {
+      name: 'João Ferreira',
+      age: 36,
+      description: 'I do pet–sitting and pet training for dogs and cats.',
+    },
+  ];
 
   const styles = {
     container: {
       minHeight: '100vh',
       backgroundColor: 'white',
-      padding: '2rem',
+      padding: '1rem',
       fontFamily: "'Lexend Peta', sans-serif",
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
     },
     card: {
-      border: '1px solid #ccc',
+      backgroundColor: '#4B3B6B',
+      color: 'white',
       borderRadius: '12px',
       padding: '1rem',
       marginBottom: '1rem',
-      width: '300px',
+      width: '90%',
+      maxWidth: '360px',
       textAlign: 'left',
-      backgroundColor: '#f9f9f9',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+      cursor: 'pointer', // cursor para indicar clique
     },
     title: {
+      color: '#FFB062',
+      fontWeight: 'bold',
+      fontSize: '1.2rem',
+      marginBottom: '0.2rem',
+    },
+    age: {
+      color: '#FFB062',
+      fontWeight: 'bold',
+      marginBottom: '0.5rem',
+    },
+    descriptionLabel: {
+      fontWeight: 'bold',
+      color: '#FECD63',
+      marginBottom: '0.2rem',
+    },
+    description: {
+      color: 'white',
+    },
+    location: {
       fontSize: '1.2rem',
       fontWeight: 'bold',
-    },
-    button: {
-      marginTop: '1rem',
-      padding: '0.5rem 1rem',
-      backgroundColor: '#2D2432',
-      color: 'white',
-      border: 'none',
-      borderRadius: '8px',
-      cursor: 'pointer',
+      color: '#2D2432',
+      marginBottom: '1rem',
     },
   };
 
-  if (loading) {
-    return <div style={styles.container}>A carregar pet takers...</div>;
-  }
-
-  if (petTakers.length === 0) {
-    return (
-      <div style={styles.container}>
-        <h2>Sem pet takers disponíveis para o serviço "{type}"</h2>
-        <button
-          style={styles.button}
-          onClick={() => navigate(`/PetMenu/${encodeURIComponent(petName)}`)}
-        >
-          Voltar
-        </button>
-      </div>
-    );
-  }
+  const handleClick = (name) => {
+    if (name === 'João Ferreira') {
+      navigate(`/PetTakerProfile`);
+    }
+  };
 
   return (
     <div style={styles.container}>
-      <h1>Pet Takers disponíveis para: {type}</h1>
+      <h1 style={{ color: '#FFB062', marginBottom: '0.5rem' }}>Pet care–Takers</h1>
+      <div style={styles.location}>Glória, Aveiro</div>
       {petTakers.map((pt, index) => (
-        <div key={index} style={styles.card}>
-          <p style={styles.title}>{pt.name} ({pt.age} anos)</p>
-          <p><strong>Tipo:</strong> {pt.type}</p>
-          <p><strong>Review:</strong> {'⭐'.repeat(pt.review || 0)}</p>
-          <p><strong>Descrição:</strong> {pt.description}</p>
-          <button
-            style={styles.button}
-            onClick={() => navigate(`/ConfirmRequest/${petName}/${encodeURIComponent(pt.name)}`)}
-          >
-            Ir
-          </button>
+        <div
+          key={index}
+          style={styles.card}
+          onClick={() => handleClick(pt.name)}
+        >
+          <div style={styles.title}>👤 {pt.name}</div>
+          <div style={styles.age}>{pt.age} years old</div>
+          <div style={styles.descriptionLabel}>Description:</div>
+          <div style={styles.description}>{pt.description}</div>
         </div>
       ))}
     </div>

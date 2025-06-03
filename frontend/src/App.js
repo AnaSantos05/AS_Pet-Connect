@@ -9,6 +9,7 @@ import Register from './pages/Register';
 import PetAssignedPin from './pages/PetAssignedPin';
 import OwnerMap from './pages/OwnerMap';
 import AddPet from './pages/AddPet';
+import OwnerFinal from './pages/OwnerFinal';
 import OwnerReview from './pages/OwnerReview';
 import PetTakerHome from './pages/PetTakerHome';
 import AddService from './pages/AddService';
@@ -16,7 +17,8 @@ import PetAssignedChat from './pages/PetAssignedChat';
 import Phone from './pages/Phone';
 import PetTakersList from './pages/PetTakersList';
 import PetRequestService from './pages/PetRequestService';
-import PetTakerMap from './pages/PetTakerMap'
+import PetTakerMap from './pages/PetTakerMap';
+import PetTakerProfile from './pages/PetTakerProfile';
 import OwnerSettings from './pages/OwnerSettings';
 import VerificationPetTaker from './pages/VerificationPetTaker';
 import PetMenuAssigned from './pages/PetMenuAssigned';
@@ -74,6 +76,8 @@ const App = () => {
           <Route path="/PetRequestService/:petName" element={<PetRequestService />} />
 
 
+          <Route path="/PetTakerProfile" element={<PetTakerProfile />} />
+          <Route path="/OwnerFinal" element={<OwnerFinal />} />
 
         </Routes>
       </BrowserRouter>
