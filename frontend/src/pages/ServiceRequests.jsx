@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ServiceRequests = () => {
+  const navigate = useNavigate();
+  const [responses, setResponses] = useState({});
+
+  const handleResponse = (index, status) => {
+    setResponses(prev => ({ ...prev, [index]: status }));
+  };
+
   const styles = {
     container: {
       fontFamily: "'Lexend Peta', sans-serif",
@@ -10,6 +18,7 @@ const ServiceRequests = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      paddingBottom: '80px', // espaço para o footer
     },
     header: {
       fontSize: '1.5rem',
@@ -85,6 +94,38 @@ const ServiceRequests = () => {
       backgroundColor: '#E53935',
       color: 'white',
     },
+    statusText: {
+      marginTop: '0.5rem',
+      fontWeight: 'bold',
+      fontSize: '1rem',
+      color: '#FFD700',
+      textAlign: 'center',
+    },
+    footer: {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '60px',
+      background: '#2D2432',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      zIndex: 1,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+    footerIcon: {
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
   };
 
   const requests = [
@@ -144,14 +185,59 @@ const ServiceRequests = () => {
 
           <div style={styles.reward}>You will receive {req.value}</div>
 
-          <div style={styles.buttons}>
-            <div style={{ ...styles.iconButton, ...styles.reject }}>✖</div>
-            <div style={{ ...styles.iconButton, ...styles.accept }}>✔</div>
-          </div>
+          {responses[i] ? (
+            <div style={styles.statusText}>
+              {responses[i] === 'accepted' ? '✅ Accepted' : '❌ Rejected'}
+            </div>
+          ) : (
+            <div style={styles.buttons}>
+              <div
+                style={{ ...styles.iconButton, ...styles.reject }}
+                onClick={() => handleResponse(i, 'rejected')}
+              >
+                ✖
+              </div>
+              <div
+                style={{ ...styles.iconButton, ...styles.accept }}
+                onClick={() => handleResponse(i, 'accepted')}
+              >
+                ✔
+              </div>
+            </div>
+          )}
         </div>
       ))}
+
+      {/* Footer */}
+      <div style={styles.footer}>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerHome')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerMap')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
 export default ServiceRequests;
+

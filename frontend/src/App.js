@@ -15,6 +15,8 @@ import PetTakerHome from './pages/PetTakerHome';
 import AddService from './pages/AddService';
 import PetAssignedChat from './pages/PetAssignedChat';
 import Phone from './pages/Phone';
+
+import PetTakerSettings from './pages/PetTakerSettings';
 import PetTakersList from './pages/PetTakersList';
 import PetRequestService from './pages/PetRequestService';
 import PetTakerMap from './pages/PetTakerMap';
@@ -84,6 +86,9 @@ const App = () => {
           <Route path="/ServiceRequests" element={<ServiceRequests />} />
 
           <Route path="/PetHotel" element={<PetHotelDetails />} />
+
+
+          <Route path="/PetTakerSettings" element={<PetTakerSettings />} />
 
         </Routes>
       </BrowserRouter>
