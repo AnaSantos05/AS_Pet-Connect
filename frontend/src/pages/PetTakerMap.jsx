@@ -134,7 +134,7 @@ const PetTakerMap = () => {
     marker: {
       width: '100%',
       height: '100%',
-      backgroundImage: 'url(/images/marker.png)',
+      backgroundImage: 'url(/images/greenmarker.png)', // alo tou aqui consegues ver isto? ya mas o live server matou se, ele n considera as minhas alteracoes pq um de nos ta com a net fraca, suponho q tu pq eduroam ahahah
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',

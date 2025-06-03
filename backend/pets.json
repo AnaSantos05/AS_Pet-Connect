@@ -28,5 +28,15 @@
     "image": "/images/logo.png",
     "status": "Care-Taker not assigned yet",
     "statusColor": "red"
+  },
+  {
+    "name": "gina",
+    "race": "cobra",
+    "age": "4",
+    "gender": "male",
+    "notes": "nao sei",
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
   }
 ]

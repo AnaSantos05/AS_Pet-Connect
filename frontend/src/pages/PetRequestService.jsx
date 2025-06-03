@@ -116,9 +116,9 @@ const PetRequestService = () => {
       <form style={styles.serviceForm} onSubmit={handleSubmit}>
         <select name="tipo" style={styles.select} defaultValue="">
           <option value="" disabled>-- Escolhe o tipo de serviço --</option>
-          <option value="Bath">Banho</option>
-          <option value="Walk">Passeio</option>
-          <option value="Hotel">Hotel</option>
+          <option value="bath">Banho</option>
+          <option value="walk">Passeio</option>
+          <option value="hotel">Hotel</option>
         </select>
         <input name="data" style={styles.input} type="date" />
         <textarea name="notas" style={styles.input} placeholder="Notas adicionais" rows="3" />

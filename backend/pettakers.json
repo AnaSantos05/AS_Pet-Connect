@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Ana",
+    "age": 22,
+    "type": "bath",
+    "review": 4,
+    "description": "Muito cuidadosa com gatos e cães pequenos."
+  },
+  {
+    "name": "Tiago",
+    "age": 29,
+    "type": "walk",
+    "review": 5,
+    "description": "Faz longas caminhadas com os patudos!"
+  },
+  {
+    "name": "Carla",
+    "age": 31,
+    "type": "hotel",
+    "review": 5,
+    "description": "Tem espaço em casa para hospedar animais."
+  }
+]

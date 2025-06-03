@@ -8,15 +8,18 @@ const PetTakersList = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/pet_takers') // CORRIGIDO aqui
+    fetch('http://localhost:5000/api/pet_takers')
       .then((res) => {
         if (!res.ok) throw new Error('Erro ao buscar pet takers');
         return res.json();
       })
       .then((data) => {
-        const filtrados = data.filter(pt =>
-          pt.type.toLowerCase() === decodeURIComponent(type).toLowerCase()
+        const tipoFiltro = decodeURIComponent(type).trim().toLowerCase();
+
+        const filtrados = data.filter((pt) =>
+          pt.type && pt.type.trim().toLowerCase() === tipoFiltro
         );
+
         setPetTakers(filtrados);
         setLoading(false);
       })
@@ -60,16 +63,23 @@ const PetTakersList = () => {
     },
   };
 
-  if (loading) return <div style={styles.container}>A carregar pet takers...</div>;
+  if (loading) {
+    return <div style={styles.container}>A carregar pet takers...</div>;
+  }
 
-  if (petTakers.length === 0) return (
-    <div style={styles.container}>
-      <h2>Sem pet takers disponíveis para o serviço "{type}"</h2>
-      <button style={styles.button} onClick={() => navigate(`/PetMenu/${encodeURIComponent(petName)}`)}>
-        Voltar
-      </button>
-    </div>
-  );
+  if (petTakers.length === 0) {
+    return (
+      <div style={styles.container}>
+        <h2>Sem pet takers disponíveis para o serviço "{type}"</h2>
+        <button
+          style={styles.button}
+          onClick={() => navigate(`/PetMenu/${encodeURIComponent(petName)}`)}
+        >
+          Voltar
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>
@@ -78,7 +88,7 @@ const PetTakersList = () => {
         <div key={index} style={styles.card}>
           <p style={styles.title}>{pt.name} ({pt.age} anos)</p>
           <p><strong>Tipo:</strong> {pt.type}</p>
-          <p><strong>Review:</strong> {'⭐'.repeat(pt.review)}</p>
+          <p><strong>Review:</strong> {'⭐'.repeat(pt.review || 0)}</p>
           <p><strong>Descrição:</strong> {pt.description}</p>
           <button
             style={styles.button}
