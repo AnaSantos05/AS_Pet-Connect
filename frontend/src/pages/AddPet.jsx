@@ -42,6 +42,16 @@ const AddPet = () => {
       alignItems: 'center',
       position: 'relative',
     },
+    profileImage: {
+      width: '150px',
+      height: '150px',
+      borderRadius: '50%',
+      objectFit: 'cover',
+      position: 'absolute',
+      left: '50%',
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
     topSection: {
       background: '#2D2432',
       width: '100%',
@@ -139,21 +149,33 @@ const AddPet = () => {
     footer: {
       position: 'absolute',
       bottom: 0,
+      left: 0,
       width: '100%',
       height: '60px',
       background: '#2D2432',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
+      zIndex: 1,
       borderTopLeftRadius: '20px',
       borderTopRightRadius: '20px',
     },
+
     footerIcon: {
-      width: '32px',
-      height: '32px',
-      objectFit: 'contain',
       cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
     },
+
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+    
   };
 
   return (
@@ -161,8 +183,11 @@ const AddPet = () => {
       <div style={styles.topSection}>
         <div style={styles.backButton} onClick={() => navigate(-1)}>←</div>
         <div style={styles.avatarCircle}>
-          <img src="/images/paw-orange.png" alt="paw" style={styles.pawIcon} />
-          <img src="/images/edit-icon.png" alt="edit" style={styles.editIcon} />
+        <img
+          style={styles.profileImage}
+          src="/images/OwnerPfp.png"
+          alt="Profile"
+        />
         </div>
       </div>
 
@@ -199,9 +224,29 @@ const AddPet = () => {
       <div style={styles.submitButton} onClick={handleSubmit}>✓</div>
 
       <div style={styles.footer}>
-        <img src="/images/paw-orange.png" alt="pets" style={styles.footerIcon} />
-        <img src="/images/profile-icon.png" alt="profile" style={styles.footerIcon} />
-        <img src="/images/settings.svg" alt="settings" style={styles.footerIcon} onClick={() => navigate('/OwnerSettings')} />
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home-on.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerHomeInterface')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
       </div>
     </div>
   );

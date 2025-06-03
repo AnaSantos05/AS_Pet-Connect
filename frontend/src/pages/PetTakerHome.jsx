@@ -190,7 +190,7 @@ return (
     {/* footer com ícones */}
     <div style={styles.footer}>
       <div style={styles.footerIcon}>
-        <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')} />
+        <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/PetTakerHome')} />
       </div>
       <div style={styles.footerIcon}>
         <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} />

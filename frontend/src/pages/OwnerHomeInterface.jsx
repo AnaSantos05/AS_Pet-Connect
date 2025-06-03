@@ -86,16 +86,6 @@ export const OwnerHomeInterface = () => {
       color: '#FECD63',
     },
 
-    ellipsisButton: {
-      position: 'relative',
-      top: '50%',
-      right: '3px',
-      cursor: 'pointer',
-      fontSize: '1.5rem',
-      color: 'red',
-      zIndex: 10,
-    },
-
     petList: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -197,12 +187,6 @@ export const OwnerHomeInterface = () => {
 
       <div style={styles.sectionTitle}>My Pets</div>
 
-      <FontAwesomeIcon
-        icon={faEllipsisVertical}
-        style={styles.ellipsisButton}
-        onClick={() => alert('Ellipsis button clicked!')}
-      />
-
       <div style={styles.addCircle} onClick={() => navigate('/AddPet')}>
         <FontAwesomeIcon icon={faPlus} style={{ color: 'white' }} />
       </div>
@@ -246,6 +230,7 @@ export const OwnerHomeInterface = () => {
             src="/images/map.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
           />
         </div>
         <div style={styles.footerIcon}>

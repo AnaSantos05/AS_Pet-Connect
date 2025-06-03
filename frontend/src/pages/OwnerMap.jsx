@@ -98,23 +98,24 @@ const OwnerMap = () => {
     },
     marker: {
       position: 'absolute',
-      width: '50px',
-      height: '50px',
+      width: '92px',
+      height: '107px',
+      backgroundImage: 'url(/images/marker.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
     },
     cluster: {
-      background: 'rgba(255, 100, 100, 0.4)', // Background color
-      borderRadius: '50%', // Makes it a circle
-      textAlign: 'center', // Centers text horizontally
+      background: 'rgba(255, 100, 100, 0.4) url(/images/pawicon.svg) no-repeat center/60px 60px',
+      borderRadius: '50%',
+      textAlign: 'center',
       fontWeight: 'bold',
-      fontSize: '1.2rem', // Slightly larger font size for better visibility
-      color: '#2D2432', // Text color
-      lineHeight: '70px', // Matches the new height for vertical centering
-      border: '5px solid #B74C4C', // Border around the circle
-      width: '150px', // New width for a bigger circle
-      height: '150px', // New height for a bigger circle
-      backgroundImage: 'url(/images/pawicon.svg)', // Path to your image
-      backgroundSize: 'cover', // Ensures the image covers the circle
-      backgroundPosition: 'center', // Centers the image
+      fontSize: '1.2rem',
+      color: '#2D2432',
+      lineHeight: '120px',
+      border: '5px solid #B74C4C',
+      width: '120px',
+      height: '120px',
     },
     notification: {
       position: 'absolute', // Position relative to the parent (cluster)
@@ -217,7 +218,7 @@ const OwnerMap = () => {
           ) : (
             <img
               key={marker.id}
-              src="/images/marker1.png"
+              src="/images/marker.png"
               alt="Marker"
               style={{ ...styles.marker, top: marker.top, left: marker.left }}
             />
