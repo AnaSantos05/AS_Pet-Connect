@@ -175,7 +175,15 @@ return (
     <div style={styles.location}>Glória, Aveiro</div>
 
     {services.map((service, index) => (
-      <div key={index} style={styles.serviceCard(service.bgColor)}>
+      <div
+        key={index}
+        style={styles.serviceCard(service.bgColor)}
+        onClick={() => {
+          if (service.title === 'Pet-Training') {
+            navigate('/ServiceRequests');
+          }
+        }}
+      >
         <div style={styles.serviceTitle}>{service.title}</div>
         <div style={styles.serviceDetail}>Schedule-type: {service.schedule}</div>
         <div style={styles.serviceDetail}>Price: {service.price}</div>
@@ -183,7 +191,8 @@ return (
       </div>
     ))}
 
-    <div style={styles.addCircle} onClick={() => alert('Add new service')}>
+
+    <div style={styles.addCircle} onClick={() => navigate('/AddService')}>
       <FontAwesomeIcon icon={faPlus} style={{ color: 'white' }} />
     </div>
 

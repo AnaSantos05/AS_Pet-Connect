@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const FinalMenu = () => {
+const OwnerFinal = () => {
   const navigate = useNavigate();
 
   const styles = {
@@ -120,4 +120,4 @@ const FinalMenu = () => {
   );
 };
 
-export default FinalMenu;
+export default OwnerFinal;

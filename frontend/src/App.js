@@ -18,6 +18,7 @@ import Phone from './pages/Phone';
 import PetTakersList from './pages/PetTakersList';
 import PetRequestService from './pages/PetRequestService';
 import PetTakerMap from './pages/PetTakerMap';
+import ServiceRequests from './pages/ServiceRequests';
 import PetTakerProfile from './pages/PetTakerProfile';
 import OwnerSettings from './pages/OwnerSettings';
 import VerificationPetTaker from './pages/VerificationPetTaker';
@@ -78,6 +79,8 @@ const App = () => {
 
           <Route path="/PetTakerProfile" element={<PetTakerProfile />} />
           <Route path="/OwnerFinal" element={<OwnerFinal />} />
+
+          <Route path="/ServiceRequests" element={<ServiceRequests />} />
 
         </Routes>
       </BrowserRouter>

@@ -12,7 +12,7 @@ const AddService = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/add_service', {
+      const response = await fetch('http://localhost:5000/api/services', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,7 +22,8 @@ const AddService = () => {
 
       if (response.ok) {
         alert('Serviço adicionado com sucesso!');
-        setForm({ type: '', animals: '', age: '', description: '' }); // limpa o form
+        setForm({ type: '', animals: '', age: '', description: '' });
+        navigate('/PetTakerHome'); // redireciona após sucesso
       } else {
         const data = await response.json();
         alert('Erro ao adicionar o serviço: ' + (data.error || 'Erro desconhecido'));
@@ -32,7 +33,6 @@ const AddService = () => {
       console.error(error);
     }
   };
-
   const styles = {
     page: {
       fontFamily: "'Londrina Solid', sans-serif",
@@ -206,7 +206,7 @@ const AddService = () => {
         </div>
 
         <div style={styles.inputGroup}>
-          <label style={styles.label}>Age Range</label>
+          <label style={styles.label}>Price</label>
           <input type="text" name="age" value={form.age} onChange={handleChange} style={styles.input} />
         </div>
 
