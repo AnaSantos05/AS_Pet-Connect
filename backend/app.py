@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import json
 import os
+from urllib.parse import unquote
 
 app = Flask(__name__)
 CORS(app)  # Permite chamadas do frontend React
@@ -47,6 +48,18 @@ def get_pets():
 def index():
     return "API para gerir pets - Hotel Bicho Solto"
 
+
+@app.route('/api/pets/<name>', methods=['GET'])
+def get_pet_by_name(name):
+    pets = load_pets()
+    decoded_name = unquote(name).strip().lower()
+    
+    for pet in pets:
+        if pet['name'].strip().lower() == decoded_name:
+            return jsonify(pet)
+    
+    return jsonify({'error': 'Pet não encontrado'}), 404
+
 #---------------------------------------------------------------------------------------------------
 SERVICES_FILE = 'services.json'
 
@@ -83,6 +96,21 @@ def add_service():
     save_services(services)
 
     return jsonify({'message': 'Serviço adicionado com sucesso!'}), 201
+
+#--------------------------------------------------------------------------------------------------------
+PET_TAKERS_FILE = 'PetTakers.json'
+
+def load_pet_takers():
+    if os.path.exists(PET_TAKERS_FILE):
+        with open(PET_TAKERS_FILE, 'r') as f:
+            return json.load(f)
+    return []
+
+@app.route('/api/PetTakers', methods=['GET'])
+def get_pet_takers():
+    pet_takers = load_pet_takers()
+    return jsonify(pet_takers)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -8,5 +8,25 @@
     "image": "/images/logo.png",
     "status": "Care-Taker not assigned yet",
     "statusColor": "red"
+  },
+  {
+    "name": "Gino",
+    "race": "C\u00e3o",
+    "age": "4",
+    "gender": "Female",
+    "notes": "docil e bonito",
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
+  },
+  {
+    "name": "tuga",
+    "race": "tartaruga",
+    "age": "4",
+    "gender": "male",
+    "notes": "ele \u00e9 bonito",
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
   }
 ]

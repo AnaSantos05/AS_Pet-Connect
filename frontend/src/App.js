@@ -14,6 +14,9 @@ import PetTakerHome from './pages/PetTakerHome';
 import AddService from './pages/AddService';
 import PetAssignedChat from './pages/PetAssignedChat';
 import Phone from './pages/Phone';
+import PetTakersList from './pages/PetTakersList';
+import PetRequestService from './pages/PetRequestService';
+import PetTakerMap from './pages/PetTakerMap'
 import OwnerSettings from './pages/OwnerSettings';
 import VerificationPetTaker from './pages/VerificationPetTaker';
 import PetMenuAssigned from './pages/PetMenuAssigned';
@@ -35,11 +38,8 @@ const App = () => {
           {/* Define a rota para a página de registro */}
           <Route path="/MenuPet" element={<MenuPet />} />
 
-          {/* Define a rota para a página dos animais */}
           <Route path="/OwnerHomeInterface" element={<OwnerHomeInterface />} />
-
-          {/* Define a rota para a página do menu */}
-          <Route path="/PetMenu" element={<PetMenu />} />
+          <Route path="/PetMenu/:petName" element={<PetMenu />} />
 
           {/* Define a rota para a página do menu */}
           <Route path="/RegisterServiceMenu" element={<RegisterServiceMenu />} />
@@ -66,6 +66,14 @@ const App = () => {
           <Route path='/PetTakerHome' element={<PetTakerHome />} />
 
           <Route path='/AddService' element={<AddService />} />
+
+          <Route path='/PetTakerMap' element={<PetTakerMap />} />
+
+          <Route path="/PetTakersList/:petName/:type" element={<PetTakersList />} />
+
+          <Route path="/PetRequestService/:petName" element={<PetRequestService />} />
+
+
 
         </Routes>
       </BrowserRouter>
