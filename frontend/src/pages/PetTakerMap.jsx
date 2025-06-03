@@ -29,11 +29,41 @@ const PetTakerMap = () => {
   ];
 
   const markers = [
-    { id: 1, top: '30%', left: '15%', tags: ['Hotels', 'Low $'] },
-    { id: 2, top: '60%', left: '20%', tags: ['Pet-walking'] },
-    { id: 3, top: '70%', left: '60%', tags: ['High $'] },
-    { id: 4, top: '48%', left: '43%', tags: ['Hotels', 'High $'], isCluster: true, count: '3+' },
-    { id: 5, top: '75%', left: '10%', tags: ['Pet-spa'], isCluster: true, count: '2' },
+    { 
+      id: 1, 
+      top: '30%', 
+      left: '15%', 
+      tags: ['Hotels', 'Low $'],
+      topImage: '/images/hotel-icon.png' // Add your icon path here
+    },
+    { 
+      id: 2, 
+      top: '60%', 
+      left: '20%', 
+      tags: ['Pet-walking'],
+      topImage: '/images/walking-icon.png' // Add your icon path here
+    },
+    { 
+      id: 3, 
+      top: '70%', 
+      left: '60%', 
+      tags: ['High $'],
+      topImage: '/images/premium-icon.png' // Add your icon path here
+    },
+    { 
+      id: 4, 
+      top: '48%', 
+      left: '43%', 
+      tags: ['Hotels', 'High $'],
+      topImage: '/images/luxury-hotel-icon.png' // Add your icon path here
+    },
+    { 
+      id: 5, 
+      top: '75%', 
+      left: '10%', 
+      tags: ['Pet-spa'],
+      topImage: '/images/spa-icon.png' // Add your icon path here
+    },
   ];
 
   const styles = {
@@ -96,43 +126,32 @@ const PetTakerMap = () => {
       fontFamily: "'Londrina Solid', sans-serif",
       cursor: 'pointer',
     },
-    marker: {
+    markerContainer: {
       position: 'absolute',
       width: '92px',
       height: '107px',
+    },
+    marker: {
+      width: '100%',
+      height: '100%',
       backgroundImage: 'url(/images/marker.png)',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
+      position: 'relative',
     },
-    cluster: {
-      background: 'rgba(255, 100, 100, 0.4) url(/images/pawicon.svg) no-repeat center/60px 60px',
+    topImage: {
+      position: 'absolute',
+      top: '15px', // Adjust to position the icon on top of the marker
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '40px', // Adjust size as needed
+      height: '40px', // Adjust size as needed
       borderRadius: '50%',
-      textAlign: 'center',
-      fontWeight: 'bold',
-      fontSize: '1.2rem',
-      color: '#2D2432',
-      lineHeight: '120px',
-      border: '5px solid #B74C4C',
-      width: '120px',
-      height: '120px',
-    },
-    notification: {
-      position: 'absolute', // Position relative to the parent (cluster)
-      top: '0px', // Adjust to position the notification circle
-      left: '0px', // Move it to the left side
-      width: '40px', // Width of the notification circle
-      height: '40px', // Height of the notification circle
-      background: 'white', // Background color for the notification
-      borderRadius: '50%', // Makes it a circle
-      color: 'black', // Text color
-      fontSize: '1rem', // Font size for the text
-      fontWeight: 'bold', // Bold text
-      display: 'flex', // Flexbox for centering text
-      alignItems: 'center', // Centers text vertically
-      justifyContent: 'center', // Centers text horizontally
-      border: '6px solid #B74C4C', // Optional border for the notification
-      boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)', // Optional shadow for better visibility
+      border: '2px solid white',
+      backgroundColor: 'white',
+      padding: '5px',
+      boxShadow: '0 2px 5px rgba(0,0,0,0.3)',
     },
     footer: {
       position: 'absolute',
@@ -163,7 +182,7 @@ const PetTakerMap = () => {
 
   return (
     <div style={styles.page}>
-      {/* Barra de pesquisa e filtro */}
+      {/* Search bar and filter */}
       <div style={styles.searchContainer}>
         <div style={styles.searchBar}>
           <input
@@ -196,34 +215,32 @@ const PetTakerMap = () => {
         </div>
       </div>
 
-      {/* Marcadores visíveis conforme os filtros */}
+      {/* Markers with top images */}
       {markers
         .filter(marker =>
           activeFilters.length === 0 ||
           marker.tags.some(tag => activeFilters.includes(tag))
         )
-        .map(marker =>
-          marker.isCluster ? (
-            <div
-              key={marker.id}
-              style={{
-                ...styles.marker,
-                ...styles.cluster,
-                top: marker.top,
-                left: marker.left,
-              }}
-            >
-              <div style={styles.notification}>{marker.count}</div>
-            </div>
-          ) : (
+        .map(marker => (
+          <div
+            key={marker.id}
+            style={{
+              ...styles.markerContainer,
+              top: marker.top,
+              left: marker.left,
+            }}
+          >
+            {/* Marker base */}
+            <div style={styles.marker} />
+            
+            {/* Top image/icon */}
             <img
-              key={marker.id}
-              src="/images/marker.png"
-              alt="Marker"
-              style={{ ...styles.marker, top: marker.top, left: marker.left }}
+              src={marker.topImage}
+              alt="Service Icon"
+              style={styles.topImage}
             />
-          )
-        )}
+          </div>
+        ))}
 
       {/* Footer */}
       <div style={styles.footer}>
@@ -232,7 +249,7 @@ const PetTakerMap = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/OwnerHomeInterface')}
+            onClick={() => navigate('/PetTakerHome')}
           />
         </div>
         <div style={styles.footerIcon}>

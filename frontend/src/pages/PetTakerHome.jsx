@@ -193,7 +193,7 @@ return (
         <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/PetTakerHome')} />
       </div>
       <div style={styles.footerIcon}>
-        <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} />
+        <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} onClick={() => navigate('/PetTakerMap')}/>
       </div>
       <div style={styles.footerIcon}>
         <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')} />
