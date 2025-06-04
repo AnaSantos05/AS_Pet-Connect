@@ -287,7 +287,7 @@ export const PetHotelDetailsWithForm = () => {
         {/* Submit button */}
         <div
           style={styles.submitButton}
-          onClick={() => alert('Request sent!')}
+          onClick={() => {navigate('/PetHotelPaymentChoice');}}
           title="Submit"
         >
           ✔
