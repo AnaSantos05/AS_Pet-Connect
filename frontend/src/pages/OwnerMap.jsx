@@ -104,6 +104,7 @@ const OwnerMap = () => {
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
+      cursor: 'pointer',
     },
     cluster: {
       background: 'rgba(255, 100, 100, 0.4) url(/images/pawicon.svg) no-repeat center/60px 60px',
@@ -221,6 +222,7 @@ const OwnerMap = () => {
               src="/images/marker.png"
               alt="Marker"
               style={{ ...styles.marker, top: marker.top, left: marker.left }}
+              onClick={() => navigate('/PetHotel')}
             />
           )
         )}

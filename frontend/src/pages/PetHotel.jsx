@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faArrowLeft, faArrowRight, faEllipsisVertical, faPaw, faMapMarkerAlt, faGear } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faArrowLeft, faArrowRight, faEllipsisVertical} from '@fortawesome/free-solid-svg-icons';
 
 const images = [
   '/images/hotel1.png',
@@ -248,7 +248,7 @@ export const PetHotelDetails = () => {
         </div>
         <button
           style={styles.continueButton}
-          onClick={() => navigate('/continue')}
+          onClick={() => navigate('/PetHotelService')}
           onMouseOver={e => e.currentTarget.style.backgroundColor = '#684e9a'}
           onMouseOut={e => e.currentTarget.style.backgroundColor = '#4a3f6b'}
         >

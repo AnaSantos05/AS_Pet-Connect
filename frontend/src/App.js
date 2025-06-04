@@ -33,6 +33,8 @@ import PetHotelDetails from './pages/PetHotel';
 import PetSitterAddServiceInterface from './pages/PetSitterAddServiceInterface'
 import PetSitterTakerHomeInterface from './pages/PetSitterTakerHomeInterface'
 
+import PetHotelDetailsWithForm from './pages/PetHotelService';
+
 const App = () => {
   return (
     <FunctionProvider>
@@ -95,6 +97,8 @@ const App = () => {
           <Route path='/PetSitterTakerHomeInterface' element={<PetSitterTakerHomeInterface />} />
 
           <Route path='/add-service' element={<PetSitterAddServiceInterface />} />
+
+          <Route path="/PetHotelService" element={<PetHotelDetailsWithForm />} />
 
         </Routes>
       </BrowserRouter>
