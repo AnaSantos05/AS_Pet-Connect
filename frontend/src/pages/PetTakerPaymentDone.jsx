@@ -183,7 +183,7 @@ const PaymentSuccessfulPetTaker = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/PetTakerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
