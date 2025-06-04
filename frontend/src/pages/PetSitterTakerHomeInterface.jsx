@@ -67,7 +67,8 @@ const PetSitterTakerHomeInterface = () => {
             <div
               key={index}
               className="bg-[#2D243220] border border-[#2D2432] rounded-xl p-4
-              w-[90%] max-w-[320px] mx-auto"
+              w-[90%] max-w-[320px] mx-auto cursor-pointer"
+              onClick={() => navigate('/ServiceRequests')}
             >
               <h2 className="text-[#2D2432] text-xl mb-1">{service.type}</h2>
               <p className="text-[#78588A] text-sm">Animals: {service.animals}</p>
@@ -87,9 +88,9 @@ const PetSitterTakerHomeInterface = () => {
 
       {/* Footer */}
       <div className="absolute bottom-0 w-full h-[78px] bg-[#2D2432] flex justify-around items-center">
-        <img src="/images/home-on.svg" alt="Paw" className="w-[30px]" />
-        <img src="/images/map.svg" alt="Map" className="w-[30px]" />
-        <img src="/images/settings.svg" alt="Settings" className="w-[30px]" />
+        <img src="/images/home-on.svg" alt="Paw" className="w-[30px]" onClick={() => navigate('/PetSitterTakerHome')} />
+        <img src="/images/map.svg" alt="Map" className="w-[30px]" onClick={() => navigate('/PetTakerMap')} />
+        <img src="/images/settings.svg" alt="Settings" className="w-[30px]" onClick={() => navigate('/OwnerSettings')} />
       </div>
     </div>
   );
