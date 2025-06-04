@@ -143,7 +143,9 @@ const PetMenu = () => {
       <button style={styles.button} onClick={() => navigate(`/PetRequestService/${pet.name}`)}>
         Request Service
       </button>
-
+      <button style={styles.button} onClick={() => navigate(`/PetMenuAssigned`)}>
+        Serviço
+      </button>
       <button style={styles.button} onClick={() => navigate(`/PetHistory/${pet.name}`)}>
         History
       </button>
@@ -173,4 +175,4 @@ const PetMenu = () => {
 };
 
 export default PetMenu;
-  
+

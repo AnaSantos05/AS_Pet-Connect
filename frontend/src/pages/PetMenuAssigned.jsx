@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-export const PetMenuAssigned = () => {
-  const baseFont = 'Lexend Peta, sans-serif';
+const PetMenuAssigned = () => {
+  const navigate = useNavigate();
+
+  const baseFont = "'Londrina Solid', cursive, sans-serif";
 
   const styles = {
     container: {
@@ -14,63 +19,66 @@ export const PetMenuAssigned = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      paddingBottom: '60px', // espaço para footer
+      paddingBottom: '80px', // espaço para footer
     },
-    topEllipse: {
+    headerCurve: {
       position: 'absolute',
-      top: '-100vw',
-      left: '-40vw',
-      width: '180vw',
-      height: '180vw',
+      top: '-110vw',
+      left: '-45vw',
+      width: '190vw',
+      height: '190vw',
       background: '#2D2432',
       borderRadius: '50%',
       zIndex: 0,
     },
     backArrow: {
-      position: 'absolute',
+      position: 'fixed',
       top: '1.5rem',
       left: '1rem',
-      fontSize: '2rem',
+      fontSize: '2.4rem',
       color: 'white',
       cursor: 'pointer',
-      zIndex: 2,
+      zIndex: 10,
     },
     petImage: {
-      width: '70vw',
-      maxWidth: '261px',
+      width: '45vw', // Ainda menor
+      maxWidth: '180px', // Ainda menor
       height: 'auto',
       marginTop: '6rem',
-      borderRadius: '30px',
-      border: '3px solid black',
-      zIndex: 1,
+      borderRadius: '20px', // Bordas proporcionalmente menores
+      border: '3px solid white', // Borda mais fina
+      zIndex: 2,
       objectFit: 'cover',
-      background: '#ccc',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.3)', // Sombra proporcionalmente menor
+      userSelect: 'none',
     },
     textGroup: {
       textAlign: 'center',
       marginTop: '1rem',
-      zIndex: 1,
+      zIndex: 2,
     },
     name: {
-      fontSize: '2rem',
+      fontSize: '2.4rem',
       color: '#2D2432',
-      fontWeight: 'bold',
+      fontWeight: '900',
       marginBottom: '0.25rem',
+      userSelect: 'none',
     },
     genderGroup: {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'baseline',
-      gap: '0.25rem',
-      fontSize: '1rem',
-      color: '#9E8DAD',
+      gap: '0.3rem',
+      fontSize: '1.2rem',
+      color: 'rgba(255, 0, 0, 0.7)',
+      userSelect: 'none',
     },
     typeText: {
-      color: '#380D51',
+      color: 'rgba(72, 255, 0, 0.9)',
       fontWeight: 'bold',
     },
     genderText: {
-      color: '#FFB062',
+      color: 'rgba(255, 176, 98, 0.9)',
       fontWeight: 'bold',
     },
     age: {
@@ -81,18 +89,20 @@ export const PetMenuAssigned = () => {
       display: 'flex',
       alignItems: 'center',
       gap: '0.5rem',
-      marginTop: '1rem',
-      zIndex: 1,
+      marginTop: '1.5rem',
+      zIndex: 2,
+      userSelect: 'none',
     },
     hotelLogo: {
-      width: '30px',
-      height: '30px',
+      width: '36px',
+      height: '36px',
       objectFit: 'contain',
+      userSelect: 'none',
     },
     hotelName: {
-      fontSize: '1.25rem',
+      fontSize: '1.5rem',
       color: '#2D2432',
-      fontWeight: 'bold',
+      fontWeight: '900',
     },
     optionsList: {
       marginTop: '2rem',
@@ -101,34 +111,28 @@ export const PetMenuAssigned = () => {
       display: 'flex',
       flexDirection: 'column',
       gap: '1rem',
-      zIndex: 1,
+      zIndex: 2,
     },
     optionButton: {
       width: '100%',
-      padding: '0.75rem 1rem',
+      padding: '0.9rem 1rem',
       background: '#2D2432',
       color: 'white',
-      border: '1px solid #000',
       borderRadius: '30px',
       fontFamily: baseFont,
-      fontSize: '1rem',
+      fontWeight: '700',
+      fontSize: '1.2rem',
       textAlign: 'center',
       cursor: 'pointer',
-      position: 'relative',
+      boxShadow: '0 6px 14px rgba(0,0,0,0.3)',
+      userSelect: 'none',
+      transition: 'background-color 0.3s ease',
     },
-    optionShadow: {
-      content: "''",
-      position: 'absolute',
-      bottom: '-4px',
-      left: '4px',
-      width: '100%',
-      height: '100%',
-      background: 'rgba(0,0,0,0.2)',
-      borderRadius: '30px',
-      zIndex: -1,
+    optionButtonHover: {
+      background: '#443769',
     },
     footer: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: 0,
       left: 0,
       width: '100%',
@@ -137,19 +141,23 @@ export const PetMenuAssigned = () => {
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
-      zIndex: 1,
+      zIndex: 20,
       borderTopLeftRadius: '20px',
       borderTopRightRadius: '20px',
+      userSelect: 'none',
     },
     footerIcon: {
-      width: '36px',
-      height: '36px',
-      background: 'white',
-      borderRadius: '50%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
       cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
@@ -157,13 +165,19 @@ export const PetMenuAssigned = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.topEllipse} />
-      <div style={styles.backArrow}>←</div>
+      <div style={styles.headerCurve} />
+      <FontAwesomeIcon
+        icon={faArrowLeft}
+        style={styles.backArrow}
+        onClick={() => navigate(-1)}
+        aria-label="Back"
+      />
 
       <img
-        src="https://placehold.co/261x207"
+        src="./images/Roxy.jpg"
         alt="Pet"
         style={styles.petImage}
+        draggable={false}
       />
 
       <div style={styles.textGroup}>
@@ -177,26 +191,68 @@ export const PetMenuAssigned = () => {
 
       <div style={styles.hotelSection}>
         <img
-          src="https://placehold.co/30"
+          src="./images/bichosolto-logo.png"
           alt="Hotel Logo"
           style={styles.hotelLogo}
+          draggable={false}
         />
         <div style={styles.hotelName}>Hotel Bicho Solto</div>
       </div>
 
       <div style={styles.optionsList}>
         {options.map(opt => (
-          <div key={opt} style={styles.optionButton}>
+          <button
+            key={opt}
+            style={styles.optionButton}
+            onClick={() => alert(`${opt} clicked`)}
+            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+          >
             {opt}
-            <div style={styles.optionShadow} />
-          </div>
+          </button>
         ))}
       </div>
 
+      {/* Footer com imagens */}
       <div style={styles.footer}>
-        <div style={styles.footerIcon}>🐾</div>
-        <div style={styles.footerIcon}>📍</div>
-        <div style={styles.footerIcon}>⚙️</div>
+        <div
+          style={styles.footerIcon}
+          onClick={() => navigate('/PetTakerHome')}
+          aria-label="Home"
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/PetTakerHome') }}
+        >
+          <img
+            src="/images/home.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            draggable={false}
+          />
+        </div>
+        <div style={styles.footerIcon} aria-hidden="true">
+          <img
+            src="/images/map-on.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            draggable={false}
+          />
+        </div>
+        <div
+          style={styles.footerIcon}
+          onClick={() => navigate('/OwnerSettings')}
+          aria-label="Settings"
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/OwnerSettings') }}
+        >
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            draggable={false}
+          />
+        </div>
       </div>
     </div>
   );
