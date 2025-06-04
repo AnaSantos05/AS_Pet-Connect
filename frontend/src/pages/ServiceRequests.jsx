@@ -231,7 +231,7 @@ const ServiceRequests = () => {
             src="/images/settings.svg"
             alt="Settings"
             style={styles.footerIconImage}
-            onClick={() => navigate('/OwnerSettings')}
+            onClick={() => navigate('/PetTakerSettings')}
           />
         </div>
       </div>
