@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@fontsource/londrina-solid';
-
 const AddPet = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', race: '', age: '', gender: '', notes: '' });
@@ -10,26 +9,34 @@ const AddPet = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+const handleSubmit = async () => {
+  const ownerId = localStorage.getItem('userId');
+  if (!ownerId) {
+    alert('Utilizador não autenticado!');
+    return;
+  }
 
-  const handleSubmit = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/add_pet', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+  const petData = { ...form, owner_id: parseInt(ownerId) };
 
-      if (response.ok) {
-        alert('Pet adicionado com sucesso!');
-        navigate('/'); // Redireciona para onde quiseres depois de adicionar
-      } else {
-        alert('Erro ao adicionar pet!');
-      }
-    } catch (error) {
-      console.error('Erro:', error);
-      alert('Erro ao conectar com o servidor!');
+  try {
+    const response = await fetch('http://localhost:5000/add_pet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(petData),
+    });
+
+    if (response.ok) {
+      alert('Pet adicionado com sucesso!');
+      navigate('/OwnerHomeInterface');
+    } else {
+      const error = await response.json();
+      alert(`Erro: ${error.error || 'ao adicionar pet'}`);
     }
-  };
+  } catch (error) {
+    console.error('Erro:', error);
+    alert('Erro ao conectar com o servidor!');
+  }
+};
 
   const styles = {
     page: {

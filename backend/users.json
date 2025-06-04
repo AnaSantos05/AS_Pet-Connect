@@ -1,0 +1,18 @@
+{
+    "users": [
+        {
+            "name": "owner1",
+            "email": "owner1@gmail.com",
+            "password": "123",
+            "type": "owner",
+            "id": 1
+        },
+        {
+            "name": "taker1",
+            "email": "taker1@gmail.com",
+            "password": "123",
+            "type": "sitter",
+            "id": 2
+        }
+    ]
+}

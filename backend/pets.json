@@ -38,5 +38,16 @@
     "image": "/images/logo.png",
     "status": "Care-Taker not assigned yet",
     "statusColor": "red"
+  },
+  {
+    "name": "patinhas",
+    "race": "gato",
+    "age": "1",
+    "gender": "femea",
+    "notes": "fofo",
+    "owner_id": 1,
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
   }
 ]

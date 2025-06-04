@@ -16,5 +16,11 @@
     "animals": "teste2",
     "age": "4",
     "description": "teste4"
+  },
+  {
+    "type": "banho",
+    "animals": "gato, cao, piriquito",
+    "description": "banho",
+    "provider_id": 2
   }
 ]

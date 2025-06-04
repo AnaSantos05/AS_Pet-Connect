@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '@fontsource/londrina-solid';
 
+
+
 const AddService = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ type: '', animals: '', age: '', description: '' });
@@ -12,7 +14,7 @@ const AddService = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/services', {
+      const response = await fetch('http://localhost:5000/add_service', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,8 +24,7 @@ const AddService = () => {
 
       if (response.ok) {
         alert('Serviço adicionado com sucesso!');
-        setForm({ type: '', animals: '', age: '', description: '' });
-        navigate('/PetTakerHome'); // redireciona após sucesso
+        setForm({ type: '', animals: '', age: '', description: '' }); // limpa o form
       } else {
         const data = await response.json();
         alert('Erro ao adicionar o serviço: ' + (data.error || 'Erro desconhecido'));

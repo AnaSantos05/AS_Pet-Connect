@@ -3,22 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 
+
 export const OwnerHomeInterface = () => {
   const navigate = useNavigate();
   const [pets, setPets] = useState([]);
+useEffect(() => {
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    alert('Utilizador não autenticado. Redirecionando para login...');
+    navigate('/login');
+    return;
+  }
 
-  useEffect(() => {
-    fetch('http://localhost:5000/api/pets')
-      .then((res) => {
-        if (!res.ok) throw new Error('Erro na resposta da API');
-        return res.json();
-      })
-      .then((data) => setPets(data))
-      .catch((err) => {
-        console.error('Erro ao carregar pets:', err);
-        setPets([]);
-      });
-  }, []);
+  fetch(`http://localhost:5000/api/pets?owner_id=${userId}`)
+    .then((res) => {
+      if (!res.ok) throw new Error('Erro na resposta da API');
+      return res.json();
+    })
+    .then((data) => setPets(data))
+    .catch((err) => {
+      console.error('Erro ao carregar pets:', err);
+      setPets([]);
+    });
+}, [navigate]);
 
   const styles = {
     container: {

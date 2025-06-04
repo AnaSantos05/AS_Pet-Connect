@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { FunctionContext } from '../contexts/FunctionContext';
 
 export const Register = () => {
+  const { selectedFunction } = useContext(FunctionContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -14,19 +17,44 @@ export const Register = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
-  
-  const handleRegister = (e) => {
-    e.preventDefault();
-    // Validação básica de senha
-    if (formData.password !== formData.repeatPassword) {
-      alert("As senhas não coincidem!");
-      return;
+  const handleRegister = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.repeatPassword) {
+    alert("As senhas não coincidem!");
+    return;
+  }
+
+  const type = selectedFunction === 'X' ? 'owner' : 'sitter';
+
+  try {
+    const response = await fetch('http://localhost:5000/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        type: type
+      })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      alert("Registro realizado com sucesso!");
+      navigate('/login');
+    } else {
+      alert(result.error || "Erro no registo.");
     }
-    
-    // Simulação de registro bem-sucedido
-    alert("Registro realizado com sucesso!");
-    navigate('/login'); // Redireciona para a página de login
-  };
+
+  } catch (error) {
+    console.error("Erro ao registar:", error);
+    alert("Erro ao comunicar com o servidor.");
+  }
+};
   
   const styles = {
     container: {

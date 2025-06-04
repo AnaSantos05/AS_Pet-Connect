@@ -30,6 +30,9 @@ import UserProfilePetOwnerOnSettings from './pages/userprofilepetowner';
 import { FunctionProvider } from './contexts/FunctionContext';
 import PetHotelDetails from './pages/PetHotel';
 
+import PetSitterAddServiceInterface from './pages/PetSitterAddServiceInterface'
+import PetSitterTakerHomeInterface from './pages/PetSitterTakerHomeInterface'
+
 const App = () => {
   return (
     <FunctionProvider>
@@ -87,8 +90,11 @@ const App = () => {
 
           <Route path="/PetHotel" element={<PetHotelDetails />} />
 
-
           <Route path="/PetTakerSettings" element={<PetTakerSettings />} />
+
+          <Route path='/PetSitterTakerHomeInterface' element={<PetSitterTakerHomeInterface />} />
+
+          <Route path='/add-service' element={<PetSitterAddServiceInterface />} />
 
         </Routes>
       </BrowserRouter>
