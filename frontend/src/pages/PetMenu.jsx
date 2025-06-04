@@ -101,21 +101,30 @@ const PetMenu = () => {
     footer: {
       position: 'fixed',
       bottom: 0,
+      left: 0,
       width: '100%',
       height: '60px',
-      backgroundColor: '#2D2432',
+      background: '#2D2432',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
+      zIndex: 10,
       borderTopLeftRadius: '20px',
       borderTopRightRadius: '20px',
+      userSelect: 'none',
     },
-
     footerIcon: {
-      width: '40px',
-      height: '40px',
-      objectFit: 'contain',
       cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
@@ -150,25 +159,32 @@ const PetMenu = () => {
         History
       </button>
 
+      {/* Footer */}
       <div style={styles.footer}>
-        <img
-          src="/images/paw-on.svg"
-          alt="Home"
-          style={styles.footerIcon}
-          onClick={() => navigate('/OwnerHomeInterface')}
-        />
-        <img
-          src="/images/user.svg"
-          alt="User"
-          style={styles.footerIcon}
-          onClick={() => navigate('/OwnerMap')}
-        />
-        <img
-          src="/images/settings.svg"
-          alt="Settings"
-          style={styles.footerIcon}
-          onClick={() => navigate('/OwnerSettings')}
-        />
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerHome')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map-on.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            draggable={false}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
       </div>
     </div>
   );
