@@ -36,6 +36,7 @@ import PetSitterTakerHomeInterface from './pages/PetSitterTakerHomeInterface'
 import PetHotelDetailsWithForm from './pages/PetHotelService';
 
 import PaymentProcedure from './pages/PetHotelPaymentChoice';
+import PaymentSuccessful from './pages/PetHotelPaymentDone';
 
 const App = () => {
   return (
@@ -103,6 +104,7 @@ const App = () => {
           <Route path="/PetHotelService" element={<PetHotelDetailsWithForm />} />
 
           <Route path="/PetHotelPaymentChoice" element={<PaymentProcedure />} />
+          <Route path="/PaymentSuccessful" element={<PaymentSuccessful />} />
 
         </Routes>
       </BrowserRouter>

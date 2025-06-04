@@ -316,7 +316,7 @@ export const PaymentProcedure = () => {
             <div
               key={method.name}
               style={styles.paymentMethod}
-              onClick={() => alert(`Selected ${method.name} payment`)}
+              onClick={() => navigate('/PaymentSuccessful')}
               title={`Pay with ${method.name}`}
             >
               <img
