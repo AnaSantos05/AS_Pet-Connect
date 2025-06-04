@@ -212,7 +212,9 @@ const OwnerMap = () => {
                 ...styles.cluster,
                 top: marker.top,
                 left: marker.left,
+                cursor: 'pointer', // Add cursor pointer to indicate it's clickable
               }}
+              onClick={() => navigate('/PetTakersList/:petName/:type')} // Add navigation on click
             >
               <div style={styles.notification}>{marker.count}</div>
             </div>
