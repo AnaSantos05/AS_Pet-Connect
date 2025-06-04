@@ -8,11 +8,13 @@ CORS(app)  # Permite chamadas do frontend React
 
 FILE_PATH = 'pets.json'
 
+
 def load_pets():
     if os.path.exists(FILE_PATH):
         with open(FILE_PATH, 'r') as f:
             return json.load(f)
     return []
+
 
 def save_pets(pets):
     with open(FILE_PATH, 'w') as f:
@@ -27,7 +29,6 @@ def get_pet_by_name(name):
         if pet['name'].strip().lower() == decoded_name:
             return jsonify(pet)
     return jsonify({'error': 'Pet não encontrado'}), 404
-
 
 
 @app.route('/add_pet', methods=['POST'])
@@ -50,6 +51,7 @@ def add_pet():
     save_pets(pets)
     return jsonify({'message': 'Pet adicionado com sucesso!'}), 201
 
+
 @app.route('/api/pets', methods=['GET'])
 def get_pets():
     pets = load_pets()
@@ -58,6 +60,7 @@ def get_pets():
         pets = [pet for pet in pets if str(pet.get('owner_id')) == owner_id]
     return jsonify(pets)
 
+
 @app.route('/')
 def index():
     return "API para gerir pets - Hotel Bicho Solto"
@@ -65,20 +68,25 @@ def index():
 #---------------------------------------------------------------------------------------------------
 SERVICES_FILE = 'services.json'
 
+
 def load_services():
     if os.path.exists(SERVICES_FILE):
         with open(SERVICES_FILE, 'r') as f:
             return json.load(f)
     return []
 
+
 def save_services(services):
     with open(SERVICES_FILE, 'w') as f:
         json.dump(services, f, indent=2)
+
 
 @app.route('/api/services', methods=['GET'])
 def get_services():
     services = load_services()
     return jsonify(services)
+
+
 @app.route('/api/services', methods=['POST'])
 def add_service():
     data = request.get_json()
@@ -112,12 +120,14 @@ def add_service():
 
 USERS_FILE = "users.json"
 
+
 def load_users():
     if not os.path.exists(USERS_FILE):
         with open(USERS_FILE, 'w') as f:
             json.dump({"users": []}, f)
     with open(USERS_FILE, 'r') as f:
         return json.load(f)
+
 
 def save_users(data):
     with open(USERS_FILE, 'w') as f:
@@ -166,7 +176,7 @@ def login_user():
         }), 200
     else:
         return jsonify({"error": "Email ou password incorretos"}), 401
-    
+
 
 if __name__ == '__main__':
     app.run(debug=True)

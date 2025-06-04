@@ -77,6 +77,7 @@ const PetAssignedPin = () => {
       width: '180px',
       height: '180px',
       zIndex: 1,
+      cursor: 'pointer',
     },
     code: {
       marginTop: '0.5rem',
@@ -126,7 +127,7 @@ const PetAssignedPin = () => {
       <div style={styles.backArrow} onClick={() => navigate(-1)}>←</div>
 
       <img
-        src="/images/roxy.png" // <- substitui com o caminho real da imagem da Roxy
+        src="/images/roxy.png"
         alt="Roxy"
         style={styles.image}
       />
@@ -141,9 +142,10 @@ const PetAssignedPin = () => {
       <div style={styles.pinText}>Present this to the pet-care taker</div>
 
       <img
-        src="/images/roxy-qr.png" // <- substitui com o caminho real do QR code
+        src="/images/roxy-qr.png"
         alt="Roxy QR"
         style={styles.qr}
+        onClick={() => navigate('/OwnerReview')}
       />
       <div style={styles.code}>QrsTJSdFF99</div>
 

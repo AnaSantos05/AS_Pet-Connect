@@ -22,5 +22,11 @@
     "animals": "gato, cao, piriquito",
     "description": "banho",
     "provider_id": 2
+  },
+  {
+    "type": "Dog-walking",
+    "animals": "c\u00e3o",
+    "description": "passeio cao",
+    "provider_id": 2
   }
 ]
