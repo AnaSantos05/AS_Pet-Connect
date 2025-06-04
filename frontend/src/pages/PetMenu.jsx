@@ -161,7 +161,7 @@ const PetMenu = () => {
           src="/images/user.svg"
           alt="User"
           style={styles.footerIcon}
-          onClick={() => navigate('/OwnerProfile')}
+          onClick={() => navigate('/OwnerMap')}
         />
         <img
           src="/images/settings.svg"

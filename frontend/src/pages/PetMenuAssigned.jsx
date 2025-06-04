@@ -239,7 +239,15 @@ const PetMenuAssigned = () => {
             draggable={false}
           />
         </div>
-        <div style={styles.footerIcon} aria-hidden="true">
+
+        <div
+          style={styles.footerIcon}
+          onClick={() => navigate('/OwnerMap')}
+          aria-label="Map"
+          role="button"
+          tabIndex={0}
+          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/OwnerMap') }}
+        >
           <img
             src="/images/map-on.svg"
             alt="Map"
@@ -247,6 +255,7 @@ const PetMenuAssigned = () => {
             draggable={false}
           />
         </div>
+
         <div
           style={styles.footerIcon}
           onClick={() => navigate('/OwnerSettings')}

@@ -244,7 +244,7 @@ const PetTakerMap = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/PetSitterTakerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -259,7 +259,7 @@ const PetTakerMap = () => {
             src="/images/settings.svg"
             alt="Settings"
             style={styles.footerIconImage}
-            onClick={() => navigate('/OwnerSettings')}
+            onClick={() => navigate('/PetTakerSettings')}
           />
         </div>
       </div>

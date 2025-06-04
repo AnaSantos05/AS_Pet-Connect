@@ -88,7 +88,7 @@ const PetSitterTakerHomeInterface = () => {
 
       {/* Footer */}
       <div className="absolute bottom-0 w-full h-[78px] bg-[#2D2432] flex justify-around items-center">
-        <img src="/images/home-on.svg" alt="Paw" className="w-[30px]" onClick={() => navigate('/PetSitterTakerHome')} />
+        <img src="/images/home-on.svg" alt="Paw" className="w-[30px]" onClick={() => navigate('/PetSitterTakerHomeInterface')} />
         <img src="/images/map.svg" alt="Map" className="w-[30px]" onClick={() => navigate('/PetTakerMap')} />
         <img src="/images/settings.svg" alt="Settings" className="w-[30px]" onClick={() => navigate('/OwnerSettings')} />
       </div>
