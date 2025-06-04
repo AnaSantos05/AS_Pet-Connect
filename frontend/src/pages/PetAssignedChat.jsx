@@ -114,8 +114,8 @@ const PetAssignedChat = () => {
       </div>
 
       {/* Chat 1 */}
-      <div style={styles.chatCard}>
-        <img src="/images/user1.png" alt="João" style={styles.profilePic} />
+      <div style={styles.chatCard} onClick={() => navigate('/ChatOwner')}>
+        <img src="/images/joao_ferreira.jpg" alt="João" style={styles.profilePic} />
         <div style={styles.content}>
           <div style={styles.name}>João Ferreira</div>
           <div style={styles.message}>Obrigado por me escolher! 🙏🙏🙏</div>
@@ -126,9 +126,10 @@ const PetAssignedChat = () => {
         </div>
       </div>
 
+
       {/* Chat 2 */}
       <div style={styles.chatCard}>
-        <img src="/images/hotel.png" alt="Hotel" style={styles.profilePic} />
+        <img src="/images/bichosolto-logo.png" alt="Hotel" style={styles.profilePic} />
         <div style={styles.content}>
           <div style={styles.name}>Hotel Bicho Solto (Glória, Aveiro)</div>
           <div style={styles.message}>Boa tarde! Sim, a Roxy já tomou...</div>

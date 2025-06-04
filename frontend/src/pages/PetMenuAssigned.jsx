@@ -19,7 +19,7 @@ const PetMenuAssigned = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      paddingBottom: '80px', // espaço para footer
+      paddingBottom: '80px',
     },
     headerCurve: {
       position: 'absolute',
@@ -41,15 +41,15 @@ const PetMenuAssigned = () => {
       zIndex: 10,
     },
     petImage: {
-      width: '45vw', // Ainda menor
-      maxWidth: '180px', // Ainda menor
+      width: '45vw',
+      maxWidth: '180px',
       height: 'auto',
       marginTop: '6rem',
-      borderRadius: '20px', // Bordas proporcionalmente menores
-      border: '3px solid white', // Borda mais fina
+      borderRadius: '20px',
+      border: '3px solid white',
       zIndex: 2,
       objectFit: 'cover',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.3)', // Sombra proporcionalmente menor
+      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
       userSelect: 'none',
     },
     textGroup: {
@@ -128,9 +128,6 @@ const PetMenuAssigned = () => {
       userSelect: 'none',
       transition: 'background-color 0.3s ease',
     },
-    optionButtonHover: {
-      background: '#443769',
-    },
     footer: {
       position: 'fixed',
       bottom: 0,
@@ -160,8 +157,6 @@ const PetMenuAssigned = () => {
       objectFit: 'cover',
     },
   };
-
-  const options = ['Services', 'Chat', 'PIN'];
 
   return (
     <div style={styles.container}>
@@ -200,28 +195,42 @@ const PetMenuAssigned = () => {
       </div>
 
       <div style={styles.optionsList}>
-        {options.map(opt => (
-          <button
-            key={opt}
-            style={styles.optionButton}
-            onClick={() => alert(`${opt} clicked`)}
-            onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-            onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-          >
-            {opt}
-          </button>
-        ))}
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate('/ServiceRequests')}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          Services
+        </button>
+
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate('/PetAssignedChat')}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          Chat
+        </button>
+
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate('/PetAssignedPin')}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          PIN
+        </button>
       </div>
 
-      {/* Footer com imagens */}
       <div style={styles.footer}>
         <div
           style={styles.footerIcon}
-          onClick={() => navigate('/PetTakerHome')}
+          onClick={() => navigate('/OwnerHomeInterface')}
           aria-label="Home"
           role="button"
           tabIndex={0}
-          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/PetTakerHome') }}
+          onKeyPress={(e) => { if (e.key === 'Enter') navigate('/OwnerHomeInterface') }}
         >
           <img
             src="/images/home.svg"

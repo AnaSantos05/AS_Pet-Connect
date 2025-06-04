@@ -14,7 +14,7 @@ const AddService = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch('http://localhost:5000/add_service', {
+      const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/add_service', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

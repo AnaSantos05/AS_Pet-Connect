@@ -12,8 +12,8 @@ const ChatOwner = () => {
       backgroundSize: 'cover',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
       fontFamily: "'Lexend Peta', sans-serif",
+      position: 'relative',
     },
     header: {
       display: 'flex',
@@ -21,11 +21,11 @@ const ChatOwner = () => {
       padding: '1rem',
       backgroundColor: '#2D2432',
       color: 'white',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
     },
     leftHeader: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     backArrow: {
       fontSize: '1.5rem',
@@ -41,7 +41,7 @@ const ChatOwner = () => {
     callIcon: {
       width: '24px',
       height: '24px',
-      cursor: 'pointer'
+      cursor: 'pointer',
     },
     chatBody: {
       padding: '1rem',
@@ -65,12 +65,18 @@ const ChatOwner = () => {
       padding: '0.6rem',
       maxWidth: '80%',
     },
+    inputWrapper: {
+      backgroundColor: 'white',
+      padding: '0.8rem',
+      borderTop: '1px solid #ccc',
+      position: 'absolute',
+      bottom: '60px',
+      width: '100%',
+      boxSizing: 'border-box',
+    },
     inputArea: {
       display: 'flex',
       alignItems: 'center',
-      padding: '0.8rem',
-      borderTop: '1px solid #ccc',
-      backgroundColor: 'white',
     },
     input: {
       flex: 1,
@@ -84,6 +90,33 @@ const ChatOwner = () => {
       width: '24px',
       height: '24px',
       cursor: 'pointer',
+    },
+    footer: {
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '60px',
+      background: '#2D2432',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      zIndex: 1,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+    footerIcon: {
+      cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
@@ -110,9 +143,38 @@ const ChatOwner = () => {
         </div>
       </div>
 
-      <div style={styles.inputArea}>
-        <input type="text" placeholder="Type here" style={styles.input} />
-        <img src="/images/send-icon.svg" alt="Send" style={styles.sendIcon} />
+      <div style={styles.inputWrapper}>
+        <div style={styles.inputArea}>
+          <input type="text" placeholder="Type here" style={styles.input} />
+          <img src="/images/send-icon.svg" alt="Send" style={styles.sendIcon} />
+        </div>
+      </div>
+
+      <div style={styles.footer}>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home-on.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerHomeInterface')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
       </div>
     </div>
   );

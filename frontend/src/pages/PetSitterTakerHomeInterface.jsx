@@ -15,7 +15,7 @@ const PetSitterTakerHomeInterface = () => {
       return;
     }
 
-    fetch('http://localhost:5000/api/services')
+    fetch(process.env.REACT_APP_API_BASE_URL + '/api/services')
       .then((res) => res.json())
       .then((data) => {
         const myServices = data.filter(service => service.provider_id === parseInt(userId));

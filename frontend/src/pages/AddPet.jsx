@@ -19,7 +19,7 @@ const handleSubmit = async () => {
   const petData = { ...form, owner_id: parseInt(ownerId) };
 
   try {
-    const response = await fetch('http://localhost:5000/add_pet', {
+    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/add_pet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(petData),

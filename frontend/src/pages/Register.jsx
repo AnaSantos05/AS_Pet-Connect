@@ -28,7 +28,7 @@ export const Register = () => {
   const type = selectedFunction === 'X' ? 'owner' : 'sitter';
 
   try {
-    const response = await fetch('http://localhost:5000/register', {
+    const response = await fetch(process.env.REACT_APP_API_BASE_URL + '/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
