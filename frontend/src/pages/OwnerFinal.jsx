@@ -300,7 +300,7 @@ const OwnerFinal = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/OwnerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -309,6 +309,7 @@ const OwnerFinal = () => {
             alt="Map"
             style={styles.footerIconImage}
             draggable={false}
+            onClick={() => navigate('/OwnerMap')}
           />
         </div>
         <div style={styles.footerIcon}>

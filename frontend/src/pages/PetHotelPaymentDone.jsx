@@ -172,7 +172,7 @@ const PaymentSuccessful = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => window.location.href = '/PetTakerHome'}
+            onClick={() => window.location.href = '/OwnerHomeInterface'}
           />
         </div>
         <div style={styles.footerIcon}>
