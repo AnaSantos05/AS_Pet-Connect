@@ -13,6 +13,13 @@
             "password": "123",
             "type": "sitter",
             "id": 2
+        },
+        {
+            "name": "Alberto",
+            "email": "naosei@gmail.com",
+            "password": "1234",
+            "type": "owner",
+            "id": 3
         }
     ]
 }

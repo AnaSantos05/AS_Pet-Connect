@@ -15,7 +15,7 @@ import PetTakerHome from './pages/PetTakerHome';
 import AddService from './pages/AddService';
 import PetAssignedChat from './pages/PetAssignedChat';
 import Phone from './pages/Phone';
-
+import ChatOwner from './pages/ChatOwner';
 import PetTakerSettings from './pages/PetTakerSettings';
 import PetTakersList from './pages/PetTakersList';
 import PetRequestService from './pages/PetRequestService';
@@ -109,6 +109,8 @@ const App = () => {
           <Route path="/PaymentSuccessful" element={<PaymentSuccessful />} />
 
           <Route path="/PaymentSuccessfulPetTaker" element={<PaymentSuccessfulPetTaker />} />
+          <Route path="/ChatOwner" element={<ChatOwner />} />
+
 
         </Routes>
       </BrowserRouter>
