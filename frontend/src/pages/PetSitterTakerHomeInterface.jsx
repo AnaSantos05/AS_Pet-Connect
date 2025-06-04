@@ -49,7 +49,7 @@ const PetSitterTakerHomeInterface = () => {
 
       {/* Imagem de perfil */}
       <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[140px] h-[140px] rounded-full border-4 border-white overflow-hidden bg-[#DDD]">
-        <img src="/images/cat_placeholder.png" alt="Profile" className="w-full h-full object-cover" />
+        <img src="/images/OwnerPfp.png" alt="Profile" className="w-full h-full object-cover" />
       </div>
 
       {/* Título */}
