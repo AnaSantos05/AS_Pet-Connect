@@ -17,6 +17,19 @@ def load_pets():
 def save_pets(pets):
     with open(FILE_PATH, 'w') as f:
         json.dump(pets, f, indent=2)
+
+
+@app.route('/api/pets/<name>', methods=['GET'])
+def get_pet_by_name(name):
+    pets = load_pets()
+    decoded_name = name.strip().lower()
+    for pet in pets:
+        if pet['name'].strip().lower() == decoded_name:
+            return jsonify(pet)
+    return jsonify({'error': 'Pet não encontrado'}), 404
+
+
+
 @app.route('/add_pet', methods=['POST'])
 def add_pet():
     data = request.get_json()

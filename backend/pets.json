@@ -49,5 +49,16 @@
     "image": "/images/logo.png",
     "status": "Care-Taker not assigned yet",
     "statusColor": "red"
+  },
+  {
+    "name": "gino",
+    "race": "cao",
+    "age": "2",
+    "gender": "male",
+    "notes": "bonito",
+    "owner_id": 1,
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
   }
 ]
