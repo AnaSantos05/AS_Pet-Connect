@@ -39,6 +39,10 @@ import PaymentProcedure from './pages/PetHotelPaymentChoice';
 import PaymentSuccessful from './pages/PetHotelPaymentDone';
 
 import PaymentSuccessfulPetTaker from './pages/PetTakerPaymentDone';
+import Store from './pages/Store';
+import PaymentConfirmation from './pages/BuyItem';
+
+import PaymentSuccessfulStore from './pages/StoreDone';
 
 const App = () => {
   return (
@@ -110,6 +114,12 @@ const App = () => {
 
           <Route path="/PaymentSuccessfulPetTaker" element={<PaymentSuccessfulPetTaker />} />
           <Route path="/ChatOwner" element={<ChatOwner />} />
+
+          <Route path="/Store" element={<Store />} />
+
+          <Route path="/BuyItem" element={<PaymentConfirmation />} />
+
+          <Route path="/PaymentSuccessfulStore" element={<PaymentSuccessfulStore />} />
 
 
         </Routes>

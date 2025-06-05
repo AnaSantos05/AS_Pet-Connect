@@ -50,6 +50,17 @@ export const PetHotelDetails = () => {
         left: 0,
         zIndex: 0,
       },
+
+    backButton: {
+      position: 'absolute',
+      top: '20px',
+      left: '15px',
+      fontSize: '28px',
+      color: 'white',
+      cursor: 'pointer',
+      zIndex: 15,
+      userSelect: 'none',
+    },
       
       logoContainer: {
         display: 'flex',
@@ -193,6 +204,14 @@ export const PetHotelDetails = () => {
     <div style={styles.container}>
       {/* Header */}
       <div style={styles.header}></div>
+
+      {/* Back Button */}
+      <FontAwesomeIcon
+        icon={faArrowLeft}
+        style={styles.backButton}
+        onClick={() => navigate(-1)}
+        title="Go back"
+      />
 
       {/* Logo */}
       <div style={styles.logoContainer}>

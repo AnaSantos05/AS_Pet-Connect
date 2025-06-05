@@ -34,37 +34,52 @@ const PetTakerMap = () => {
       top: '30%', 
       left: '15%', 
       tags: ['Hotels', 'Low $'],
-      topImage: '/images/logostore.png' // Store logo
+      topImage: '/images/logostore.png', // Store logo
+      type: 'store'
     },
     { 
       id: 2, 
       top: '60%', 
       left: '20%', 
       tags: ['Pet-walking'],
-      topImage: '/images/garden1.png' // Garden 1
+      topImage: '/images/garden1.png', // Garden 1
+      type: 'garden'
     },
     { 
       id: 3, 
       top: '70%', 
       left: '60%', 
       tags: ['High $'],
-      topImage: '/images/garden2.png' // Garden 2
+      topImage: '/images/garden2.png', // Garden 2
+      type: 'garden'
     },
     { 
       id: 4, 
       top: '48%', 
       left: '43%', 
       tags: ['Hotels', 'High $'],
-      topImage: '/images/logostore.png' // Store logo
+      topImage: '/images/logostore.png', // Store logo
+      type: 'store'
     },
     { 
       id: 5, 
       top: '75%', 
       left: '10%', 
       tags: ['Pet-spa'],
-      topImage: '/images/garden2.png' // Garden 2
+      topImage: '/images/garden2.png', // Garden 2
+      type: 'garden'
     },
   ];
+
+  const handleMarkerClick = (marker) => {
+    if (marker.type === 'store') {
+      navigate('/Store');
+    } else if (marker.type === 'garden') {
+      // Handle garden markers - you can add navigation for these too
+      console.log('Clicked on garden marker:', marker.id);
+      // Example: navigate('/Garden');
+    }
+  };
 
   const styles = {
     page: {
@@ -130,6 +145,7 @@ const PetTakerMap = () => {
       position: 'absolute',
       width: '92px', // Match the marker width
       height: '107px', // Match the marker height
+      cursor: 'pointer', // Add cursor pointer for clickable markers
     },
     marker: {
       width: '100%', // Use full container width
@@ -147,6 +163,7 @@ const PetTakerMap = () => {
       transform: 'translateX(-50%) translateY(-15%)',
       width: '70px', // Adjust size as needed
       height: '70px', // Adjust size as needed
+      pointerEvents: 'none', // Prevent the image from blocking click events
     },
     footer: {
       position: 'absolute',
@@ -167,6 +184,7 @@ const PetTakerMap = () => {
       height: '48px',
       borderRadius: '50%',
       overflow: 'hidden',
+      cursor: 'pointer',
     },
     footerIconImage: {
       width: '100%',
@@ -224,6 +242,7 @@ const PetTakerMap = () => {
               top: marker.top,
               left: marker.left,
             }}
+            onClick={() => handleMarkerClick(marker)}
           >
             {/* Marker base */}
             <div style={styles.marker} />

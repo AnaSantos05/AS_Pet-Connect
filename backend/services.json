@@ -34,5 +34,11 @@
     "animals": "tartarugas",
     "description": "eu sou o melhor",
     "provider_id": 2
+  },
+  {
+    "type": "qualquer",
+    "animals": "any",
+    "description": "nao sei",
+    "provider_id": 2
   }
 ]

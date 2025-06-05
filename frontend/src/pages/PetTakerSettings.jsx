@@ -180,13 +180,13 @@ export const PetTakerSettings = () => {
       {/* footer com ícones */}
       <div style={styles.footer}>
         <div style={styles.footerIcon}>
-          <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/PetSitterTakerHomeInterface')} />
+          <img src="./images/home.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/PetSitterTakerHomeInterface')} />
         </div>
         <div style={styles.footerIcon}>
           <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} onClick={() => navigate('/PetTakerMap')}/>
         </div>
         <div style={styles.footerIcon}>
-          <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/PetTakerSettings')} />
+          <img src="./images/settings-on.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/PetTakerSettings')} />
         </div>
       </div>
     </div>

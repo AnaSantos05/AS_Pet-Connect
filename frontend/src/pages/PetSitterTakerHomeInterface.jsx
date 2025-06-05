@@ -27,6 +27,36 @@ const PetSitterTakerHomeInterface = () => {
       });
   }, [navigate]);
 
+  const styles = {
+    footer: {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '60px',
+      background: '#2D2432',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      zIndex: 10,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+    footerIcon: {
+      cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
+  };
+
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-white font-['Londrina_Solid']">
       {/* Background ellipse */}
@@ -42,11 +72,6 @@ const PetSitterTakerHomeInterface = () => {
         }}
       />
 
-      {/* Voltar */}
-      <button className="absolute top-6 left-5 w-8 h-8 z-10" onClick={() => navigate(-1)}>
-        <img src="/images/back.svg" alt="Back" />
-      </button>
-
       {/* Imagem de perfil */}
       <div className="absolute top-[80px] left-1/2 transform -translate-x-1/2 w-[140px] h-[140px] rounded-full border-4 border-white overflow-hidden bg-[#DDD]">
         <img src="/images/OwnerPfp.png" alt="Profile" className="w-full h-full object-cover" />
@@ -59,7 +84,7 @@ const PetSitterTakerHomeInterface = () => {
       {/* Lista ou aviso */}
       {services.length === 0 ? (
         <p className="mt-10 px-6 text-center text-[18px] text-[#585858]">
-          Currently, there are no services. Click on ‘+’ button to add some.
+          Currently, there are no services. Click on '+' button to add some.
         </p>
       ) : (
         <div className="mt-10 px-6 flex flex-col gap-4 overflow-y-auto max-h-[calc(100vh-400px)]">
@@ -87,10 +112,31 @@ const PetSitterTakerHomeInterface = () => {
       </button>
 
       {/* Footer */}
-      <div className="absolute bottom-0 w-full h-[78px] bg-[#2D2432] flex justify-around items-center">
-        <img src="/images/home-on.svg" alt="Paw" className="w-[30px]" onClick={() => navigate('/PetSitterTakerHomeInterface')} />
-        <img src="/images/map.svg" alt="Map" className="w-[30px]" onClick={() => navigate('/PetTakerMap')} />
-        <img src="/images/settings.svg" alt="Settings" className="w-[30px]" onClick={() => navigate('/OwnerSettings')} />
+      <div style={styles.footer}>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home-on.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetSitterTakerHomeInterface')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerMap')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/PetTakerSettings')}
+          />
+        </div>
       </div>
     </div>
   );

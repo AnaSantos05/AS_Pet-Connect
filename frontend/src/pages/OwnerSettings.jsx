@@ -180,13 +180,13 @@ export const OwnerSettings = () => {
       {/* footer com ícones */}
       <div style={styles.footer}>
         <div style={styles.footerIcon}>
-          <img src="./images/home-on.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')} />
+          <img src="./images/home.svg" alt="Ícone 1" style={styles.footerIconImage} onClick={() => navigate('/OwnerHomeInterface')} />
         </div>
         <div style={styles.footerIcon}>
           <img src="./images/map.svg" alt="Ícone 2" style={styles.footerIconImage} onClick={() => navigate('/OwnerMap')} />
         </div>
         <div style={styles.footerIcon}>
-          <img src="./images/settings.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')} />
+          <img src="./images/settings-on.svg" alt="Ícone 3" style={styles.footerIconImage} onClick={() => navigate('/OwnerSettings')} />
         </div>
       </div>
     </div>

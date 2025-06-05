@@ -82,5 +82,16 @@
     "image": "/images/logo.png",
     "status": "Care-Taker assigned",
     "statusColor": "green"
+  },
+  {
+    "name": "ola",
+    "race": "u8a9sio",
+    "age": "2",
+    "gender": "asok",
+    "notes": "diri",
+    "owner_id": 1,
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red"
   }
 ]
