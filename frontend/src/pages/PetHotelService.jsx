@@ -348,7 +348,7 @@ export const PetHotelDetailsWithForm = () => {
               onChange={(e) => handleInputChange('date', e.target.value)}
             />
             <span style={styles.icon} role="img" aria-label="calendar">
-              🗓️
+              
             </span>
           </div>
         </div>

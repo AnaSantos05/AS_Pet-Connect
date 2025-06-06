@@ -29,8 +29,6 @@ export const Login = () => {
       localStorage.setItem('userId', id);
       localStorage.setItem('userType', type);  // Guarda o tipo
 
-      alert("Login realizado com sucesso!");
-
       if (type === 'owner') {
         navigate('/OwnerHomeInterface');
       } else if (type === 'sitter') {

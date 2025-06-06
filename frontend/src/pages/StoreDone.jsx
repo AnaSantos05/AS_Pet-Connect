@@ -180,6 +180,7 @@ const PaymentSuccessfulStore = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => window.location.href = '/PetTakerMap'}
           />
         </div>
         <div style={styles.footerIcon}>

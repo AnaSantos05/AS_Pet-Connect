@@ -224,6 +224,7 @@ const PaymentSuccessful = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => window.location.href = '/OwnerMap'}
           />
         </div>
         <div style={styles.footerIcon}>
