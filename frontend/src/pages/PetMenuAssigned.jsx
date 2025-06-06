@@ -12,7 +12,6 @@ const PetMenuAssigned = () => {
   const baseFont = "'Londrina Solid', cursive, sans-serif";
 
   useEffect(() => {
-    // Try to get pet data from localStorage first
     const storedPetData = localStorage.getItem('selectedPetData');
     if (storedPetData) {
       setPet(JSON.parse(storedPetData));
@@ -20,7 +19,6 @@ const PetMenuAssigned = () => {
       return;
     }
 
-    // If not in localStorage, fetch from API
     if (petName) {
       fetch(`http://localhost:5000/api/pets/${encodeURIComponent(petName)}`)
         .then((response) => response.json())
@@ -44,54 +42,43 @@ const PetMenuAssigned = () => {
 
   const getCaretakerInfo = () => {
     if (!pet) return null;
-    
+
     if (pet.caretaker_type === 'hotel' || pet.caretaker_id === 999) {
       return {
         name: 'Hotel Bicho Solto',
-        logo: '/images/bichosolto-logo.png'
+        logo: '/images/bichosolto-logo.png',
       };
     } else if (pet.caretaker_id === 2) {
       return {
         name: 'João Ferreira',
-        logo: '/images/joao_ferreira.jpg'
+        logo: '/images/joao_ferreira.jpg',
       };
     } else {
       return {
         name: 'Individual Caretaker',
-        logo: '/images/default-caretaker.png'
+        logo: '/images/default-caretaker.png',
       };
     }
   };
 
   const styles = {
     container: {
-      position: 'relative',
       width: '100vw',
-      height: '100dvh',
+      minHeight: '100vh',
       background: 'white',
       fontFamily: baseFont,
-      overflow: 'hidden',
+      overflowX: 'hidden',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       paddingBottom: '80px',
-    },
-    headerCurve: {
-      position: 'absolute',
-      top: '-110vw',
-      left: '-45vw',
-      width: '190vw',
-      height: '190vw',
-      background: '#2D2432',
-      borderRadius: '50%',
-      zIndex: 0,
     },
     backArrow: {
       position: 'fixed',
       top: '1.5rem',
       left: '1rem',
       fontSize: '2.4rem',
-      color: 'white',
+      color: '#2D2432',
       cursor: 'pointer',
       zIndex: 10,
     },
@@ -101,10 +88,10 @@ const PetMenuAssigned = () => {
       height: 'auto',
       marginTop: '6rem',
       borderRadius: '20px',
-      border: '3px solid white',
+      border: '3px solid #2D2432',
       zIndex: 2,
       objectFit: 'cover',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
       userSelect: 'none',
     },
     textGroup: {
@@ -125,7 +112,6 @@ const PetMenuAssigned = () => {
       alignItems: 'baseline',
       gap: '0.3rem',
       fontSize: '1.2rem',
-      color: 'rgba(255, 0, 0, 0.7)',
       userSelect: 'none',
     },
     typeText: {
@@ -218,7 +204,6 @@ const PetMenuAssigned = () => {
   if (loading) {
     return (
       <div style={styles.container}>
-        <div style={styles.headerCurve} />
         <div style={{ marginTop: '50%', color: '#2D2432', fontSize: '1.5rem' }}>
           Loading pet information...
         </div>
@@ -229,7 +214,6 @@ const PetMenuAssigned = () => {
   if (!pet) {
     return (
       <div style={styles.container}>
-        <div style={styles.headerCurve} />
         <div style={{ marginTop: '50%', color: '#2D2432', fontSize: '1.5rem' }}>
           Pet not found
         </div>
@@ -241,7 +225,6 @@ const PetMenuAssigned = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.headerCurve} />
       <FontAwesomeIcon
         icon={faArrowLeft}
         style={styles.backArrow}
@@ -277,34 +260,34 @@ const PetMenuAssigned = () => {
         </div>
       )}
 
-<div style={styles.optionsList}>
-  <button
-    style={styles.optionButton}
-    onClick={() => navigate(`/PetServices/${encodeURIComponent(pet.name)}`)}
-    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-  >
-    Services
-  </button>
+      <div style={styles.optionsList}>
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate(`/PetServices/${encodeURIComponent(pet.name)}`)}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          Services
+        </button>
 
-  <button
-    style={styles.optionButton}
-    onClick={() => navigate('/PetAssignedChat')}
-    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-  >
-    Chat
-  </button>
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate('/PetAssignedChat')}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          Chat
+        </button>
 
-  <button
-    style={styles.optionButton}
-    onClick={() => navigate(`/PetAssignedPin/${encodeURIComponent(pet.name)}`)}
-    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-  >
-    PIN
-  </button>
-</div>
+        <button
+          style={styles.optionButton}
+          onClick={() => navigate(`/PetAssignedPin/${encodeURIComponent(pet.name)}`)}
+          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+        >
+          PIN
+        </button>
+      </div>
 
       <div style={styles.footer}>
         <div

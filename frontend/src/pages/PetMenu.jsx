@@ -146,7 +146,7 @@ const PetMenu = () => {
       </div>
       <div style={{ ...styles.infoRow, ...styles.age }}>{pet.age} years old</div>
 
-      <button style={styles.button} onClick={() => navigate(`/EditPet/${pet.name}`)}>
+      <button style={styles.button}>
         Edit Profile
       </button>
       <button style={styles.button} onClick={() => navigate(`/PetRequestService/${pet.name}`)}>
@@ -155,7 +155,7 @@ const PetMenu = () => {
       <button style={styles.button} onClick={() => navigate(`/PetServices/${pet.name}`)}>
         Services
       </button>
-      <button style={styles.button} onClick={() => navigate(`/PetHistory/${pet.name}`)}>
+      <button style={styles.button}>
         History
       </button>
 
@@ -166,7 +166,7 @@ const PetMenu = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/OwnerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -174,6 +174,7 @@ const PetMenu = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
             draggable={false}
           />
         </div>

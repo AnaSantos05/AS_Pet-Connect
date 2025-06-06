@@ -76,9 +76,12 @@ const App = () => {
 
           <Route path="/PetMenuAssigned/:petName" element={<PetMenuAssigned />} />
 
-          <Route path='/PetAssignedPin' element={<PetAssignedPin />} />
+          <Route path="/PetAssignedPin/:petName" element={<PetAssignedPin />} />
+
           <Route path='/OwnerMap' element={<OwnerMap />} />
+
           <Route path='/AddPet' element={<AddPet />} />
+
           <Route path='/OwnerReview' element={<OwnerReview />} />
 
           <Route path='/PetAssignedChat' element={<PetAssignedChat />} />
@@ -95,8 +98,8 @@ const App = () => {
 
           <Route path="/PetRequestService/:petName" element={<PetRequestService />} />
 
-
           <Route path="/PetTakerProfile" element={<PetTakerProfile />} />
+
           <Route path="/OwnerFinal" element={<OwnerFinal />} />
 
           <Route path="/ServiceRequests" element={<ServiceRequests />} />
@@ -112,9 +115,11 @@ const App = () => {
           <Route path="/PetHotelService" element={<PetHotelDetailsWithForm />} />
 
           <Route path="/PetHotelPaymentChoice" element={<PaymentProcedure />} />
+
           <Route path="/PaymentSuccessful" element={<PaymentSuccessful />} />
 
           <Route path="/PaymentSuccessfulPetTaker" element={<PaymentSuccessfulPetTaker />} />
+          
           <Route path="/ChatOwner" element={<ChatOwner />} />
 
           <Route path="/Store" element={<Store />} />

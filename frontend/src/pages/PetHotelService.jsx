@@ -415,6 +415,7 @@ export const PetHotelDetailsWithForm = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
           />
         </div>
         <div style={styles.footerIcon}>

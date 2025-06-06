@@ -1,0 +1,22 @@
+[
+  {
+    "pet_id": 5,
+    "type": "Hotel Accommodation",
+    "provider": "Hotel Bicho Solto",
+    "startDate": "2025-06-06",
+    "endDate": "2025-06-13",
+    "status": "In Progress",
+    "price": "35\u20ac/day",
+    "id": 1
+  },
+  {
+    "pet_id": 5,
+    "type": "Hotel Accommodation",
+    "provider": "Hotel Bicho Solto",
+    "startDate": "2025-06-06",
+    "endDate": "2025-06-13",
+    "status": "In Progress",
+    "price": "35\u20ac/day",
+    "id": 2
+  }
+]

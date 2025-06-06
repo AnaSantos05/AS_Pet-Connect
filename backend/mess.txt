@@ -1,0 +1,692 @@
+import pytest
+import json
+import os
+import tempfile
+from unittest.mock import patch, mock_open, MagicMock
+from flask import Flask
+import sys
+
+# Import the app and functions to test
+from app import (
+    app, load_pets, save_pets, load_services, save_services, 
+    load_users, save_users, add_pet, get_pets, add_service, 
+    register_user, login_user, get_pet_by_name
+)
+from models import db, Pet
+
+
+class TestAppConfiguration:
+    """Test Flask app configuration and setup"""
+    
+    def test_app_exists(self):
+        """Test that the Flask app is created"""
+        assert app is not None
+        assert isinstance(app, Flask)
+    
+    def test_cors_enabled(self):
+        """Test that CORS is enabled"""
+        with app.test_client() as client:
+            response = client.options('/')
+            assert 'Access-Control-Allow-Origin' in response.headers
+
+
+class TestFileOperations:
+    """Test file loading and saving operations"""
+    
+    def setup_method(self):
+        """Setup test data for each test"""
+        self.sample_pets = [
+            {
+                "name": "test_pet",
+                "race": "dog",
+                "age": "3",
+                "gender": "male",
+                "notes": "friendly",
+                "owner_id": 1
+            }
+        ]
+        
+        self.sample_services = [
+            {
+                "type": "walking",
+                "animals": "dogs",
+                "description": "Dog walking service",
+                "provider_id": 2
+            }
+        ]
+        
+        self.sample_users = {
+            "users": [
+                {
+                    "name": "test_user",
+                    "email": "test@example.com",
+                    "password": "password123",
+                    "type": "owner",
+                    "id": 1
+                }
+            ]
+        }
+
+    @patch('builtins.open', new_callable=mock_open, read_data='[]')
+    @patch('os.path.exists', return_value=True)
+    def test_load_pets_existing_file(self, mock_exists, mock_file):
+        """Test loading pets from existing file"""
+        result = load_pets()
+        assert result == []
+        mock_file.assert_called_once_with('pets.json', 'r')
+
+    @patch('os.path.exists', return_value=False)
+    def test_load_pets_nonexistent_file(self, mock_exists):
+        """Test loading pets when file doesn't exist"""
+        result = load_pets()
+        assert result == []
+
+    @patch('builtins.open', new_callable=mock_open)
+    def test_save_pets(self, mock_file):
+        """Test saving pets to file"""
+        save_pets(self.sample_pets)
+        mock_file.assert_called_once_with('pets.json', 'w')
+        handle = mock_file()
+        # Verify that json.dump was called (indirectly through write calls)
+        assert handle.write.called
+
+    @patch('builtins.open', new_callable=mock_open, read_data='[]')
+    @patch('os.path.exists', return_value=True)
+    def test_load_services_existing_file(self, mock_exists, mock_file):
+        """Test loading services from existing file"""
+        result = load_services()
+        assert result == []
+        mock_file.assert_called_once_with('services.json', 'r')
+
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('os.path.exists', return_value=False)
+    def test_load_users_creates_file_if_not_exists(self, mock_exists, mock_file):
+        """Test that load_users creates file if it doesn't exist"""
+        load_users()
+        # Should be called twice: once for writing, once for reading
+        assert mock_file.call_count == 2
+
+
+class TestPetEndpoints:
+    """Test pet-related endpoints"""
+    
+    def setup_method(self):
+        """Setup test client and sample data"""
+        self.client = app.test_client()
+        self.sample_pet_data = {
+            "name": "Buddy",
+            "race": "Golden Retriever",
+            "age": "5",
+            "gender": "Male",
+            "notes": "Very friendly",
+            "owner_id": 1
+        }
+        
+        self.pets_data = [
+            {
+                "name": "existing_pet",
+                "race": "cat",
+                "age": "2",
+                "gender": "female",
+                "notes": "shy",
+                "owner_id": 1,
+                "image": "/images/logo.png",
+                "status": "Care-Taker not assigned yet",
+                "statusColor": "red"
+            }
+        ]
+
+    @patch('app.load_pets')
+    @patch('app.save_pets')
+    def test_add_pet_success(self, mock_save, mock_load):
+        """Test successful pet addition"""
+        mock_load.return_value = []
+        
+        response = self.client.post('/add_pet', 
+                                  json=self.sample_pet_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 201
+        data = json.loads(response.data)
+        assert data['message'] == 'Pet adicionado com sucesso!'
+        mock_save.assert_called_once()
+
+    def test_add_pet_missing_fields(self):
+        """Test pet addition with missing required fields"""
+        incomplete_data = {
+            "name": "Buddy",
+            "race": "Dog"
+            # Missing age, gender, notes, owner_id
+        }
+        
+        response = self.client.post('/add_pet',
+                                  json=incomplete_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'Campos em falta' in data['error']
+
+    def test_add_pet_empty_fields(self):
+        """Test pet addition with empty required fields"""
+        empty_data = {
+            "name": "",
+            "race": "Dog",
+            "age": "5",
+            "gender": "Male",
+            "notes": "Nice dog",
+            "owner_id": 1
+        }
+        
+        response = self.client.post('/add_pet',
+                                  json=empty_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+
+    @patch('app.load_pets')
+    def test_get_pets_all(self, mock_load):
+        """Test getting all pets"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert len(data) == 1
+        assert data[0]['name'] == 'existing_pet'
+
+    @patch('app.load_pets')
+    def test_get_pets_by_owner(self, mock_load):
+        """Test getting pets filtered by owner_id"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets?owner_id=1')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert len(data) == 1
+        assert data[0]['owner_id'] == 1
+
+    @patch('app.load_pets')
+    def test_get_pets_by_nonexistent_owner(self, mock_load):
+        """Test getting pets for non-existent owner"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets?owner_id=999')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert len(data) == 0
+
+    @patch('app.load_pets')
+    def test_get_pet_by_name_success(self, mock_load):
+        """Test getting pet by name - success case"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets/existing_pet')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['name'] == 'existing_pet'
+
+    @patch('app.load_pets')
+    def test_get_pet_by_name_not_found(self, mock_load):
+        """Test getting pet by name - not found"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets/nonexistent_pet')
+        
+        assert response.status_code == 404
+        data = json.loads(response.data)
+        assert 'Pet não encontrado' in data['error']
+
+    @patch('app.load_pets')
+    def test_get_pet_by_name_case_insensitive(self, mock_load):
+        """Test getting pet by name is case insensitive"""
+        mock_load.return_value = self.pets_data
+        
+        response = self.client.get('/api/pets/EXISTING_PET')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['name'] == 'existing_pet'
+
+
+class TestServiceEndpoints:
+    """Test service-related endpoints"""
+    
+    def setup_method(self):
+        """Setup test client and sample data"""
+        self.client = app.test_client()
+        self.sample_service_data = {
+            "type": "walking",
+            "animals": "dogs",
+            "description": "Professional dog walking",
+            "provider_id": 2
+        }
+        
+        self.services_data = [
+            {
+                "type": "bathing",
+                "animals": "cats, dogs",
+                "description": "Pet bathing service",
+                "provider_id": 2
+            }
+        ]
+        
+        self.users_data = {
+            "users": [
+                {
+                    "id": 2,
+                    "name": "Pet Sitter",
+                    "email": "sitter@example.com",
+                    "type": "sitter"
+                },
+                {
+                    "id": 3,
+                    "name": "Pet Owner",
+                    "email": "owner@example.com",
+                    "type": "owner"
+                }
+            ]
+        }
+
+    @patch('app.load_services')
+    def test_get_services(self, mock_load):
+        """Test getting all services"""
+        mock_load.return_value = self.services_data
+        
+        response = self.client.get('/api/services')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert len(data) == 1
+        assert data[0]['type'] == 'bathing'
+
+    @patch('app.load_services')
+    @patch('app.save_services')
+    @patch('app.load_users')
+    def test_add_service_success(self, mock_load_users, mock_save, mock_load_services):
+        """Test successful service addition"""
+        mock_load_services.return_value = []
+        mock_load_users.return_value = self.users_data
+        
+        response = self.client.post('/api/services',
+                                  json=self.sample_service_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 201
+        data = json.loads(response.data)
+        assert data['message'] == 'Serviço adicionado com sucesso!'
+        mock_save.assert_called_once()
+
+    def test_add_service_no_data(self):
+        """Test service addition with no data"""
+        response = self.client.post('/api/services',
+                                  json=None,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'Nenhum dado recebido' in data['error']
+
+    def test_add_service_missing_fields(self):
+        """Test service addition with missing required fields"""
+        incomplete_data = {
+            "type": "walking",
+            "animals": "dogs"
+            # Missing description and provider_id
+        }
+        
+        response = self.client.post('/api/services',
+                                  json=incomplete_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'Campos em falta' in data['error']
+
+    @patch('app.load_users')
+    def test_add_service_user_not_found(self, mock_load_users):
+        """Test service addition with non-existent provider"""
+        mock_load_users.return_value = self.users_data
+        
+        invalid_data = self.sample_service_data.copy()
+        invalid_data['provider_id'] = 999
+        
+        response = self.client.post('/api/services',
+                                  json=invalid_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 404
+        data = json.loads(response.data)
+        assert 'Utilizador não encontrado' in data['error']
+
+    @patch('app.load_users')
+    def test_add_service_not_sitter(self, mock_load_users):
+        """Test service addition by non-sitter user"""
+        mock_load_users.return_value = self.users_data
+        
+        invalid_data = self.sample_service_data.copy()
+        invalid_data['provider_id'] = 3  # This is an owner, not sitter
+        
+        response = self.client.post('/api/services',
+                                  json=invalid_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 403
+        data = json.loads(response.data)
+        assert 'Apenas pet sitters podem adicionar serviços' in data['error']
+
+
+class TestUserEndpoints:
+    """Test user-related endpoints"""
+    
+    def setup_method(self):
+        """Setup test client and sample data"""
+        self.client = app.test_client()
+        self.sample_user_data = {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "password": "securepassword",
+            "type": "owner"
+        }
+        
+        self.existing_users = {
+            "users": [
+                {
+                    "id": 1,
+                    "name": "Existing User",
+                    "email": "existing@example.com",
+                    "password": "password123",
+                    "type": "sitter"
+                }
+            ]
+        }
+
+    @patch('app.load_users')
+    @patch('app.save_users')
+    def test_register_user_success(self, mock_save, mock_load):
+        """Test successful user registration"""
+        mock_load.return_value = {"users": []}
+        
+        response = self.client.post('/register',
+                                  json=self.sample_user_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 201
+        data = json.loads(response.data)
+        assert data['message'] == 'Utilizador registado'
+        assert 'id' in data
+        mock_save.assert_called_once()
+
+    def test_register_user_missing_fields(self):
+        """Test user registration with missing required fields"""
+        incomplete_data = {
+            "name": "John Doe",
+            "email": "john@example.com"
+            # Missing password and type
+        }
+        
+        response = self.client.post('/register',
+                                  json=incomplete_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'Campos em falta' in data['error']
+
+    @patch('app.load_users')
+    def test_register_user_duplicate_email(self, mock_load):
+        """Test user registration with duplicate email"""
+        mock_load.return_value = self.existing_users
+        
+        duplicate_data = self.sample_user_data.copy()
+        duplicate_data['email'] = 'existing@example.com'
+        
+        response = self.client.post('/register',
+                                  json=duplicate_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 409
+        data = json.loads(response.data)
+        assert 'Email já registado' in data['error']
+
+    @patch('app.load_users')
+    def test_login_user_success(self, mock_load):
+        """Test successful user login"""
+        mock_load.return_value = self.existing_users
+        
+        login_data = {
+            "email": "existing@example.com",
+            "password": "password123"
+        }
+        
+        response = self.client.post('/login',
+                                  json=login_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 200
+        data = json.loads(response.data)
+        assert data['message'] == 'Login bem-sucedido'
+        assert 'user' in data
+        assert data['user']['email'] == 'existing@example.com'
+
+    def test_login_user_missing_fields(self):
+        """Test user login with missing fields"""
+        incomplete_data = {
+            "email": "test@example.com"
+            # Missing password
+        }
+        
+        response = self.client.post('/login',
+                                  json=incomplete_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 400
+        data = json.loads(response.data)
+        assert 'Email e password são obrigatórios' in data['error']
+
+    @patch('app.load_users')
+    def test_login_user_invalid_credentials(self, mock_load):
+        """Test user login with invalid credentials"""
+        mock_load.return_value = self.existing_users
+        
+        invalid_data = {
+            "email": "existing@example.com",
+            "password": "wrongpassword"
+        }
+        
+        response = self.client.post('/login',
+                                  json=invalid_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 401
+        data = json.loads(response.data)
+        assert 'Email ou password incorretos' in data['error']
+
+    @patch('app.load_users')
+    def test_login_user_nonexistent_email(self, mock_load):
+        """Test user login with non-existent email"""
+        mock_load.return_value = self.existing_users
+        
+        invalid_data = {
+            "email": "nonexistent@example.com",
+            "password": "password123"
+        }
+        
+        response = self.client.post('/login',
+                                  json=invalid_data,
+                                  content_type='application/json')
+        
+        assert response.status_code == 401
+        data = json.loads(response.data)
+        assert 'Email ou password incorretos' in data['error']
+
+
+class TestSQLAlchemyModels:
+    """Test SQLAlchemy models"""
+    
+    def setup_method(self):
+        """Setup test database"""
+        self.app = Flask(__name__)
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        self.app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        
+        db.init_app(self.app)
+        
+        with self.app.app_context():
+            db.create_all()
+
+    def test_pet_model_creation(self):
+        """Test Pet model creation and attributes"""
+        with self.app.app_context():
+            pet = Pet(
+                name="Test Pet",
+                race="Test Breed",
+                age=5,
+                notes="Test notes"
+            )
+            
+            db.session.add(pet)
+            db.session.commit()
+            
+            # Retrieve the pet
+            retrieved_pet = Pet.query.filter_by(name="Test Pet").first()
+            
+            assert retrieved_pet is not None
+            assert retrieved_pet.name == "Test Pet"
+            assert retrieved_pet.race == "Test Breed"
+            assert retrieved_pet.age == 5
+            assert retrieved_pet.notes == "Test notes"
+
+    def test_pet_model_required_fields(self):
+        """Test Pet model with required fields only"""
+        with self.app.app_context():
+            pet = Pet(
+                name="Required Only",
+                race="Test Breed",
+                age=3
+            )
+            
+            db.session.add(pet)
+            db.session.commit()
+            
+            retrieved_pet = Pet.query.filter_by(name="Required Only").first()
+            assert retrieved_pet is not None
+            assert retrieved_pet.notes is None  # Optional field
+
+
+class TestRootEndpoint:
+    """Test root endpoint"""
+    
+    def setup_method(self):
+        """Setup test client"""
+        self.client = app.test_client()
+
+    def test_root_endpoint(self):
+        """Test root endpoint returns expected message"""
+        response = self.client.get('/')
+        
+        assert response.status_code == 200
+        assert b"API para gerir pets - Hotel Bicho Solto" in response.data
+
+
+# Pytest fixtures and configuration
+@pytest.fixture
+def app_context():
+    """Provide application context for tests"""
+    with app.app_context():
+        yield app
+
+
+@pytest.fixture
+def client():
+    """Provide test client"""
+    app.config['TESTING'] = True
+    with app.test_client() as client:
+        yield client
+
+
+# Integration tests
+class TestIntegration:
+    """Integration tests for the complete workflow"""
+    
+    def setup_method(self):
+        """Setup test client"""
+        self.client = app.test_client()
+
+    @patch('app.load_users')
+    @patch('app.save_users')
+    @patch('app.load_pets')
+    @patch('app.save_pets')
+    def test_complete_workflow(self, mock_save_pets, mock_load_pets, 
+                             mock_save_users, mock_load_users):
+        """Test a complete workflow: register -> login -> add pet"""
+        # Setup mocks
+        mock_load_users.return_value = {"users": []}
+        mock_load_pets.return_value = []
+        
+        # 1. Register a user
+        user_data = {
+            "name": "Integration Test User",
+            "email": "integration@test.com",
+            "password": "password123",
+            "type": "owner"
+        }
+        
+        register_response = self.client.post('/register',
+                                           json=user_data,
+                                           content_type='application/json')
+        
+        assert register_response.status_code == 201
+        
+        # Update mock to include the new user for login
+        mock_load_users.return_value = {
+            "users": [
+                {
+                    "id": 1,
+                    "name": "Integration Test User",
+                    "email": "integration@test.com",
+                    "password": "password123",
+                    "type": "owner"
+                }
+            ]
+        }
+        
+        # 2. Login with the registered user
+        login_data = {
+            "email": "integration@test.com",
+            "password": "password123"
+        }
+        
+        login_response = self.client.post('/login',
+                                        json=login_data,
+                                        content_type='application/json')
+        
+        assert login_response.status_code == 200
+        
+        # 3. Add a pet for the user
+        pet_data = {
+            "name": "Integration Pet",
+            "race": "Integration Breed",
+            "age": "3",
+            "gender": "Male",
+            "notes": "Test pet for integration",
+            "owner_id": 1
+        }
+        
+        pet_response = self.client.post('/add_pet',
+                                      json=pet_data,
+                                      content_type='application/json')
+        
+        assert pet_response.status_code == 201
+        
+        # Verify all save functions were called
+        mock_save_users.assert_called()
+        mock_save_pets.assert_called()
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])

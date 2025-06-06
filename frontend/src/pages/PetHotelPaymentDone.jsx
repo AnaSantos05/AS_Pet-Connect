@@ -4,15 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const PaymentSuccessful = () => {
   const navigate = useNavigate();
 
-  // Function to assign hotel as caretaker after successful payment
   const assignHotelToPet = async (petId) => {
     try {
-      // For hotel services, use a special hotel caretaker ID (999)
       const response = await fetch(`http://localhost:5000/api/pets/${petId}/assign-caretaker`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ caretaker_id: 999 }),
       });
 
@@ -29,24 +25,21 @@ const PaymentSuccessful = () => {
     }
   };
 
-  // Function to create a hotel service record after successful payment
   const createHotelServiceRecord = async (petId) => {
     try {
       const serviceData = {
         pet_id: petId,
         type: 'Hotel Accommodation',
         provider: 'Hotel Bicho Solto',
-        startDate: new Date().toISOString().split('T')[0], // Today's date
-        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
+        startDate: new Date().toISOString().split('T')[0],
+        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         status: 'In Progress',
-        price: '35€/day'
+        price: '35€/day',
       };
 
       const response = await fetch('http://localhost:5000/api/pet-services', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(serviceData),
       });
 
@@ -63,33 +56,22 @@ const PaymentSuccessful = () => {
     }
   };
 
-  // Add this after successful hotel assignment
   useEffect(() => {
     const assignHotel = async () => {
       const petId = localStorage.getItem('selectedPetId');
-
       if (petId) {
-        // First assign the hotel as caretaker
         const assignmentSuccess = await assignHotelToPet(parseInt(petId));
-        
-        // Then create service record if assignment was successful
         if (assignmentSuccess) {
           await createHotelServiceRecord(parseInt(petId));
         }
-        
-        // Clean up localStorage after assignment
         localStorage.removeItem('selectedPetId');
-        localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
-
-        // Trigger storage event to refresh OwnerHomeInterface
+        localStorage.removeItem('selectedPetData');
         window.dispatchEvent(new Event('storage'));
       }
     };
-
     assignHotel();
   }, []);
 
-  // ... rest of the component remains the same
   const styles = {
     container: {
       width: '100%',
@@ -105,7 +87,6 @@ const PaymentSuccessful = () => {
       textAlign: 'center',
       color: '#000',
     },
-
     header: {
       width: '100%',
       height: '160px',
@@ -119,12 +100,10 @@ const PaymentSuccessful = () => {
       zIndex: 1,
       userSelect: 'none',
     },
-
     logoImage: {
       width: '160px',
       userSelect: 'none',
     },
-
     successText: {
       marginTop: '30px',
       fontSize: '2rem',
@@ -132,7 +111,6 @@ const PaymentSuccessful = () => {
       color: '#2D2432',
       userSelect: 'none',
     },
-
     checkmarkContainer: {
       marginTop: '40px',
       width: '160px',
@@ -144,8 +122,8 @@ const PaymentSuccessful = () => {
       justifyContent: 'center',
       position: 'relative',
       userSelect: 'none',
+      cursor: 'pointer',
     },
-
     checkmarkCircleMiddle: {
       width: '110px',
       height: '110px',
@@ -155,7 +133,6 @@ const PaymentSuccessful = () => {
       alignItems: 'center',
       justifyContent: 'center',
     },
-
     checkmarkCircleInner: {
       width: '70px',
       height: '70px',
@@ -165,21 +142,18 @@ const PaymentSuccessful = () => {
       alignItems: 'center',
       justifyContent: 'center',
     },
-
     checkmarkIcon: {
       width: '40px',
       height: '40px',
       stroke: 'white',
       strokeWidth: 3,
     },
-
     amountText: {
       marginTop: '40px',
       fontSize: '1.5rem',
       color: '#2D2432',
       userSelect: 'none',
     },
-
     footer: {
       position: 'fixed',
       bottom: 0,
@@ -195,7 +169,6 @@ const PaymentSuccessful = () => {
       borderTopRightRadius: '20px',
       userSelect: 'none',
     },
-
     footerIcon: {
       cursor: 'pointer',
       width: '48px',
@@ -204,7 +177,6 @@ const PaymentSuccessful = () => {
       overflow: 'hidden',
       flexShrink: 0,
     },
-
     footerIconImage: {
       width: '100%',
       height: '100%',
@@ -214,7 +186,6 @@ const PaymentSuccessful = () => {
 
   return (
     <div style={styles.container}>
-      {/* Header with logo */}
       <div style={styles.header}>
         <img
           src="/images/bichosolto-logo.png"
@@ -224,14 +195,15 @@ const PaymentSuccessful = () => {
         />
       </div>
 
-      {/* Success text */}
       <div style={styles.successText}>Payment Successful</div>
 
-      {/* Checkmark circles */}
-      <div style={styles.checkmarkContainer}>
+      <div
+        style={styles.checkmarkContainer}
+        onClick={() => navigate('/OwnerHomeInterface')}
+        title="Go to Home"
+      >
         <div style={styles.checkmarkCircleMiddle}>
           <div style={styles.checkmarkCircleInner}>
-            {/* SVG Checkmark */}
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -248,17 +220,15 @@ const PaymentSuccessful = () => {
         </div>
       </div>
 
-      {/* Amount paid */}
       <div style={styles.amountText}>Amount paid: 15€</div>
 
-      {/* Footer */}
       <div style={styles.footer}>
         <div style={styles.footerIcon}>
           <img
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => window.location.href = '/OwnerHomeInterface'}
+            onClick={() => navigate('/OwnerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -266,7 +236,7 @@ const PaymentSuccessful = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
-            onClick={() => window.location.href = '/OwnerMap'}
+            onClick={() => navigate('/OwnerMap')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -274,7 +244,7 @@ const PaymentSuccessful = () => {
             src="/images/settings.svg"
             alt="Settings"
             style={styles.footerIconImage}
-            onClick={() => window.location.href = '/OwnerSettings'}
+            onClick={() => navigate('/OwnerSettings')}
           />
         </div>
       </div>

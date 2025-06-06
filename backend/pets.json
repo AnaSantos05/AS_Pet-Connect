@@ -1,49 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "alberto",
-    "race": "cao",
-    "age": "10",
-    "gender": "Male",
-    "notes": "cao muito astuto e bonito",
-    "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
-  },
-  {
-    "id": 2,
-    "name": "Gino",
-    "race": "C\u00e3o",
-    "age": "4",
-    "gender": "Female",
-    "notes": "docil e bonito",
-    "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
-  },
-  {
-    "id": 3,
-    "name": "tuga",
-    "race": "tartaruga",
-    "age": "4",
-    "gender": "male",
-    "notes": "ele \u00e9 bonito",
-    "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
-  },
-  {
-    "id": 4,
-    "name": "gina",
-    "race": "cobra",
-    "age": "4",
-    "gender": "male",
-    "notes": "nao sei",
-    "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
-  },
-  {
     "id": 5,
     "name": "patinhas",
     "race": "gato",
@@ -94,20 +50,6 @@
     "statusColor": "green"
   },
   {
-    "id": 9,
-    "name": "ola",
-    "race": "u8a9sio",
-    "age": "2",
-    "gender": "asok",
-    "notes": "diri",
-    "owner_id": 1,
-    "image": "/images/logo.png",
-    "status": "Care-Taker assigned",
-    "statusColor": "green",
-    "caretaker_id": 2,
-    "caretaker_type": "individual"
-  },
-  {
     "name": "Bobby",
     "race": "dog",
     "age": "10",
@@ -120,5 +62,17 @@
     "id": 10,
     "caretaker_id": 999,
     "caretaker_type": "hotel"
+  },
+  {
+    "name": "Malu",
+    "race": "Cat",
+    "age": "10",
+    "gender": "Female",
+    "notes": "D\u00f3cil e brinca muito",
+    "owner_id": 1,
+    "image": "/images/logo.png",
+    "status": "Care-Taker not assigned yet",
+    "statusColor": "red",
+    "id": 6
   }
 ]

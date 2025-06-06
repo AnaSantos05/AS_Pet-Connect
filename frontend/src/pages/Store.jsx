@@ -174,7 +174,7 @@ const Store = () => {
                         src="/images/home.svg"
                         alt="Home"
                         style={styles.footerIconImage}
-                        onClick={() => navigate('/PetTakerHome')}
+                        onClick={() => navigate('/PetSitterTakerHomeInterface')}
                     />
                 </div>
                 <div style={styles.footerIcon}>

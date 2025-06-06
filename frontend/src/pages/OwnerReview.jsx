@@ -18,6 +18,7 @@ const OwnerReview = () => {
       flexDirection: 'column',
       alignItems: 'center',
       position: 'relative',
+      paddingBottom: '80px',
     },
     topSection: {
       background: '#2D2432',
@@ -90,22 +91,32 @@ const OwnerReview = () => {
       cursor: 'pointer',
     },
     footer: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: 0,
+      left: 0,
       width: '100%',
       height: '60px',
       background: '#2D2432',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
+      zIndex: 10,
       borderTopLeftRadius: '20px',
       borderTopRightRadius: '20px',
+      userSelect: 'none',
     },
     footerIcon: {
-      width: '32px',
-      height: '32px',
-      objectFit: 'contain',
       cursor: 'pointer',
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      flexShrink: 0,
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
     },
   };
 
@@ -131,18 +142,18 @@ const OwnerReview = () => {
       <div style={styles.details}>35 years old<br />Male</div>
 
       <div style={styles.sectionLabel}>Leave a rating</div>
-        <div style={styles.stars}>
+      <div style={styles.stars}>
         {[1, 2, 3, 4, 5].map((i) => (
-            <span
+          <span
             key={i}
             style={{
-                ...styles.star,
-                ...(i <= rating ? styles.starFilled : {}),
+              ...styles.star,
+              ...(i <= rating ? styles.starFilled : {}),
             }}
             onClick={() => setRating(rating === i ? 0 : i)}
-            >
+          >
             ★
-            </span>
+          </span>
         ))}
       </div>
 
@@ -155,18 +166,36 @@ const OwnerReview = () => {
         onChange={(e) => setReview(e.target.value)}
       />
 
-      <button
-        key={buttonText}
-        style={styles.button}
-        onClick={handleSubmit}
-      >
+      <button key={buttonText} style={styles.button} onClick={handleSubmit}>
         {buttonText}
       </button>
 
+      {/* Footer igual ao do OwnerFinal */}
       <div style={styles.footer}>
-        <img src="/images/paw-orange.png" alt="Home" style={styles.footerIcon} onClick={() => navigate('/OwnerHomeInterface')} />
-        <img src="/images/profile-icon.png" alt="Profile" style={styles.footerIcon} />
-        <img src="/images/settings.svg" alt="Settings" style={styles.footerIcon} onClick={() => navigate('/OwnerSettings')} />
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerHomeInterface')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map-on.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
       </div>
     </div>
   );

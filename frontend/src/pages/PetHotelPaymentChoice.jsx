@@ -337,7 +337,7 @@ export const PaymentProcedure = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/OwnerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>
@@ -345,6 +345,7 @@ export const PaymentProcedure = () => {
             src="/images/map-on.svg"
             alt="Map"
             style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
           />
         </div>
         <div style={styles.footerIcon}>
