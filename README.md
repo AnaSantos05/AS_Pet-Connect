@@ -1,3 +1,9 @@
+AS - G501
+20188 – Roberto Mota
+120187 - João Ferreira
+120039 - Ana Rita Barreto dos Santos
+119806 - João Abrunhosa
+
 # Pet-Connect
 
 Sistema de gestão e conexão de serviços de cuidados para animais de estimação, desenvolvido no âmbito da disciplina de Análise de Sistemas da Universidade de Aveiro.
