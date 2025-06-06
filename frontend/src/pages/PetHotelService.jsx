@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faArrowLeft, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
@@ -7,6 +7,61 @@ const baseFont = "'Londrina Solid', cursive, sans-serif";
 
 export const PetHotelDetailsWithForm = () => {
   const navigate = useNavigate();
+  const [pets, setPets] = useState([]);
+  const [selectedPet, setSelectedPet] = useState('');
+  const [formData, setFormData] = useState({
+    type: '',
+    date: '',
+    hour: '',
+    notes: ''
+  });
+
+  // Fetch user's pets on component mount
+  useEffect(() => {
+    const fetchUserPets = async () => {
+      const ownerId = localStorage.getItem('userId');
+      if (ownerId) {
+        try {
+          const response = await fetch(`http://localhost:5000/api/pets?owner_id=${ownerId}`);
+          if (response.ok) {
+            const data = await response.json();
+            setPets(data);
+          }
+        } catch (error) {
+          console.error('Error fetching pets:', error);
+        }
+      }
+    };
+
+    fetchUserPets();
+  }, []);
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = () => {
+    // Validate that a pet is selected
+    if (!selectedPet) {
+      alert('Please select a pet');
+      return;
+    }
+
+    // Store the selected pet ID for hotel assignment
+    localStorage.setItem('selectedPetId', selectedPet);
+    
+    // Store form data if needed
+    localStorage.setItem('hotelServiceData', JSON.stringify({
+      ...formData,
+      petId: selectedPet
+    }));
+
+    // Navigate to payment
+    navigate('/PetHotelPaymentChoice');
+  };
 
   const styles = {
     container: {
@@ -17,7 +72,7 @@ export const PetHotelDetailsWithForm = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      paddingBottom: '80px', // espaço para o footer fixo
+      paddingBottom: '80px',
       position: 'relative',
       overflowX: 'hidden',
     },
@@ -131,6 +186,18 @@ export const PetHotelDetailsWithForm = () => {
       borderRadius: '8px',
     },
 
+    select: {
+      flex: 1,
+      height: '2.2rem',
+      background: '#C2C2C2',
+      border: '1px solid black',
+      padding: '0.4rem',
+      fontSize: '1rem',
+      fontFamily: baseFont,
+      color: '#525252',
+      borderRadius: '8px',
+    },
+
     textarea: {
       width: '100%',
       height: '4.5rem',
@@ -164,6 +231,7 @@ export const PetHotelDetailsWithForm = () => {
       cursor: 'pointer',
       zIndex: 1,
       userSelect: 'none',
+      border: 'none',
     },
 
     footer: {
@@ -257,41 +325,79 @@ export const PetHotelDetailsWithForm = () => {
       <div style={styles.formGroup}>
         <div style={styles.inputRow}>
           <label style={styles.label}>Type:</label>
-          <input style={styles.input} placeholder="Select a type" />
+          <select 
+            style={styles.select} 
+            value={formData.type}
+            onChange={(e) => handleInputChange('type', e.target.value)}
+          >
+            <option value="">Select a type</option>
+            <option value="accommodation">Accommodation</option>
+            <option value="daycare">Daycare</option>
+            <option value="grooming">Grooming</option>
+            <option value="training">Training</option>
+          </select>
         </div>
+        
         <div style={styles.inputRow}>
           <label style={styles.label}>Date:</label>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: 1 }}>
-            <input style={styles.input} placeholder="DD/MM/YYYY" />
+            <input 
+              style={styles.input} 
+              type="date"
+              value={formData.date}
+              onChange={(e) => handleInputChange('date', e.target.value)}
+            />
             <span style={styles.icon} role="img" aria-label="calendar">
               🗓️
             </span>
           </div>
         </div>
+        
         <div style={styles.inputRow}>
           <label style={styles.label}>Hour:</label>
-          <input style={styles.input} placeholder="HH:MM" />
+          <input 
+            style={styles.input} 
+            type="time"
+            value={formData.hour}
+            onChange={(e) => handleInputChange('hour', e.target.value)}
+          />
         </div>
+        
         <div>
           <label style={styles.label}>Pet:</label>
-          <input style={styles.input} placeholder="Select the pet" />
+          <select 
+            style={styles.select}
+            value={selectedPet}
+            onChange={(e) => setSelectedPet(e.target.value)}
+          >
+            <option value="">Select the pet</option>
+            {pets.map((pet) => (
+              <option key={pet.id} value={pet.id}>
+                {pet.name} ({pet.race})
+              </option>
+            ))}
+          </select>
         </div>
+        
         <div>
           <label style={styles.label}>Notes:</label>
           <textarea
             style={styles.textarea}
             placeholder="Put here medication, prescription, notes about the treatment or the pet"
+            value={formData.notes}
+            onChange={(e) => handleInputChange('notes', e.target.value)}
           />
         </div>
 
         {/* Submit button */}
-        <div
+        <button
           style={styles.submitButton}
-          onClick={() => {navigate('/PetHotelPaymentChoice');}}
+          onClick={handleSubmit}
           title="Submit"
+          type="button"
         >
           ✔
-        </div>
+        </button>
       </div>
 
       {/* Footer */}
@@ -301,7 +407,7 @@ export const PetHotelDetailsWithForm = () => {
             src="/images/home.svg"
             alt="Home"
             style={styles.footerIconImage}
-            onClick={() => navigate('/PetTakerHome')}
+            onClick={() => navigate('/OwnerHomeInterface')}
           />
         </div>
         <div style={styles.footerIcon}>

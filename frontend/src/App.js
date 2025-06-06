@@ -72,7 +72,7 @@ const App = () => {
 
           <Route path='/VerificationPetTaker' element={<VerificationPetTaker />} />
 
-          <Route path='/PetMenuAssigned' element={<PetMenuAssigned />} />
+          <Route path="/PetMenuAssigned/:petName" element={<PetMenuAssigned />} />
 
           <Route path='/PetAssignedPin' element={<PetAssignedPin />} />
           <Route path='/OwnerMap' element={<OwnerMap />} />

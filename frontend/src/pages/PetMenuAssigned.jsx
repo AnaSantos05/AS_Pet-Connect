@@ -1,12 +1,67 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const PetMenuAssigned = () => {
   const navigate = useNavigate();
+  const { petName } = useParams();
+  const [pet, setPet] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const baseFont = "'Londrina Solid', cursive, sans-serif";
+
+  useEffect(() => {
+    // Try to get pet data from localStorage first
+    const storedPetData = localStorage.getItem('selectedPetData');
+    if (storedPetData) {
+      setPet(JSON.parse(storedPetData));
+      setLoading(false);
+      return;
+    }
+
+    // If not in localStorage, fetch from API
+    if (petName) {
+      fetch(`http://localhost:5000/api/pets/${encodeURIComponent(petName)}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            console.error('Pet não encontrado:', data.error);
+          } else {
+            setPet(data);
+          }
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar informações do pet:', error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [petName]);
+
+  const getCaretakerInfo = () => {
+    if (!pet) return null;
+    
+    if (pet.caretaker_type === 'hotel' || pet.caretaker_id === 999) {
+      return {
+        name: 'Hotel Bicho Solto',
+        logo: '/images/bichosolto-logo.png'
+      };
+    } else if (pet.caretaker_id === 2) {
+      return {
+        name: 'João Ferreira',
+        logo: '/images/joao_ferreira.jpg'
+      };
+    } else {
+      return {
+        name: 'Individual Caretaker',
+        logo: '/images/default-caretaker.png'
+      };
+    }
+  };
 
   const styles = {
     container: {
@@ -85,7 +140,7 @@ const PetMenuAssigned = () => {
       marginLeft: '0.5rem',
       color: '#9E8DAD',
     },
-    hotelSection: {
+    caretakerSection: {
       display: 'flex',
       alignItems: 'center',
       gap: '0.5rem',
@@ -93,13 +148,14 @@ const PetMenuAssigned = () => {
       zIndex: 2,
       userSelect: 'none',
     },
-    hotelLogo: {
+    caretakerLogo: {
       width: '36px',
       height: '36px',
-      objectFit: 'contain',
+      borderRadius: '50%',
+      objectFit: 'cover',
       userSelect: 'none',
     },
-    hotelName: {
+    caretakerName: {
       fontSize: '1.5rem',
       color: '#2D2432',
       fontWeight: '900',
@@ -127,6 +183,7 @@ const PetMenuAssigned = () => {
       boxShadow: '0 6px 14px rgba(0,0,0,0.3)',
       userSelect: 'none',
       transition: 'background-color 0.3s ease',
+      border: 'none',
     },
     footer: {
       position: 'fixed',
@@ -158,6 +215,30 @@ const PetMenuAssigned = () => {
     },
   };
 
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.headerCurve} />
+        <div style={{ marginTop: '50%', color: '#2D2432', fontSize: '1.5rem' }}>
+          Loading pet information...
+        </div>
+      </div>
+    );
+  }
+
+  if (!pet) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.headerCurve} />
+        <div style={{ marginTop: '50%', color: '#2D2432', fontSize: '1.5rem' }}>
+          Pet not found
+        </div>
+      </div>
+    );
+  }
+
+  const caretakerInfo = getCaretakerInfo();
+
   return (
     <div style={styles.container}>
       <div style={styles.headerCurve} />
@@ -169,30 +250,32 @@ const PetMenuAssigned = () => {
       />
 
       <img
-        src="./images/Roxy.jpg"
-        alt="Pet"
+        src={pet.image}
+        alt={pet.name}
         style={styles.petImage}
         draggable={false}
       />
 
       <div style={styles.textGroup}>
-        <div style={styles.name}>Roxy</div>
+        <div style={styles.name}>{pet.name}</div>
         <div style={styles.genderGroup}>
-          <span style={styles.typeText}>Dog</span>
-          <span style={styles.genderText}>(Female)</span>
-          <span style={styles.age}>5 years old</span>
+          <span style={styles.typeText}>{pet.race}</span>
+          <span style={styles.genderText}>({pet.gender})</span>
+          <span style={styles.age}>{pet.age} years old</span>
         </div>
       </div>
 
-      <div style={styles.hotelSection}>
-        <img
-          src="./images/bichosolto-logo.png"
-          alt="Hotel Logo"
-          style={styles.hotelLogo}
-          draggable={false}
-        />
-        <div style={styles.hotelName}>Hotel Bicho Solto</div>
-      </div>
+      {caretakerInfo && (
+        <div style={styles.caretakerSection}>
+          <img
+            src={caretakerInfo.logo}
+            alt="Caretaker Logo"
+            style={styles.caretakerLogo}
+            draggable={false}
+          />
+          <div style={styles.caretakerName}>{caretakerInfo.name}</div>
+        </div>
+      )}
 
       <div style={styles.optionsList}>
         <button

@@ -2,8 +2,8 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const PetTakersList = () => {
-  const { petName, type } = useParams();
   const navigate = useNavigate();
+  const { petName, serviceType } = useParams();
 
   const petTakers = [
     {
@@ -14,7 +14,7 @@ const PetTakersList = () => {
     {
       name: 'Pedro Lemos',
       age: 20,
-      description: 'I will give your pet a bath and also do your pet’s fur.',
+      description: "I will give your pet a bath and also do your pet's fur.",
     },
     {
       name: 'Patrícia Lee',
@@ -37,6 +37,30 @@ const PetTakersList = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      paddingBottom: '80px', // Add padding for footer
+      position: 'relative',
+    },
+    header: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: '1rem',
+    },
+    backButton: {
+      fontSize: '1.5rem',
+      color: '#2D2432',
+      cursor: 'pointer',
+      padding: '0.5rem',
+      userSelect: 'none',
+      fontWeight: 'bold',
+    },
+    headerTitle: {
+      flex: 1,
+      textAlign: 'center',
+      color: '#FFB062',
+      marginBottom: '0.5rem',
+      fontSize: '1.5rem',
+      fontWeight: 'bold',
     },
     card: {
       backgroundColor: '#4B3B6B',
@@ -48,7 +72,7 @@ const PetTakersList = () => {
       maxWidth: '360px',
       textAlign: 'left',
       boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-      cursor: 'pointer', // cursor para indicar clique
+      cursor: 'pointer',
     },
     title: {
       color: '#FFB062',
@@ -75,18 +99,58 @@ const PetTakersList = () => {
       color: '#2D2432',
       marginBottom: '1rem',
     },
+    footer: {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      width: '100%',
+      height: '60px',
+      background: '#2D2432',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      zIndex: 10,
+      borderTopLeftRadius: '20px',
+      borderTopRightRadius: '20px',
+    },
+    footerIcon: {
+      width: '48px',
+      height: '48px',
+      borderRadius: '50%',
+      overflow: 'hidden',
+      cursor: 'pointer',
+    },
+    footerIconImage: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover',
+    },
   };
 
   const handleClick = (name) => {
     if (name === 'João Ferreira') {
+      // Store the selected caretaker ID (assuming João has ID 2)
+      localStorage.setItem('selectedCaretakerId', '2');
       navigate(`/PetTakerProfile`);
     }
   };
 
   return (
     <div style={styles.container}>
-      <h1 style={{ color: '#FFB062', marginBottom: '0.5rem' }}>Pet care–Takers</h1>
+      <div style={styles.header}>
+        <div 
+          style={styles.backButton} 
+          onClick={() => navigate(-1)}
+          title="Go back"
+        >
+          ←
+        </div>
+        <h1 style={styles.headerTitle}>Pet care–Takers</h1>
+        <div style={{ width: '2rem' }}></div> {/* Spacer for centering */}
+      </div>
+      
       <div style={styles.location}>Glória, Aveiro</div>
+      
       {petTakers.map((pt, index) => (
         <div
           key={index}
@@ -99,6 +163,33 @@ const PetTakersList = () => {
           <div style={styles.description}>{pt.description}</div>
         </div>
       ))}
+
+      <div style={styles.footer}>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/home-on.svg"
+            alt="Home"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerHomeInterface')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/map.svg"
+            alt="Map"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerMap')}
+          />
+        </div>
+        <div style={styles.footerIcon}>
+          <img
+            src="/images/settings.svg"
+            alt="Settings"
+            style={styles.footerIconImage}
+            onClick={() => navigate('/OwnerSettings')}
+          />
+        </div>
+      </div>
     </div>
   );
 };

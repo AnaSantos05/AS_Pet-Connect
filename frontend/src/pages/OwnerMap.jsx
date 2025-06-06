@@ -117,6 +117,7 @@ const OwnerMap = () => {
       border: '5px solid #B74C4C',
       width: '120px',
       height: '120px',
+      cursor: 'pointer', // Add cursor pointer to indicate it's clickable
     },
     notification: {
       position: 'absolute', // Position relative to the parent (cluster)
@@ -154,6 +155,7 @@ const OwnerMap = () => {
       height: '48px',
       borderRadius: '50%',
       overflow: 'hidden',
+      cursor: 'pointer',
     },
     footerIconImage: {
       width: '100%',

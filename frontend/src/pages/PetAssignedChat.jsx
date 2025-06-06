@@ -21,9 +21,13 @@ const PetAssignedChat = () => {
       alignItems: 'center',
       marginBottom: '1rem',
     },
-    backIcon: {
-      fontSize: '1.2rem',
+    backButton: {
+      fontSize: '1.5rem',
+      color: 'black',
       cursor: 'pointer',
+      padding: '0.5rem',
+      userSelect: 'none',
+      fontWeight: 'bold',
     },
     title: {
       flex: 1,
@@ -41,6 +45,7 @@ const PetAssignedChat = () => {
       alignItems: 'center',
       color: 'white',
       boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+      cursor: 'pointer',
     },
     profilePic: {
       width: '45px',
@@ -98,6 +103,7 @@ const PetAssignedChat = () => {
       height: '48px',
       borderRadius: '50%',
       overflow: 'hidden',
+      cursor: 'pointer',
     },
     footerIconImage: {
       width: '100%',
@@ -109,7 +115,13 @@ const PetAssignedChat = () => {
   return (
     <div style={styles.container}>
       <div style={styles.header}>
-        <img src="/images/back.png" alt="Back" style={styles.backIcon} onClick={() => navigate(-1)} />
+        <div 
+          style={styles.backButton} 
+          onClick={() => navigate(-1)}
+          title="Go back"
+        >
+          ←
+        </div>
         <div style={styles.title}>My Chats</div>
       </div>
 
@@ -126,7 +138,6 @@ const PetAssignedChat = () => {
         </div>
       </div>
 
-
       {/* Chat 2 */}
       <div style={styles.chatCard}>
         <img src="/images/bichosolto-logo.png" alt="Hotel" style={styles.profilePic} />
@@ -142,7 +153,7 @@ const PetAssignedChat = () => {
 
       {/* Chat 3 */}
       <div style={styles.chatCard}>
-        <img src="/images/user2.png" alt="Matilde" style={styles.profilePic} />
+        <img src="/images/matilde.jpg" alt="Matilde" style={styles.profilePic} />
         <div style={styles.content}>
           <div style={styles.name}>Matilde Nogueira</div>
           <div style={styles.message}><strong>Me:</strong> Ok, eu passo lá amanhã</div>
@@ -153,7 +164,7 @@ const PetAssignedChat = () => {
         </div>
       </div>
 
-      {/* Footer igual ao OwnerMap */}
+      {/* Footer */}
       <div style={styles.footer}>
         <div style={styles.footerIcon}>
           <img
@@ -185,4 +196,3 @@ const PetAssignedChat = () => {
 };
 
 export default PetAssignedChat;
-

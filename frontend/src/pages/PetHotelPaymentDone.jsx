@@ -1,8 +1,52 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PaymentSuccessful = () => {
   const navigate = useNavigate();
+
+  // Function to assign hotel as caretaker after successful payment
+  const assignHotelToPet = async (petId) => {
+    try {
+      // For hotel services, use a special hotel caretaker ID (999)
+      const response = await fetch(`http://localhost:5000/api/pets/${petId}/assign-caretaker`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ caretaker_id: 999 }),
+      });
+
+      if (response.ok) {
+        console.log('Hotel assigned successfully after payment');
+        return true;
+      } else {
+        console.error('Error assigning hotel');
+        return false;
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      return false;
+    }
+  };
+
+  // Add this after successful hotel assignment
+  useEffect(() => {
+    const assignHotel = async () => {
+      const petId = localStorage.getItem('selectedPetId');
+
+      if (petId) {
+        await assignHotelToPet(parseInt(petId));
+        // Clean up localStorage after assignment
+        localStorage.removeItem('selectedPetId');
+        localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
+
+        // Trigger storage event to refresh OwnerHomeInterface
+        window.dispatchEvent(new Event('storage'));
+      }
+    };
+
+    assignHotel();
+  }, []);
 
   const styles = {
     container: {

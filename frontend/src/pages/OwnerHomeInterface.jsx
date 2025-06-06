@@ -1,158 +1,179 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export const OwnerHomeInterface = () => {
   const navigate = useNavigate();
   const [pets, setPets] = useState([]);
-useEffect(() => {
-  const userId = localStorage.getItem('userId');
-  if (!userId) {
-    alert('Utilizador não autenticado. Redirecionando para login...');
-    navigate('/login');
-    return;
-  }
+  const [loading, setLoading] = useState(true);
 
-  fetch(`http://localhost:5000/api/pets?owner_id=${userId}`)
-    .then((res) => {
-      if (!res.ok) throw new Error('Erro na resposta da API');
-      return res.json();
-    })
-    .then((data) => setPets(data))
-    .catch((err) => {
-      console.error('Erro ao carregar pets:', err);
-      setPets([]);
-    });
-}, [navigate]);
+  // Function to fetch pets
+  const fetchPets = async () => {
+    const ownerId = localStorage.getItem('userId');
+    if (!ownerId) {
+      console.error('Owner ID não encontrado');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/pets?owner_id=${ownerId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setPets(data);
+      } else {
+        console.error('Erro ao buscar pets');
+      }
+    } catch (error) {
+      console.error('Erro de rede:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPets();
+
+    // Listen for storage changes (when localStorage is updated)
+    const handleStorageChange = () => {
+      fetchPets();
+    };
+
+    // Listen for focus events (when user returns to the page)
+    const handleFocus = () => {
+      fetchPets();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
+  // Function to handle pet card click
+  const handlePetClick = (pet) => {
+    // Store the pet data for use in other components
+    localStorage.setItem('selectedPetData', JSON.stringify(pet));
+    
+    // Navigate based on pet status
+    if (pet.status === 'Care-Taker assigned' || pet.status === 'Care-Taker assigned (Hotel)') {
+      navigate(`/PetMenuAssigned/${encodeURIComponent(pet.name)}`);
+    } else {
+      navigate(`/PetMenu/${encodeURIComponent(pet.name)}`);
+    }
+  };
 
   const styles = {
     container: {
-      width: '100%',
-      minHeight: '100vh',
-      backgroundColor: 'white',
       fontFamily: "'Lexend Peta', sans-serif",
+      backgroundColor: '#fff',
+      minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      position: 'relative',
+      paddingBottom: '80px',
     },
-
     header: {
       width: '100%',
-      height: '200px',
-      backgroundColor: '#2D2432',
-      borderBottomLeftRadius: '50px',
-      borderBottomRightRadius: '50px',
+      height: '20vh',
+      background: '#2D2432',
+      borderRadius: '0 0 50% 50% / 0 0 100px 100px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       position: 'relative',
     },
-
     profileImage: {
-      width: '150px',
-      height: '150px',
+      width: '160px',
+      height: '160px',
       borderRadius: '50%',
       objectFit: 'cover',
-      position: 'absolute',
-      left: '50%',
-      top: '50%',
-      transform: 'translate(-50%, -50%)',
+      border: '3px solid white',
     },
-
     sectionTitle: {
-      marginTop: '1rem',
       fontSize: '1.5rem',
-      fontWeight: 600,
+      fontWeight: 'bold',
+      color: '#FFB062',
+      marginTop: '1rem',
     },
-
-    text_name: {
-      fontFamily: 'Londrina Solid',
-      fontWeight: '400',
-      color: 'rgb(147, 53, 73)',
-      fontSize: '1.6rem',
-    },
-
-    text_age: {
-      fontFamily: 'Londrina Solid',
-      fontWeight: '400',
-      color: '#78588A',
-    },
-
-    text_type: {
-      fontFamily: 'Londrina Solid',
-      fontWeight: '400',
-      color: 'rgb(104, 128, 173)',
-    },
-
-    text_gender: {
-      fontFamily: 'Londrina Solid',
-      fontWeight: '400',
-      color: '#FECD63',
-    },
-
-    petList: {
+    addCircle: {
+      position: 'fixed',
+      bottom: '100px',
+      right: '20px',
+      width: '60px',
+      height: '60px',
+      borderRadius: '50%',
+      backgroundColor: '#2D2432',
       display: 'flex',
-      flexWrap: 'wrap',
+      alignItems: 'center',
       justifyContent: 'center',
-      gap: '1rem',
-      padding: '1rem',
-      width: '100%',
-      maxWidth: '1000px',
-      boxSizing: 'border-box',
-      position: 'relative',
-      zIndex: 2,
-    },
-
-    card: {
-      backgroundColor: '#2D243261',
-      borderRadius: '16px',
-      padding: '1rem',
-      width: '280px',
-      display: 'flex',
-      gap: '1rem',
       cursor: 'pointer',
+      zIndex: 10,
     },
-
-    petImage: {
-      width: '100px',
-      height: '100px',
-      borderRadius: '12px',
-      objectFit: 'cover',
-      zIndex: 1,
-    },
-
-    petDetails: {
+    petList: {
+      width: '100%',
+      marginTop: '1rem',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
-      fontSize: '0.9rem',
+      alignItems: 'center',
+      gap: '1rem',
     },
-
-    status: (color) => ({
-      color,
-      fontWeight: 600,
-      fontSize: '0.9rem',
-    }),
-
-    addCircle: {
-      width: '50px',
-      height: '50px',
-      borderRadius: '50%',
-      backgroundColor: '#2D2432',
+    card: {
+      backgroundColor: '#4B3B6B',
+      color: 'white',
+      borderRadius: '12px',
+      padding: '1rem',
+      width: '90%',
+      maxWidth: '360px',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center',
-      position: 'absolute',
-      right: '20px',
-      top: 'calc(50% - 25px)',
+      gap: '1rem',
       cursor: 'pointer',
+      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
     },
-
+    petImage: {
+      width: '60px',
+      height: '60px',
+      borderRadius: '12px',
+      objectFit: 'cover',
+    },
+    petDetails: {
+      flex: 1,
+    },
+    text_name: {
+      fontSize: '1.2rem',
+      fontWeight: 'bold',
+      marginBottom: '0.2rem',
+    },
+    text_age: {
+      fontSize: '0.9rem',
+      color: '#E0E0E0',
+      marginBottom: '0.2rem',
+    },
+    text_type: {
+      fontSize: '0.9rem',
+      color: '#E0E0E0',
+      marginBottom: '0.2rem',
+    },
+    text_gender: {
+      fontSize: '0.9rem',
+      color: '#E0E0E0',
+      marginBottom: '0.5rem',
+    },
+    status: (color) => ({
+      padding: '0.2rem 0.5rem',
+      borderRadius: '12px',
+      fontSize: '0.8rem',
+      fontWeight: 'bold',
+      backgroundColor: color,
+      color: 'white',
+    }),
     footer: {
-      position: 'absolute',
+      position: 'fixed',
       bottom: 0,
       left: 0,
       width: '100%',
@@ -165,22 +186,26 @@ useEffect(() => {
       borderTopLeftRadius: '20px',
       borderTopRightRadius: '20px',
     },
-
     footerIcon: {
-      cursor: 'pointer',
       width: '48px',
       height: '48px',
       borderRadius: '50%',
       overflow: 'hidden',
-      flexShrink: 0,
     },
-
     footerIconImage: {
       width: '100%',
       height: '100%',
       objectFit: 'cover',
     },
   };
+
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <div>Loading pets...</div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.container}>
@@ -206,12 +231,14 @@ useEffect(() => {
             <div
               key={index}
               style={styles.card}
-              onClick={() => navigate(`/PetMenu/${encodeURIComponent(pet.name)}`)}
+              onClick={() => handlePetClick(pet)}
             >
               <img src={pet.image} alt={pet.name} style={styles.petImage} />
               <div style={styles.petDetails}>
                 <div style={styles.text_name}>{pet.name}</div>
-                <div style={styles.text_age}>{pet.age}</div>
+                <div style={styles.text_age}>
+                  {pet.age} {pet.age === 1 ? 'year old' : 'years old'}
+                </div>
                 <div style={styles.text_type}>{pet.race}</div>
                 <div style={styles.text_gender}>{pet.gender}</div>
                 <span style={styles.status(pet.statusColor)}>

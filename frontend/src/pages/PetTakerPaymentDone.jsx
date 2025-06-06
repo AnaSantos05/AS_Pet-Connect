@@ -1,8 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const PaymentSuccessfulPetTaker = () => {
   const navigate = useNavigate();
+
+  // Function to assign caretaker after successful payment
+  const assignCaretakerToPet = async (petId, caretakerId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/pets/${petId}/assign-caretaker`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ caretaker_id: caretakerId }),
+      });
+      
+      if (response.ok) {
+        console.log('Caretaker assigned successfully after payment');
+        return true;
+      } else {
+        console.error('Error assigning caretaker');
+        return false;
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      return false;
+    }
+  };
+
+// Add this after successful assignment
+useEffect(() => {
+  const assignCaretaker = async () => {
+    const petId = localStorage.getItem('selectedPetId');
+    const caretakerId = localStorage.getItem('selectedCaretakerId');
+    
+    if (petId && caretakerId) {
+      await assignCaretakerToPet(parseInt(petId), parseInt(caretakerId));
+      // Clean up localStorage after assignment
+      localStorage.removeItem('selectedPetId');
+      localStorage.removeItem('selectedCaretakerId');
+      localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
+      
+      // Trigger storage event to refresh OwnerHomeInterface
+      window.dispatchEvent(new Event('storage'));
+    }
+  };
+
+  assignCaretaker();
+}, []);
 
   const styles = {
     container: {
