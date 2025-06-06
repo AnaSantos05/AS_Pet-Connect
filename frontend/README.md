@@ -1,94 +1,48 @@
-# Getting Started with Create React App
+# Pet-Connect
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O Pet-Connect é um sistema desenvolvido no âmbito da disciplina de Análise de Sistemas que tem como objetivo facilitar a ligação entre a procura e a oferta de serviços no universo do PetCare. Esta solução digital promove o bem-estar animal através da criação de uma ponte entre prestadores de serviços especializados e proprietários de animais de estimação.
 
-## Available Scripts
+## Funcionalidades Principais
 
-In the project directory, you can run:
+- **Gestão de Pets**: Registo e acompanhamento de animais de estimação
+- **Serviços de Pet-sitting**: Conexão com cuidadores individuais certificados
+- **Alojamento em Hotel**: Reservas em estabelecimentos especializados
+- **Sistema de Pagamentos**: Processamento seguro de transações
+- **Histórico de Serviços**: Acompanhamento completo dos serviços utilizados
+- **Autenticação Segura**: Sistema de login com encriptação MD5
 
-### `npm start`
+## Tecnologias Utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- **React.js** - Interface de utilizador
+- **React Router** - Navegação entre páginas
+- **CSS Modules** - Estilização de componentes
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- **Flask** - Framework web Python
+- **JSON** - Base de dados em ficheiros
+- **MD5** - Encriptação de passwords
+- **CORS** - Comunicação cross-origin
 
-### `npm test`
+## Como Executar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Pré-requisitos
 
-### `npm run build`
+Para executar este projeto necessita de:
+- [Node.js](https://nodejs.org/) (versão 14 ou superior)
+- [Python](https://python.org/) (versão 3.8 ou superior)
+- [npm](https://npmjs.org/) (incluído com Node.js)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalação e Execução
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### 1. Frontend (React)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+# Navegar para a pasta frontend
+cd frontend
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-
-
-### COMO USAR O PET-CONNECT ####
-Instalar na pasta do frontend  o react 
+# Instalar dependências
 npm install
-E para começar o programa
-npm start
 
-Instalar na pasta do backend o flask 
-
-pip install flask flask-cors
-
-Caso der erro devido a sistemas de segurança do linux(por mexer no python) fazer 
-python3 -m venv venv 
-
-source venv/bin/activate
-
-pip install flask flask-cors
-
-Com a instalção do flask-cors na pasta de backend
-
-flask run
+# Executar a aplicação
+npm run dev
