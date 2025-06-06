@@ -55,6 +55,18 @@ O Pet-Connect é uma plataforma digital que facilita a ligação entre propriet�
 - **npm** - Gestor de pacotes JavaScript
 - **pip** - Gestor de pacotes Python
 
+## Estrutura do Projeto
+- **frontend/** - Código fonte da aplicação React
+- **backend/** - Código fonte da API Flask
+- **README.md** - Documentação do projeto
+- **requirements.txt** - Dependências do backend
+- **package.json** - Dependências do frontend
+
+## README'S
+- **frontend/README.md** - Instruções para o frontend
+- **backend/README.md** - Instruções para o backend
+- **README.md** - Visão geral do projeto
+
 ## Como Executar
 
 ### Pré-requisitos
@@ -69,3 +81,17 @@ Certifique-se de ter instalado:
 ```bash
 git clone https://github.com/seu-usuario/AS_Pet-Connect.git
 cd AS_Pet-Connect
+
+```
+
+### Como fazer login
+Para fazer login na aplicação, utilize as seguintes credenciais de teste:
+
+## Porprietários de Animais (Owners)
+    email             password        descrição
+- owner1@gmail.com      123           Proprietário com pets registados
+- nopets@gmail.com      123           Proprietário sem pets
+
+## Cuidadores de Animais (PetCareTakers)
+    email             password        descrição
+- taker1@gmail.com      123           Cuidador com pets atribuídos

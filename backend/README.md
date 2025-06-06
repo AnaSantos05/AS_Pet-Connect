@@ -56,3 +56,15 @@ pip install -r requirements.txt
 cd backend
 flask run
 ```
+
+### Como fazer login
+Para fazer login na aplicação, utilize as seguintes credenciais de teste:
+
+## Porprietários de Animais (Owners)
+    email             password        descrição
+- owner1@gmail.com      123           Proprietário com pets registados
+- nopets@gmail.com      123           Proprietário sem pets
+
+## Cuidadores de Animais (PetCareTakers)
+    email             password        descrição
+- taker1@gmail.com      123           Cuidador com pets atribuídos
