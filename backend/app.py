@@ -46,10 +46,13 @@ def add_pet():
     data['status'] = data.get('status', 'Care-Taker not assigned yet')
     data['statusColor'] = data.get('statusColor', 'red')
 
+    # Add unique ID for the pet
     pets = load_pets()
+    data['id'] = len(pets) + 1  # Simple ID generation
+
     pets.append(data)
     save_pets(pets)
-    return jsonify({'message': 'Pet adicionado com sucesso!'}), 201
+    return jsonify({'message': 'Pet adicionado com sucesso!', 'pet_id': data['id']}), 201
 
 
 @app.route('/api/pets', methods=['GET'])
@@ -60,6 +63,61 @@ def get_pets():
         pets = [pet for pet in pets if str(pet.get('owner_id')) == owner_id]
     return jsonify(pets)
 
+
+# Update the assign_caretaker_to_pet function to handle hotel assignments
+
+@app.route('/api/pets/<int:pet_id>/assign-caretaker', methods=['PUT'])
+def assign_caretaker_to_pet(pet_id):
+    data = request.get_json()
+    
+    if not data or 'caretaker_id' not in data:
+        return jsonify({'error': 'caretaker_id é obrigatório'}), 400
+    
+    caretaker_id = data['caretaker_id']
+    
+    # Special handling for hotel (ID 999)
+    if caretaker_id == 999:
+        # Hotel assignment logic
+        pets = load_pets()
+        pet_index = next((i for i, pet in enumerate(pets) if pet.get('id') == pet_id), None)
+        
+        if pet_index is None:
+            return jsonify({'error': 'Pet não encontrado'}), 404
+        
+        pets[pet_index]['status'] = "Care-Taker assigned (Hotel)"
+        pets[pet_index]['statusColor'] = "green"
+        pets[pet_index]['caretaker_id'] = caretaker_id
+        pets[pet_index]['caretaker_type'] = "hotel"
+        
+        save_pets(pets)
+        return jsonify({'message': 'Hotel atribuído com sucesso', 'pet': pets[pet_index]}), 200
+    
+    # Regular caretaker assignment logic
+    users_data = load_users()
+    caretaker = next((u for u in users_data["users"] if u["id"] == caretaker_id), None)
+    
+    if not caretaker:
+        return jsonify({'error': 'Cuidador não encontrado'}), 404
+    if caretaker.get("type") != "sitter":
+        return jsonify({'error': 'Utilizador não é um pet sitter'}), 400
+    
+    pets = load_pets()
+    pet_index = next((i for i, pet in enumerate(pets) if pet.get('id') == pet_id), None)
+    
+    if pet_index is None:
+        return jsonify({'error': 'Pet não encontrado'}), 404
+    
+    pets[pet_index]['status'] = "Care-Taker assigned"
+    pets[pet_index]['statusColor'] = "green"
+    pets[pet_index]['caretaker_id'] = caretaker_id
+    pets[pet_index]['caretaker_type'] = "individual"
+    
+    save_pets(pets)
+    
+    return jsonify({
+        'message': 'Cuidador atribuído com sucesso',
+        'pet': pets[pet_index]
+    }), 200
 
 @app.route('/')
 def index():
