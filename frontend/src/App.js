@@ -45,6 +45,7 @@ import PaymentConfirmation from './pages/BuyItem';
 import PaymentSuccessfulStore from './pages/StoreDone';
 
 import PetServices from './pages/PetServices';
+import { PetTakerNotifications } from './pages/PetTakerNotifications';
 
 const App = () => {
   return (
@@ -129,6 +130,9 @@ const App = () => {
           <Route path="/PaymentSuccessfulStore" element={<PaymentSuccessfulStore />} />
 
           <Route path="/PetServices/:petName" element={<PetServices />} />
+
+          <Route path="/PetTakerNotifications" element={<PetTakerNotifications />} />
+
 
 
         </Routes>

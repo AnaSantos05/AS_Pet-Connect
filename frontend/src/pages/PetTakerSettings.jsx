@@ -170,11 +170,19 @@ export const PetTakerSettings = () => {
       {/* Options List */}
       <div style={styles.optionsList}>
         {options.map((opt) => (
-          <div key={opt} style={styles.optionButton}>
-            {opt}
-            <div style={styles.optionShadow} />
-          </div>
-        ))}
+  <div
+    key={opt}
+    style={styles.optionButton}
+    onClick={() => {
+      if (opt === 'Notifications') {
+        navigate('/PetTakerNotifications');
+      }
+    }}
+  >
+    {opt}
+    <div style={styles.optionShadow} />
+  </div>
+))}
       </div>
 
       {/* footer com ícones */}

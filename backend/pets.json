@@ -22,8 +22,10 @@
     "notes": "bonito",
     "owner_id": 1,
     "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
+    "status": "Care-Taker assigned (Hotel)",
+    "statusColor": "green",
+    "caretaker_id": 999,
+    "caretaker_type": "hotel"
   },
   {
     "id": 8,
