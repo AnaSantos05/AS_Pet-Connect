@@ -68,3 +68,27 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+
+
+### COMO USAR O PET-CONNECT ####
+Instalar na pasta do frontend  o react 
+npm install
+E para começar o programa
+npm start
+
+Instalar na pasta do backend o flask 
+
+pip install flask flask-cors
+
+Caso der erro devido a sistemas de segurança do linux(por mexer no python) fazer 
+python3 -m venv venv 
+
+source venv/bin/activate
+
+pip install flask flask-cors
+
+Com a instalção do flask-cors na pasta de backend
+
+flask run
