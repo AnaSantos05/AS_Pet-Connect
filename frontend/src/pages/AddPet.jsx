@@ -26,7 +26,6 @@ const handleSubmit = async () => {
     });
 
     if (response.ok) {
-      alert('Pet adicionado com sucesso!');
       navigate('/OwnerHomeInterface');
     } else {
       const error = await response.json();

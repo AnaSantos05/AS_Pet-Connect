@@ -44,7 +44,6 @@ export const Register = () => {
     const result = await response.json();
 
     if (response.ok) {
-      alert("Registro realizado com sucesso!");
       navigate('/login');
     } else {
       alert(result.error || "Erro no registo.");

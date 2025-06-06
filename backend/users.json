@@ -3,23 +3,24 @@
         {
             "name": "owner1",
             "email": "owner1@gmail.com",
-            "password": "123",
+            "password": "202cb962ac59075b964b07152d234b70",
             "type": "owner",
             "id": 1
         },
         {
             "name": "taker1",
             "email": "taker1@gmail.com",
-            "password": "123",
+            "password": "202cb962ac59075b964b07152d234b70",
             "type": "sitter",
             "id": 2
         },
         {
-            "name": "Alberto",
-            "email": "naosei@gmail.com",
-            "password": "1234",
+            "name": "NoPets",
+            "email": "nopets@gmail.com",
+            "password": "202cb962ac59075b964b07152d234b70",
             "type": "owner",
-            "id": 3
+            "id": 3,
+            "created_at": "2025-06-06T22:33:52.523346"
         }
     ]
 }

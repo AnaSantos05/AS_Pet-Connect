@@ -1,0 +1,39 @@
+{
+    "users": [
+        {
+            "name": "owner1",
+            "email": "owner1@gmail.com",
+            "password": "123",
+            "type": "owner",
+            "id": 1
+        },
+        {
+            "name": "taker1",
+            "email": "taker1@gmail.com",
+            "password": "123",
+            "type": "sitter",
+            "id": 2
+        },
+        {
+            "name": "Alberto",
+            "email": "naosei@gmail.com",
+            "password": "1234",
+            "type": "owner",
+            "id": 3
+        },
+        {
+            "name": "Fabio",
+            "email": "teste@gmail.com",
+            "password": "ohmeudeus",
+            "type": "owner",
+            "id": 4
+        },
+        {
+            "name": "patricia",
+            "email": "teste2@gmail.com",
+            "password": "ohmeudeus",
+            "type": "owner",
+            "id": 5
+        }
+    ]
+}

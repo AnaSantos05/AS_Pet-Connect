@@ -26,18 +26,6 @@
     "statusColor": "red"
   },
   {
-    "id": 7,
-    "name": "ALberto Junior",
-    "race": "C\u00e3o",
-    "age": "4",
-    "gender": "Male",
-    "notes": "Nunca quer caminhar por algum motivo",
-    "owner_id": 3,
-    "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
-  },
-  {
     "id": 8,
     "name": "Roxy",
     "race": "Dog",
