@@ -44,6 +44,8 @@ import PaymentConfirmation from './pages/BuyItem';
 
 import PaymentSuccessfulStore from './pages/StoreDone';
 
+import PetServices from './pages/PetServices';
+
 const App = () => {
   return (
     <FunctionProvider>
@@ -120,6 +122,8 @@ const App = () => {
           <Route path="/BuyItem" element={<PaymentConfirmation />} />
 
           <Route path="/PaymentSuccessfulStore" element={<PaymentSuccessfulStore />} />
+
+          <Route path="/PetServices/:petName" element={<PetServices />} />
 
 
         </Routes>

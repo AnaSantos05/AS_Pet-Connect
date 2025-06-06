@@ -119,6 +119,90 @@ def assign_caretaker_to_pet(pet_id):
         'pet': pets[pet_index]
     }), 200
 
+
+# New endpoint to get pet services
+@app.route('/api/pets/<int:pet_id>/services', methods=['GET'])
+def get_pet_services(pet_id):
+    """Get all services for a specific pet"""
+    
+    # Find the pet first
+    pets = load_pets()
+    pet = next((p for p in pets if p.get('id') == pet_id), None)
+    
+    if not pet:
+        return jsonify({'error': 'Pet não encontrado'}), 404
+    
+    # Load all pet service records
+    pet_services = load_pet_services()
+    
+    # Filter services for this specific pet
+    pet_specific_services = [s for s in pet_services if s.get('pet_id') == pet_id]
+    
+    # Separate into active and past services
+    active_services = []
+    past_services = []
+    
+    for service in pet_specific_services:
+        if service.get('status') in ['In Progress', 'Active', 'Ongoing']:
+            active_services.append(service)
+        else:
+            past_services.append(service)
+    
+    # If no real services exist, return mock data based on pet's current status
+    if not pet_specific_services:
+        if pet.get('status') == 'Care-Taker assigned (Hotel)':
+            active_services = [{
+                'id': 1,
+                'type': 'Hotel Accommodation',
+                'provider': 'Hotel Bicho Solto',
+                'startDate': '2025-01-15',
+                'endDate': '2025-01-20',
+                'status': 'In Progress',
+                'price': '35€/day',
+                'pet_id': pet_id
+            }]
+        elif pet.get('status') == 'Care-Taker assigned':
+            active_services = [{
+                'id': 2,
+                'type': 'Pet-sitting',
+                'provider': 'João Ferreira',
+                'startDate': '2025-01-15',
+                'endDate': '2025-01-20',
+                'status': 'In Progress',
+                'price': '25€/day',
+                'pet_id': pet_id
+            }]
+        
+        # Add some mock past services
+        past_services = [
+            {
+                'id': 3,
+                'type': 'Grooming',
+                'provider': 'Hotel Bicho Solto',
+                'startDate': '2024-12-10',
+                'endDate': '2024-12-10',
+                'status': 'Completed',
+                'price': '30€',
+                'pet_id': pet_id
+            },
+            {
+                'id': 4,
+                'type': 'Pet-walking',
+                'provider': 'Maria Silva',
+                'startDate': '2024-11-20',
+                'endDate': '2024-11-25',
+                'status': 'Completed',
+                'price': '5€/hour',
+                'pet_id': pet_id
+            }
+        ]
+    
+    return jsonify({
+        'active': active_services,
+        'past': past_services
+    })
+
+
 @app.route('/')
 def index():
     return "API para gerir pets - Hotel Bicho Solto"
@@ -172,6 +256,48 @@ def add_service():
     save_services(services)
 
     return jsonify({'message': 'Serviço adicionado com sucesso!'}), 201
+
+
+# Pet Services Management
+PET_SERVICES_FILE = 'pet_services.json'
+
+
+def load_pet_services():
+    if os.path.exists(PET_SERVICES_FILE):
+        with open(PET_SERVICES_FILE, 'r') as f:
+            return json.load(f)
+    return []
+
+
+def save_pet_services(pet_services):
+    with open(PET_SERVICES_FILE, 'w') as f:
+        json.dump(pet_services, f, indent=2)
+
+
+@app.route('/api/pet-services', methods=['POST'])
+def add_pet_service():
+    """Add a new service record for a specific pet"""
+    data = request.get_json()
+    
+    required_fields = ['pet_id', 'type', 'provider', 'startDate', 'status']
+    missing_fields = [field for field in required_fields if field not in data or not data[field]]
+    
+    if missing_fields:
+        return jsonify({'error': f'Campos em falta: {", ".join(missing_fields)}'}), 400
+    
+    # Verify pet exists
+    pets = load_pets()
+    pet = next((p for p in pets if p.get('id') == data['pet_id']), None)
+    if not pet:
+        return jsonify({'error': 'Pet não encontrado'}), 404
+    
+    pet_services = load_pet_services()
+    data['id'] = len(pet_services) + 1
+    
+    pet_services.append(data)
+    save_pet_services(pet_services)
+    
+    return jsonify({'message': 'Serviço de pet adicionado com sucesso!', 'service': data}), 201
 
 
 # ----------------------------USERS------------------

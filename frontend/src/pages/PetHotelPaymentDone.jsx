@@ -29,13 +29,54 @@ const PaymentSuccessful = () => {
     }
   };
 
+  // Function to create a hotel service record after successful payment
+  const createHotelServiceRecord = async (petId) => {
+    try {
+      const serviceData = {
+        pet_id: petId,
+        type: 'Hotel Accommodation',
+        provider: 'Hotel Bicho Solto',
+        startDate: new Date().toISOString().split('T')[0], // Today's date
+        endDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days from now
+        status: 'In Progress',
+        price: '35€/day'
+      };
+
+      const response = await fetch('http://localhost:5000/api/pet-services', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(serviceData),
+      });
+
+      if (response.ok) {
+        console.log('Hotel service record created successfully');
+        return true;
+      } else {
+        console.error('Error creating hotel service record');
+        return false;
+      }
+    } catch (error) {
+      console.error('Network error creating hotel service:', error);
+      return false;
+    }
+  };
+
   // Add this after successful hotel assignment
   useEffect(() => {
     const assignHotel = async () => {
       const petId = localStorage.getItem('selectedPetId');
 
       if (petId) {
-        await assignHotelToPet(parseInt(petId));
+        // First assign the hotel as caretaker
+        const assignmentSuccess = await assignHotelToPet(parseInt(petId));
+        
+        // Then create service record if assignment was successful
+        if (assignmentSuccess) {
+          await createHotelServiceRecord(parseInt(petId));
+        }
+        
         // Clean up localStorage after assignment
         localStorage.removeItem('selectedPetId');
         localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
@@ -48,6 +89,7 @@ const PaymentSuccessful = () => {
     assignHotel();
   }, []);
 
+  // ... rest of the component remains the same
   const styles = {
     container: {
       width: '100%',
@@ -96,7 +138,7 @@ const PaymentSuccessful = () => {
       width: '160px',
       height: '160px',
       borderRadius: '50%',
-      backgroundColor: '#C8F7D4', // círculo maior verde claro
+      backgroundColor: '#C8F7D4',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -108,7 +150,7 @@ const PaymentSuccessful = () => {
       width: '110px',
       height: '110px',
       borderRadius: '50%',
-      backgroundColor: '#7CE582', // círculo médio verde
+      backgroundColor: '#7CE582',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -118,7 +160,7 @@ const PaymentSuccessful = () => {
       width: '70px',
       height: '70px',
       borderRadius: '50%',
-      backgroundColor: '#0ED53F', // círculo pequeno verde forte
+      backgroundColor: '#0ED53F',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',

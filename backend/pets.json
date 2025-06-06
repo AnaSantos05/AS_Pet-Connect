@@ -52,8 +52,10 @@
     "notes": "fofo",
     "owner_id": 1,
     "image": "/images/logo.png",
-    "status": "Care-Taker not assigned yet",
-    "statusColor": "red"
+    "status": "Care-Taker assigned (Hotel)",
+    "statusColor": "green",
+    "caretaker_id": 999,
+    "caretaker_type": "hotel"
   },
   {
     "id": 6,
@@ -104,5 +106,19 @@
     "statusColor": "green",
     "caretaker_id": 2,
     "caretaker_type": "individual"
+  },
+  {
+    "name": "Bobby",
+    "race": "dog",
+    "age": "10",
+    "gender": "male",
+    "notes": "Nothing",
+    "owner_id": 1,
+    "image": "/images/logo.png",
+    "status": "Care-Taker assigned (Hotel)",
+    "statusColor": "green",
+    "id": 10,
+    "caretaker_id": 999,
+    "caretaker_type": "hotel"
   }
 ]

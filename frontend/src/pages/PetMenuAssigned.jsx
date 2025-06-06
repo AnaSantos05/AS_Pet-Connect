@@ -277,34 +277,34 @@ const PetMenuAssigned = () => {
         </div>
       )}
 
-      <div style={styles.optionsList}>
-        <button
-          style={styles.optionButton}
-          onClick={() => navigate('/ServiceRequests')}
-          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-        >
-          Services
-        </button>
+<div style={styles.optionsList}>
+  <button
+    style={styles.optionButton}
+    onClick={() => navigate(`/PetServices/${encodeURIComponent(pet.name)}`)}
+    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+  >
+    Services
+  </button>
 
-        <button
-          style={styles.optionButton}
-          onClick={() => navigate('/PetAssignedChat')}
-          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-        >
-          Chat
-        </button>
+  <button
+    style={styles.optionButton}
+    onClick={() => navigate('/PetAssignedChat')}
+    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+  >
+    Chat
+  </button>
 
-        <button
-          style={styles.optionButton}
-          onClick={() => navigate('/PetAssignedPin')}
-          onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
-          onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
-        >
-          PIN
-        </button>
-      </div>
+  <button
+    style={styles.optionButton}
+    onClick={() => navigate(`/PetAssignedPin/${encodeURIComponent(pet.name)}`)}
+    onMouseEnter={e => e.currentTarget.style.backgroundColor = '#443769'}
+    onMouseLeave={e => e.currentTarget.style.backgroundColor = '#2D2432'}
+  >
+    PIN
+  </button>
+</div>
 
       <div style={styles.footer}>
         <div

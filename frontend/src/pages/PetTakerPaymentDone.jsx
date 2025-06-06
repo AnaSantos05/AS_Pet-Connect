@@ -28,27 +28,69 @@ const PaymentSuccessfulPetTaker = () => {
     }
   };
 
-// Add this after successful assignment
-useEffect(() => {
-  const assignCaretaker = async () => {
-    const petId = localStorage.getItem('selectedPetId');
-    const caretakerId = localStorage.getItem('selectedCaretakerId');
-    
-    if (petId && caretakerId) {
-      await assignCaretakerToPet(parseInt(petId), parseInt(caretakerId));
-      // Clean up localStorage after assignment
-      localStorage.removeItem('selectedPetId');
-      localStorage.removeItem('selectedCaretakerId');
-      localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
-      
-      // Trigger storage event to refresh OwnerHomeInterface
-      window.dispatchEvent(new Event('storage'));
+  // Function to create a service record after successful payment
+  const createServiceRecord = async (petId, caretakerId) => {
+    try {
+      const serviceData = {
+        pet_id: petId,
+        type: 'Pet-sitting',
+        provider: 'João Ferreira', // This should be dynamic based on caretakerId
+        startDate: new Date().toISOString().split('T')[0], // Today's date
+        endDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 5 days from now
+        status: 'In Progress',
+        price: '25€/day'
+      };
+
+      const response = await fetch('http://localhost:5000/api/pet-services', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(serviceData),
+      });
+
+      if (response.ok) {
+        console.log('Service record created successfully');
+        return true;
+      } else {
+        console.error('Error creating service record');
+        return false;
+      }
+    } catch (error) {
+      console.error('Network error creating service:', error);
+      return false;
     }
   };
 
-  assignCaretaker();
-}, []);
+  // Add this after successful assignment
+  useEffect(() => {
+    const assignCaretaker = async () => {
+      const petId = localStorage.getItem('selectedPetId');
+      const caretakerId = localStorage.getItem('selectedCaretakerId');
+      
+      if (petId && caretakerId) {
+        // First assign the caretaker
+        const assignmentSuccess = await assignCaretakerToPet(parseInt(petId), parseInt(caretakerId));
+        
+        // Then create service record if assignment was successful
+        if (assignmentSuccess) {
+          await createServiceRecord(parseInt(petId), parseInt(caretakerId));
+        }
+        
+        // Clean up localStorage after assignment
+        localStorage.removeItem('selectedPetId');
+        localStorage.removeItem('selectedCaretakerId');
+        localStorage.removeItem('selectedPetData'); // Clear stored pet data to force refresh
+        
+        // Trigger storage event to refresh OwnerHomeInterface
+        window.dispatchEvent(new Event('storage'));
+      }
+    };
 
+    assignCaretaker();
+  }, []);
+
+  // ... rest of the component remains the same
   const styles = {
     container: {
       width: '100%',
@@ -106,7 +148,7 @@ useEffect(() => {
       width: '160px',
       height: '160px',
       borderRadius: '50%',
-      backgroundColor: '#C8F7D4', // círculo maior verde claro
+      backgroundColor: '#C8F7D4',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -119,7 +161,7 @@ useEffect(() => {
       width: '110px',
       height: '110px',
       borderRadius: '50%',
-      backgroundColor: '#7CE582', // círculo médio verde
+      backgroundColor: '#7CE582',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -129,7 +171,7 @@ useEffect(() => {
       width: '70px',
       height: '70px',
       borderRadius: '50%',
-      backgroundColor: '#0ED53F', // círculo pequeno verde forte
+      backgroundColor: '#0ED53F',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
